@@ -1036,6 +1036,127 @@ p {
   margin-top: 14px;
 }
 
+.certificationsGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (min-width: 601px) {
+  .certificationsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (min-width: 901px) {
+  .certificationsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+.certificationGridItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary) 88%, #ffffff 12%),
+    #22d3ee,
+    #d946ef
+  );
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.certificationGridItem:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.certificationCardInner {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: clamp(16px, 1.4vw, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.certificationLinkedMetaWrap {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.certificationIssuerLogo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: grayscale(100%);
+  opacity: 0.9;
+}
+
+.certificationLinkedName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+}
+
+.certificationLinkedMeta {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.certificationInlineLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  font-size: 0.92rem;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+.certificationInlineLink:hover,
+.certificationInlineLink:focus-visible {
+  text-decoration: underline;
+  opacity: 1;
+}
+
+.certificationsCtaRow {
+  margin-top: 8px;
+  justify-content: flex-end;
+}
+
+.certificationsContent {
+  width: 100%;
+}
+
+.certificationsIntro {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 700px) {
+  .certificationsCtaRow {
+    justify-content: flex-start;
+  }
+}
+
 .contactSection {
   display: flex;
   flex-direction: column;

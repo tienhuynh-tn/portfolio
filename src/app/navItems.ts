@@ -46,8 +46,8 @@ export const NAV_ITEMS = [
     Icon: GraduationCap as NavIcon,
   },
   {
-    id: 'credentials',
-    label: 'Certifications & Awards',
+    id: 'certifications',
+    label: 'Certifications',
     Icon: MedalMilitary as NavIcon,
   },
   {
