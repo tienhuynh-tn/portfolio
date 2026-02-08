@@ -1,4 +1,5 @@
 import { useEffect, type ReactElement } from 'react'
+import ActivitiesPage from './ActivitiesPage'
 import Navbar from '../components/layout/Navbar'
 import ScrollToTop from '../components/layout/ScrollToTop'
 import { NAV_ITEMS, type NavItemId } from './navItems'
@@ -22,7 +23,7 @@ const SECTION_COMPONENTS: Record<NavItemId, ReactElement> = {
   experience: <Experience />,
   education: <Education />,
   certifications: <Certifications />,
-  activity: <Activity />,
+  activities: <Activity />,
   contact: <Contact />,
 }
 
@@ -47,6 +48,10 @@ function App() {
 
   if (pathname === '/credentials' || pathname === '/certifications') {
     return <CertificationsPage />
+  }
+
+  if (pathname === '/activities') {
+    return <ActivitiesPage />
   }
 
   return (

@@ -51,8 +51,8 @@ export const NAV_ITEMS = [
     Icon: MedalMilitary as NavIcon,
   },
   {
-    id: 'activity',
-    label: 'Activity',
+    id: 'activities',
+    label: 'Activities',
     Icon: Pulse as NavIcon,
   },
   {
