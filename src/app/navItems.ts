@@ -6,7 +6,7 @@ import {
   HouseLine,
   LightningSlash,
   MedalMilitary,
-  Pulse,
+  PuzzlePiece,
   SuitcaseSimple,
   UserCircle,
   type IconProps,
@@ -53,7 +53,7 @@ export const NAV_ITEMS = [
   {
     id: 'activities',
     label: 'Activities',
-    Icon: Pulse as NavIcon,
+    Icon: PuzzlePiece as NavIcon,
   },
   {
     id: 'contact',
