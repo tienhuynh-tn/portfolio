@@ -188,10 +188,15 @@ function Contact() {
               type="submit"
               disabled={!isComplete}
               onClick={() => setSubmittedEmpty(false)}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[color:var(--primary)] px-4 py-2 font-semibold text-[color:var(--primaryText)] transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[color:var(--primary)] px-4 py-2 font-semibold text-white transition hover:opacity-95 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
             >
               <span>Send Message</span>
-              <PaperPlaneTilt size={20} weight="regular" aria-hidden="true" />
+              <PaperPlaneTilt
+                size={20}
+                weight="regular"
+                aria-hidden="true"
+                className="text-current"
+              />
             </button>
 
             <p className="text-sm text-[color:var(--muted)]" aria-live="polite">

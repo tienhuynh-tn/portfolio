@@ -78,7 +78,12 @@ function ThemeToggle({ compact = false }: ThemeToggleProps) {
           <span className="themeToggleSwitch" aria-hidden="true">
             <span className="themeToggleThumb">
               {theme === 'dark' ? (
-                <Moon size={12} weight="regular" aria-hidden="true" />
+                <Moon
+                  size={12}
+                  weight="regular"
+                  aria-hidden="true"
+                  className="text-white"
+                />
               ) : (
                 <Sun size={12} weight="regular" aria-hidden="true" />
               )}
