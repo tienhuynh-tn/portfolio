@@ -268,7 +268,7 @@ function Navbar() {
 
     setActiveId(id)
     setIsMobileMenuOpen(false)
-    ignoreObserverUntilRef.current = performance.now() + 300
+    ignoreObserverUntilRef.current = event.timeStamp + 300
     scrollToId(id)
 
     if (lockTimeoutRef.current !== null) {
