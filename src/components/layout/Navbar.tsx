@@ -6,6 +6,7 @@ import {
   type MouseEvent as ReactMouseEvent,
 } from 'react'
 import { List } from '@phosphor-icons/react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { NAV_ITEMS, type NavItemId } from '../../app/navItems'
 import ThemeToggle from './ThemeToggle'
 
@@ -21,7 +22,17 @@ type SectionMetrics = {
   isIntersecting: boolean
 }
 
+const HASH_ACTIVE_IDS = new Set<NavItemId>([
+  'about',
+  'skills',
+  'projects',
+  'experience',
+  'contact',
+])
+
 function Navbar() {
+  const location = useLocation()
+  const navigate = useNavigate()
   const [activeId, setActiveId] = useState<NavItemId>('home')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isNavbarVisible, setIsNavbarVisible] = useState(true)
@@ -40,15 +51,14 @@ function Navbar() {
     return order
   }, [])
 
-  const scrollToId = (id: string, behavior: ScrollBehavior = 'smooth') => {
-    const element = document.getElementById(id)
-    if (!element) return false
-    window.history.replaceState(null, '', `#${id}`)
-    element.scrollIntoView({ behavior, block: 'start' })
-    return true
+  const getNavTarget = (id: NavItemId) => {
+    if (id === 'home') return '/'
+    return `/#${id}`
   }
 
   useEffect(() => {
+    if (location.pathname !== '/') return
+
     const sections = NAV_ITEMS.map((item) => {
       const element = document.getElementById(item.id)
       return element ? { id: item.id, element } : null
@@ -151,14 +161,12 @@ function Navbar() {
     sections.forEach((section) => observer.observe(section.element))
     window.addEventListener('scroll', scheduleFallback, { passive: true })
     window.addEventListener('resize', scheduleFallback)
-    window.addEventListener('hashchange', scheduleFallback)
     scheduleFallback()
 
     return () => {
       observer.disconnect()
       window.removeEventListener('scroll', scheduleFallback)
       window.removeEventListener('resize', scheduleFallback)
-      window.removeEventListener('hashchange', scheduleFallback)
       if (rafIdRef.current) {
         window.cancelAnimationFrame(rafIdRef.current)
         rafIdRef.current = 0
@@ -168,19 +176,24 @@ function Navbar() {
         lockTimeoutRef.current = null
       }
     }
-  }, [sectionOrder])
+  }, [location.pathname, sectionOrder])
 
   useEffect(() => {
-    const hashId = window.location.hash.replace('#', '')
+    if (location.pathname.startsWith('/projects')) {
+      setActiveId('projects')
+      return
+    }
 
-    window.requestAnimationFrame(() => {
-      if (!hashId || hashId === 'home') {
-        window.scrollTo({ top: 0, behavior: 'auto' })
+    if (location.pathname === '/') {
+      const hashId = location.hash.replace('#', '') as NavItemId
+      if (HASH_ACTIVE_IDS.has(hashId)) {
+        setActiveId(hashId)
         return
       }
-      scrollToId(hashId, 'auto')
-    })
-  }, [])
+    }
+
+    setActiveId('home')
+  }, [location.hash, location.pathname])
 
   useEffect(() => {
     const media = window.matchMedia('(max-width: 1199px)')
@@ -257,36 +270,38 @@ function Navbar() {
     id: NavItemId
   ) => {
     event.preventDefault()
+    setIsMobileMenuOpen(false)
+    setActiveId(id === 'projects' ? 'projects' : id)
 
-    if (id === 'home') {
-      setActiveId('home')
-      setIsMobileMenuOpen(false)
+    if (id === 'home' && location.pathname === '/' && !location.hash) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
-      window.history.replaceState(null, '', '#home')
       return
     }
 
-    setActiveId(id)
-    setIsMobileMenuOpen(false)
-    ignoreObserverUntilRef.current = event.timeStamp + 300
-    scrollToId(id)
-
-    if (lockTimeoutRef.current !== null) {
-      window.clearTimeout(lockTimeoutRef.current)
+    if (
+      id !== 'home' &&
+      location.pathname === '/' &&
+      location.hash === `#${id}`
+    ) {
+      const section = document.getElementById(id)
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return
+      }
     }
 
-    lockTimeoutRef.current = window.setTimeout(() => {
-      ignoreObserverUntilRef.current = 0
-      lockTimeoutRef.current = null
-    }, 320)
+    navigate(getNavTarget(id))
   }
 
   const handleBrandClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     setActiveId('home')
     setIsMobileMenuOpen(false)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    window.history.replaceState(null, '', '#home')
+    if (location.pathname === '/' && !location.hash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+    navigate('/')
   }
 
   const activeItem = NAV_ITEMS.find((item) => item.id === activeId) ?? NAV_ITEMS[0]
@@ -299,7 +314,7 @@ function Navbar() {
     >
       <div className="container navbarShell flex items-center gap-3 py-2">
         <a
-          href="#home"
+          href="/"
           onClick={handleBrandClick}
           className="navBrand shrink-0"
           aria-label="Go to Home"
@@ -321,7 +336,7 @@ function Navbar() {
                 return (
                   <a
                     key={item.id}
-                    href={`#${item.id}`}
+                    href={getNavTarget(item.id)}
                     aria-label={item.label}
                     aria-current={isActive ? 'page' : undefined}
                     onClick={(event) => handleNavClick(event, item.id)}
@@ -401,7 +416,7 @@ function Navbar() {
               return (
                 <a
                   key={item.id}
-                  href={`#${item.id}`}
+                  href={getNavTarget(item.id)}
                   aria-current={isActive ? 'page' : undefined}
                   onClick={(event) => handleNavClick(event, item.id)}
                   className={`navbarMobileMenuItem ${isActive ? 'navbarMobileMenuItem--active' : ''}`}

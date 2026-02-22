@@ -1,7 +1,5 @@
 import { useEffect, type ReactElement } from 'react'
-import ActivitiesPage from './ActivitiesPage'
-import Navbar from '../components/layout/Navbar'
-import ScrollToTop from '../components/layout/ScrollToTop'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { NAV_ITEMS, type NavItemId } from './navItems'
 import Activity from '../sections/Activity'
 import About from '../sections/About'
@@ -12,8 +10,11 @@ import Experience from '../sections/Experience'
 import Hero from '../sections/Hero'
 import Projects from '../sections/Projects'
 import Skills from '../sections/Skills'
+import ActivitiesPage from './ActivitiesPage'
 import CertificationsPage from './CertificationsPage'
-import ProjectsPage from './ProjectsPage'
+import AppLayout from '../layouts/AppLayout'
+import ProjectsPage from '../pages/ProjectsPage'
+import ProjectDetailPage from '../pages/ProjectDetailPage'
 
 const SECTION_COMPONENTS: Record<NavItemId, ReactElement> = {
   home: <Hero />,
@@ -27,9 +28,18 @@ const SECTION_COMPONENTS: Record<NavItemId, ReactElement> = {
   contact: <Contact />,
 }
 
+function HomePage() {
+  return (
+    <>
+      {NAV_ITEMS.map((item) => (
+        <div key={item.id}>{SECTION_COMPONENTS[item.id]}</div>
+      ))}
+    </>
+  )
+}
+
 function App() {
   useEffect(() => {
-    // Hard unlock once in case previous runs left inline scroll lock styles.
     document.documentElement.style.overflow = ''
     document.body.style.overflow = ''
     document.body.style.position = ''
@@ -40,30 +50,18 @@ function App() {
     document.body.style.height = ''
   }, [])
 
-  const pathname = window.location.pathname.replace(/\/+$/, '') || '/'
-
-  if (pathname === '/projects') {
-    return <ProjectsPage />
-  }
-
-  if (pathname === '/credentials' || pathname === '/certifications') {
-    return <CertificationsPage />
-  }
-
-  if (pathname === '/activities') {
-    return <ActivitiesPage />
-  }
-
   return (
-    <>
-      <Navbar />
-      <main>
-        {NAV_ITEMS.map((item) => (
-          <div key={item.id}>{SECTION_COMPONENTS[item.id]}</div>
-        ))}
-      </main>
-      <ScrollToTop />
-    </>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+      </Route>
+      <Route path="/activities" element={<ActivitiesPage />} />
+      <Route path="/credentials" element={<CertificationsPage />} />
+      <Route path="/certifications" element={<CertificationsPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
 

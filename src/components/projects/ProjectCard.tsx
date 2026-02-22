@@ -1,3 +1,5 @@
+import { type MouseEvent } from 'react'
+import { Link } from 'react-router-dom'
 import type { Project } from '../../data/projects'
 
 type ProjectCardProps = {
@@ -11,39 +13,52 @@ function ProjectCard({ project }: ProjectCardProps) {
     { label: 'Case Study', href: project.links.caseStudy },
   ].filter((link): link is { label: string; href: string } => Boolean(link.href))
 
+  const handleActionClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.stopPropagation()
+  }
+
   return (
     <article className="skillsGroup projectCard">
-      <div className="skillsGroupInner">
-        {project.image ? (
+      <div className="skillsGroupInner relative">
+        <Link
+          to={`/projects/${project.slug}`}
+          aria-label={`View details for ${project.title}`}
+          className="absolute inset-0 z-10 rounded-[calc(var(--radius-lg)-1.5px)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]"
+        >
+          <span className="sr-only">View project details</span>
+        </Link>
+
+        {project.coverImage ? (
           <img
-            src={project.image}
+            src={project.coverImage}
             alt={`${project.title} preview`}
             className="h-44 w-full rounded-xl object-cover"
             loading="lazy"
           />
         ) : null}
 
-        <h3 className="itemTitle">{project.title}</h3>
+        <h3 className="itemTitle relative z-0">{project.title}</h3>
 
-        <ul className="skillsBadges" aria-label={`${project.title} technology stack`}>
-          {project.tags.map((tech) => (
+        <ul className="skillsBadges relative z-0" aria-label={`${project.title} technology stack`}>
+          {project.tech.map((tech) => (
             <li key={tech} className="skillBadge">
               <span>{tech}</span>
             </li>
           ))}
         </ul>
 
-        <p className="cardDesc">{project.description}</p>
+        <p className="cardDesc relative z-0">{project.shortDesc}</p>
 
         {links.length > 0 ? (
-          <div className="cardLinks">
+          <div className="cardLinks relative z-20">
             {links.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 className="cardLink"
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
+                target="_blank"
+                rel="noreferrer"
+                onClick={handleActionClick}
               >
                 {link.label}
               </a>
