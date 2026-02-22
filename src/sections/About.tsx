@@ -20,7 +20,7 @@ function About() {
   return (
     <Section id="about" className="pb-6 md:pb-8">
       <div className="reveal" ref={revealRef}>
-        <h2 className="mb-7 text-center text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[color:var(--primary)] via-[color:var(--primary)] to-[color:var(--primary)] md:text-[2.7rem]">
+        <h2 className="mb-7 text-center text-2xl font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[color:var(--primary)] via-[color:var(--primary)] to-[color:var(--primary)] sm:text-3xl md:text-4xl">
           About Me
         </h2>
 
@@ -51,13 +51,13 @@ function About() {
           <div className="flex flex-col gap-5">
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(260px,320px)] lg:gap-8 lg:items-start">
               <div className="space-y-5">
-                <p className="leading-relaxed text-[color:var(--text-strong)]">
-                  <span className="font-semibold text-[color:var(--primary)]">Java Backend Developer</span> with{' '}
-                  <span className="font-semibold text-[color:var(--primary)]">3+ years of experience</span> building and maintaining backend
+                <p className="text-sm leading-relaxed text-[color:var(--text-strong)] sm:text-base md:text-lg">
+                  <span className="text-base font-semibold text-[color:var(--primary)] sm:text-lg md:text-xl">Java Backend Developer</span> with{' '}
+                  <span className="text-base font-semibold text-[color:var(--primary)] sm:text-lg md:text-xl">3+ years of experience</span> building and maintaining backend
                   services that prioritize clarity, stability, and scalability.
                 </p>
 
-                <p className="leading-relaxed text-[color:var(--text-strong)]">
+                <p className="text-sm leading-relaxed text-[color:var(--text-strong)] sm:text-base md:text-lg">
                   Comfortable designing APIs, working with{' '}
                   <span className="font-semibold text-[color:var(--primary)]">relational and NoSQL databases</span>, and integrating backend systems
                   in production environments. I focus on how services evolve over time - making sure they’re easy to maintain, adapt,
@@ -81,18 +81,18 @@ function About() {
               </blockquote>
             </div>
 
-            <div className="aboutTagGrid grid grid-cols-1 gap-3 md:max-w-[540px] md:grid-cols-2 md:gap-x-3 md:gap-y-3">
+            <div className="aboutTagGrid flex flex-wrap gap-2 sm:gap-3 md:max-w-[540px]">
               {TAGS.map(({ label, Icon }) => (
                 <span
                   key={label}
-                  className="aboutTag group relative inline-flex w-fit items-center gap-2 rounded-full px-3.5 py-2 pl-7 pr-4 text-sm font-medium"
+                  className="aboutTag group relative inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 pl-6 pr-3 text-xs font-medium sm:gap-2 sm:px-4 sm:py-2 sm:pl-7 sm:pr-4 sm:text-sm"
                 >
                   <span className="aboutTagHole" />
                   <Icon
-                    size={16}
+                    size={14}
                     weight="regular"
                     aria-hidden="true"
-                    className="aboutTagIcon"
+                    className="aboutTagIcon h-3 w-3 sm:h-4 sm:w-4"
                   />
                   <span className="font-medium">{label}</span>
                 </span>

@@ -109,14 +109,14 @@ function Hero() {
           <div className="flex flex-wrap items-center justify-center gap-3">
             <a
               href="#projects"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-transparent bg-[color:var(--primary)] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-[color:var(--primary)] hover:text-white hover:shadow-lg active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-transparent bg-[color:var(--primary)] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-[color:var(--primary)] hover:text-white hover:shadow-lg active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50 sm:px-6 sm:py-3 sm:text-base"
             >
               View Projects
             </a>
             <a
               href={RESUME_PATH}
               download
-              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[color:var(--border)] bg-transparent px-6 py-2.5 text-sm font-semibold text-[color:var(--text)] shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-blue-600/60 hover:text-[color:var(--primary)] hover:shadow-lg active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50 dark:hover:border-blue-400/60"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[color:var(--border)] bg-transparent px-5 py-2.5 text-sm font-semibold text-[color:var(--text)] shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-blue-600/60 hover:text-[color:var(--primary)] hover:shadow-lg active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50 dark:hover:border-blue-400/60 sm:px-6 sm:py-3 sm:text-base"
             >
               View Resume
             </a>

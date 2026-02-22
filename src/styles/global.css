@@ -15,8 +15,8 @@
 
   /* Spacing */
   --space-container-x: clamp(16px, 4vw, 48px);
-  --space-section-y: clamp(56px, 8vw, 104px);
-  --space-section-hero-y: clamp(88px, 12vw, 160px);
+  --space-section-y: clamp(40px, 7vw, 64px);
+  --space-section-hero-y: clamp(64px, 10vw, 112px);
 
   /* Radius */
   --radius-sm: 6px;
@@ -45,7 +45,7 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Rhythm */
-  --space-block: clamp(14px, 2vw, 24px);
+  --space-block: clamp(16px, 3vw, 32px);
 }
 
 :root[data-theme='dark'] {
@@ -243,6 +243,7 @@ button,
 p {
   color: var(--text);
   font-weight: 400;
+  font-size: clamp(0.875rem, 1.8vw, 1.125rem);
 }
 
 .text-muted {
@@ -660,7 +661,7 @@ p {
 .skillsBadges {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -669,11 +670,11 @@ p {
 .skillBadge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 7px 12px;
+  gap: 6px;
+  padding: 4px 10px;
   border-radius: var(--radius-sm);
   color: var(--text-strong);
-  font-size: 0.86rem;
+  font-size: 0.75rem;
   font-weight: 500;
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface) 56%, transparent);
@@ -688,6 +689,8 @@ p {
   color: currentColor;
   opacity: 0.85;
   flex-shrink: 0;
+  width: 12px;
+  height: 12px;
 }
 
 
@@ -716,11 +719,12 @@ p {
 
 .btn {
   display: inline-block;
-  padding: 10px 18px;
+  padding: 10px 20px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   text-decoration: none;
   font-weight: 500;
+  font-size: 0.875rem;
   background-image: none;
   min-height: 44px;
   transition: transform 0.18s var(--ease-out),
@@ -838,7 +842,7 @@ p {
 }
 
 .tag {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   padding: 4px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -1585,7 +1589,7 @@ p {
   }
 
   .section--hero {
-    padding: 80px 0;
+    padding: 72px 0;
   }
 
   .sectionHeader {
@@ -1628,11 +1632,11 @@ p {
   }
 
   .section {
-    padding: 44px 0;
+    padding: 40px 0;
   }
 
   .section--hero {
-    padding: 64px 0;
+    padding: 56px 0;
   }
 
   .navbarLinks {
@@ -1670,6 +1674,32 @@ p {
 
   .contactSubmit {
     width: 100%;
+  }
+}
+
+@media (min-width: 640px) {
+  .skillsBadges {
+    gap: 10px;
+  }
+
+  .skillBadge {
+    gap: 8px;
+    padding: 7px 12px;
+    font-size: 0.875rem;
+  }
+
+  .skillBadgeIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+
+  .tag {
+    font-size: 0.875rem;
   }
 }
 

@@ -63,7 +63,7 @@ function Contact() {
   return (
     <Section id="contact" className="pb-0">
       <div className="reveal" ref={revealRef}>
-        <h2 className="mb-8 text-center text-5xl font-bold tracking-tight text-[color:var(--primary)]">
+        <h2 className="mb-8 text-center text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-[color:var(--primary)]">
           Get in touch
         </h2>
 
@@ -188,7 +188,7 @@ function Contact() {
               type="submit"
               disabled={!isComplete}
               onClick={() => setSubmittedEmpty(false)}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[color:var(--primary)] px-4 py-2 font-semibold text-white transition hover:opacity-95 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[color:var(--primary)] px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-95 hover:text-white disabled:cursor-not-allowed disabled:opacity-60 sm:px-6 sm:py-3 sm:text-base"
             >
               <span>Send Message</span>
               <PaperPlaneTilt

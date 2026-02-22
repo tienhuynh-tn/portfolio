@@ -111,7 +111,7 @@ function Skills() {
   return (
     <Section id="skills" className="skillsSection">
       <div className="skillsBody" ref={revealRef}>
-        <h2 className="mb-8 text-center text-5xl font-bold tracking-tight text-[color:var(--primary)] reveal">
+        <h2 className="mb-8 text-center text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-[color:var(--primary)] reveal">
           Some Languages and Tools
         </h2>
 
