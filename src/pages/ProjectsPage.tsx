@@ -13,10 +13,9 @@ function ProjectsPage() {
           All Projects
         </h1>
 
-        <div className="skillsIntro reveal">
-          <p className="skillsSubtitle">
-            Featured work first, followed by additional projects across backend,
-            data, and frontend delivery.
+        <div className="skillsIntro reveal max-w-none">
+          <p className="skillsSubtitle whitespace-normal lg:whitespace-nowrap">
+            Explore all backend, data, and system design projects built with scalability and production-grade reliability in mind.
           </p>
           <span className="skillsDivider" aria-hidden="true" />
         </div>
