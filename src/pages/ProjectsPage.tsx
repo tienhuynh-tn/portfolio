@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import Section from '../components/layout/Section'
+import ProjectModal from '../components/projects/ProjectModal'
 import ProjectCard from '../components/projects/ProjectCard'
-import { allProjects } from '../data/projects'
+import { allProjects, type Project } from '../data/projects'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 
 function ProjectsPage() {
   const revealRef = useRevealOnScroll<HTMLDivElement>()
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   return (
     <Section id="all-projects" className="skillsSection pt-[var(--navbar-height)]">
@@ -27,11 +30,18 @@ function ProjectsPage() {
               className="reveal"
               style={{ ['--reveal-delay' as string]: `${index * 80}ms` }}
             >
-              <ProjectCard project={project} />
+              <ProjectCard project={project} onSelect={setSelectedProject} />
             </div>
           ))}
         </div>
       </div>
+
+      {selectedProject ? (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      ) : null}
     </Section>
   )
 }

@@ -1,12 +1,12 @@
 import { type MouseEvent } from 'react'
-import { Link } from 'react-router-dom'
 import type { Project } from '../../data/projects'
 
 type ProjectCardProps = {
   project: Project
+  onSelect: (project: Project) => void
 }
 
-function ProjectCard({ project }: ProjectCardProps) {
+function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const links = [
     { label: 'Live', href: project.links.live },
     { label: 'Source', href: project.links.source },
@@ -20,13 +20,14 @@ function ProjectCard({ project }: ProjectCardProps) {
   return (
     <article className="skillsGroup projectCard">
       <div className="skillsGroupInner relative">
-        <Link
-          to={`/projects/${project.slug}`}
-          aria-label={`View details for ${project.title}`}
+        <button
+          type="button"
+          onClick={() => onSelect(project)}
+          aria-label={`Open details for ${project.title}`}
           className="absolute inset-0 z-10 rounded-[calc(var(--radius-lg)-1.5px)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]"
         >
-          <span className="sr-only">View project details</span>
-        </Link>
+          <span className="sr-only">Open project details</span>
+        </button>
 
         {project.coverImage ? (
           <img

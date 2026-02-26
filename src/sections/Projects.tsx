@@ -1,11 +1,14 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import ProjectModal from '../components/projects/ProjectModal'
 import Section from '../components/layout/Section'
 import ProjectCard from '../components/projects/ProjectCard'
-import { projects } from '../data/projects'
+import { projects, type Project } from '../data/projects'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 
 function Projects() {
   const revealRef = useRevealOnScroll<HTMLDivElement>()
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const featuredProjects = projects.filter((project) => project.featured)
 
   return (
@@ -29,7 +32,7 @@ function Projects() {
               className="reveal"
               style={{ ['--reveal-delay' as string]: `${index * 80}ms` }}
             >
-              <ProjectCard project={project} />
+              <ProjectCard project={project} onSelect={setSelectedProject} />
             </div>
           ))}
         </div>
@@ -40,6 +43,13 @@ function Projects() {
           </Link>
         </div>
       </div>
+
+      {selectedProject ? (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      ) : null}
     </Section>
   )
 }

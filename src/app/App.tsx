@@ -14,7 +14,6 @@ import ActivitiesPage from './ActivitiesPage'
 import CertificationsPage from './CertificationsPage'
 import AppLayout from '../layouts/AppLayout'
 import ProjectsPage from '../pages/ProjectsPage'
-import ProjectDetailPage from '../pages/ProjectDetailPage'
 
 const SECTION_COMPONENTS: Record<NavItemId, ReactElement> = {
   home: <Hero />,
@@ -55,7 +54,6 @@ function App() {
       <Route element={<AppLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/projects/:slug" element={<ProjectDetailPage />} />
       </Route>
       <Route path="/activities" element={<ActivitiesPage />} />
       <Route path="/credentials" element={<CertificationsPage />} />

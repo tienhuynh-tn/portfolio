@@ -10,6 +10,9 @@ export type Project = {
   featured: boolean
   coverImage: string
   shortDesc: string
+  context?: string
+  teamSize?: string
+  duration?: string
   longDesc: string[]
   tech: string[]
   links: ProjectLinkSet
@@ -201,6 +204,3 @@ export const projects: Project[] = [
 export const featuredProjects = projects.filter((project) => project.featured)
 
 export const allProjects = [...projects]
-
-export const getProjectBySlug = (slug: string) =>
-  projects.find((project) => project.slug === slug)
