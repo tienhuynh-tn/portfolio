@@ -1,0 +1,8 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="160" rx="32" fill="#F8FAFC"/>
+  <rect x="14" y="14" width="132" height="132" rx="28" fill="#FEFCE8" stroke="#FDE68A"/>
+  <circle cx="80" cy="68" r="28" fill="#FEF3C7"/>
+  <path d="M64 84c10-16 22-25 34-28-4 10-14 22-34 28Z" fill="#1D4ED8"/>
+  <path d="M58 92c18 5 33 5 44-1" stroke="#D97706" stroke-width="6" stroke-linecap="round"/>
+  <text x="80" y="124" text-anchor="middle" fill="#92400E" font-family="Arial, sans-serif" font-size="16" font-weight="700">AWS CCP</text>
+</svg>

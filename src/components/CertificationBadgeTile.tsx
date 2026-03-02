@@ -1,73 +1,87 @@
-import { ArrowSquareOut } from '@phosphor-icons/react'
-import type { CertificationItem } from '../data/certifications'
+import { useEffect, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
+import {
+  getCertificationIssuerText,
+  type CertificationItem,
+} from '../data/certifications'
 
 type CertificationBadgeTileProps = {
   certification: CertificationItem
-}
-
-function getBadgeFallback(certification: CertificationItem) {
-  if (certification.badgeLabel) {
-    return certification.badgeLabel
-  }
-
-  const issuerToken = (certification.issuedBy ?? '')
-    .split(/\s+/)
-    .map((part) => part[0])
-    .filter(Boolean)
-    .join('')
-    .slice(0, 3)
-    .toUpperCase()
-
-  return issuerToken || certification.name.slice(0, 3).toUpperCase()
+  onSelect: (certification: CertificationItem) => void
 }
 
 function CertificationBadgeTile({
   certification,
+  onSelect,
 }: CertificationBadgeTileProps) {
-  const badgeFallback = getBadgeFallback(certification)
-  const credentialUrl =
-    typeof certification.credentialUrl === 'string' &&
-    certification.credentialUrl.trim().length > 0
-      ? certification.credentialUrl.trim()
-      : 'https://www.linkedin.com/in/tienhuynh-tn/'
+  const badgeText = getCertificationIssuerText(certification)
+  const [issuerLogoOk, setIssuerLogoOk] = useState(Boolean(certification.issuerLogoSrc))
+  const [certImageOk, setCertImageOk] = useState(Boolean(certification.certBadgeSrc))
+
+  useEffect(() => {
+    setIssuerLogoOk(Boolean(certification.issuerLogoSrc))
+    setCertImageOk(Boolean(certification.certBadgeSrc))
+  }, [certification.certBadgeSrc, certification.id, certification.issuerLogoSrc])
+
+  const handleActivate = () => {
+    onSelect(certification)
+  }
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleActivate()
+    }
+  }
 
   return (
-    <div className="certificationBadgeTile">
-      <a
-        href={credentialUrl}
-        className="certificationBadgeAction"
-        target="_blank"
-        rel="noreferrer noopener"
-        aria-label={`Open credential: ${certification.name}`}
-      >
-        <ArrowSquareOut size={12} weight="regular" aria-hidden="true" />
-      </a>
-
-      <span className="certificationBadgeTileInner">
-        <span className="certificationBadgeRow">
-          <span className="certificationBadgeMark" aria-hidden="true">
-            {certification.badgeImage ? (
+    <article
+      className="certificationBadgeTile certificationBadgeTileTrigger"
+      role="button"
+      tabIndex={0}
+      aria-label={`Open ${certification.name} details`}
+      onClick={handleActivate}
+      onKeyDown={handleKeyDown}
+    >
+      <div className="certificationBadgeTileInner">
+        <div className="certificationBadgeRow">
+          <div className="certificationBadgeMark" aria-hidden="true">
+            {issuerLogoOk ? (
               <img
-                src={certification.badgeImage}
-                alt={`${certification.name} badge`}
+                src={certification.issuerLogoSrc}
+                alt={`${certification.issuer} logo`}
                 width={40}
                 height={40}
-                className="certificationBadgeImage"
+                className="certificationIssuerLogo"
                 loading="lazy"
+                onError={() => setIssuerLogoOk(false)}
               />
             ) : (
-              <span className="certificationBadgeMonogram">{badgeFallback}</span>
+              <span className="certificationBadgeMonogram">{badgeText}</span>
             )}
-          </span>
-        </span>
+          </div>
+        </div>
 
-        <span className="certificationBadgeBody">
-          <span className="certificationBadgeTitle">{certification.name}</span>
-          <span className="certificationBadgeIssuer">{certification.issuedBy}</span>
-          <span className="certificationBadgeIssued">{certification.issuedDate}</span>
-        </span>
-      </span>
-    </div>
+        {certification.certBadgeSrc && certImageOk ? (
+          <div className="certificationBadgeCertImageWrap">
+            <img
+              src={certification.certBadgeSrc}
+              alt={`${certification.name} certification badge`}
+              width={60}
+              height={60}
+              className="certificationBadgeCertImage"
+              loading="lazy"
+              onError={() => setCertImageOk(false)}
+            />
+          </div>
+        ) : null}
+
+        <div className="certificationBadgeBody certTileContent">
+          <h3 className="certificationBadgeTitle certTitle">{certification.name}</h3>
+          <p className="certificationBadgeIssuer certMeta">{certification.issuer}</p>
+          <p className="certificationBadgeIssued certMeta">{`Issued ${certification.issued}`}</p>
+        </div>
+      </div>
+    </article>
   )
 }
 

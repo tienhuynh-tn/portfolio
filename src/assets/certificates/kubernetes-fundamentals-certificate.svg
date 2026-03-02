@@ -1,0 +1,11 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="28" fill="#F8FAFC"/>
+  <rect x="38" y="38" width="1124" height="724" rx="24" fill="#FFFFFF" stroke="#E0E7FF" stroke-width="2"/>
+  <rect x="90" y="88" width="1020" height="110" rx="20" fill="#EEF2FF"/>
+  <text x="600" y="156" text-anchor="middle" fill="#1E40AF" font-family="Arial, sans-serif" font-size="46" font-weight="700">Kubernetes Fundamentals</text>
+  <text x="600" y="252" text-anchor="middle" fill="#475569" font-family="Arial, sans-serif" font-size="28">Recognition awarded to</text>
+  <text x="600" y="324" text-anchor="middle" fill="#0F172A" font-family="Georgia, serif" font-size="56" font-weight="700">Tien Huynh</text>
+  <text x="600" y="392" text-anchor="middle" fill="#475569" font-family="Arial, sans-serif" font-size="28">for understanding workload orchestration, service discovery, and container operations.</text>
+  <rect x="180" y="486" width="840" height="120" rx="18" fill="#E0E7FF"/>
+  <text x="600" y="556" text-anchor="middle" fill="#2563EB" font-family="Arial, sans-serif" font-size="34" font-weight="700">Issued Feb 2025 • CNCF</text>
+</svg>

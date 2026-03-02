@@ -179,6 +179,14 @@ function Navbar() {
   }, [location.pathname, sectionOrder])
 
   useEffect(() => {
+    if (
+      location.pathname.startsWith('/certifications') ||
+      location.pathname.startsWith('/credentials')
+    ) {
+      setActiveId('certifications')
+      return
+    }
+
     if (location.pathname.startsWith('/projects')) {
       setActiveId('projects')
       return

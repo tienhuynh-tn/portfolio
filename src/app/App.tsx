@@ -54,10 +54,10 @@ function App() {
       <Route element={<AppLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/certifications" element={<CertificationsPage />} />
+        <Route path="/credentials" element={<Navigate to="/certifications" replace />} />
       </Route>
       <Route path="/activities" element={<ActivitiesPage />} />
-      <Route path="/credentials" element={<CertificationsPage />} />
-      <Route path="/certifications" element={<CertificationsPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

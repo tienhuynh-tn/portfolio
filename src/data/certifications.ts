@@ -1,103 +1,182 @@
+import oracleJavaOcp17Certificate from '../assets/certificates/oracle-java-ocp-17-certificate.svg'
+import awsDeveloperAssociateCertificate from '../assets/certificates/aws-certified-developer-associate-certificate.svg'
+import googleCloudFundamentalsCertificate from '../assets/certificates/google-cloud-fundamentals-certificate.svg'
+import googleCloudDigitalLeaderCertificate from '../assets/certificates/google-cloud-digital-leader-certificate.svg'
+import oracleCloudInfrastructureCertificate from '../assets/certificates/oracle-cloud-infrastructure-foundations-certificate.svg'
+import awsCloudPractitionerCertificate from '../assets/certificates/aws-cloud-practitioner-certificate.svg'
+import dockerFoundationsCertificate from '../assets/certificates/docker-foundations-certificate.svg'
+import kubernetesFundamentalsCertificate from '../assets/certificates/kubernetes-fundamentals-certificate.svg'
+import githubFoundationsCertificate from '../assets/certificates/github-foundations-certificate.svg'
+import microsoftAzureFundamentalsCertificate from '../assets/certificates/microsoft-azure-fundamentals-certificate.svg'
+
 export type CertificationItem = {
   id: string
   name: string
-  issuedBy?: string
-  issuedDate?: string
-  credentialUrl?: string | null
-  credentialId?: string
-  issuerLogo?: string
-  badgeImage?: string
-  badgeLabel?: string
+  issuer: string
+  issued: string
+  url: string
+  badgeText: string
+  issuerLogoSrc: string
+  certBadgeSrc?: string
+  certDetailImageSrc?: string
+  summary?: string
 }
 
-const CERTIFICATION_FALLBACK_URL = 'https://www.linkedin.com/in/tienhuynh-tn/'
+const LINKEDIN_CERTIFICATIONS_URL = 'https://www.linkedin.com/in/tienhuynh-tn/'
+const ORACLE_LOGO = '/issuers/oracle.svg'
+const AWS_LOGO = '/issuers/aws.svg'
+const GOOGLE_LOGO = '/issuers/google.svg'
+const DOCKER_LOGO = '/issuers/docker.svg'
+const CNCF_LOGO = '/issuers/cncf.svg'
+const GITHUB_LOGO = '/issuers/github.svg'
+const MICROSOFT_LOGO = '/issuers/microsoft.svg'
 
 export const allCertifications: CertificationItem[] = [
   {
     id: 'oracle-java-ocp-17',
     name: 'Oracle Java OCP 17',
-    issuedBy: 'Oracle',
-    issuedDate: 'Issued Jan 2025',
-    credentialUrl: 'https://www.oracle.com/education/certification/',
-    credentialId: 'OCP-17-2025-TH',
-    badgeLabel: 'OCP',
+    issuer: 'Oracle',
+    issued: 'Jan 2025',
+    url: 'https://www.oracle.com/education/certification/',
+    badgeText: 'OCP',
+    issuerLogoSrc: ORACLE_LOGO,
+    certBadgeSrc: '/certs/oracle-java-ocp-17.svg',
+    certDetailImageSrc: oracleJavaOcp17Certificate,
+    summary: 'Professional Java certification focused on modern Java 17 language features and enterprise development.',
   },
   {
     id: 'aws-certified-developer-associate',
-    name: 'AWS Certified Developer – Associate',
-    issuedBy: 'Amazon Web Services',
-    issuedDate: 'Issued Mar 2025',
-    credentialUrl:
-      'https://aws.amazon.com/certification/certified-developer-associate/',
-    credentialId: 'AWS-DVA-2025-TH',
-    badgeLabel: 'AWS',
+    name: 'AWS Certified Developer Associate',
+    issuer: 'Amazon Web Services',
+    issued: 'Mar 2025',
+    url: 'https://aws.amazon.com/certification/certified-developer-associate/',
+    badgeText: 'AWS',
+    issuerLogoSrc: AWS_LOGO,
+    certBadgeSrc: '/certs/aws-certified-developer-associate.svg',
+    certDetailImageSrc: awsDeveloperAssociateCertificate,
+    summary: 'Validated AWS application development, deployment, and troubleshooting skills across cloud-native workloads.',
   },
   {
     id: 'google-cloud-fundamentals',
     name: 'Google Cloud Fundamentals',
-    issuedBy: 'Google',
-    issuedDate: 'Issued Oct 2024',
-    credentialUrl:
-      'https://www.cloudskillsboost.google/paths/11',
-    credentialId: 'GCF-2024-TH',
-    badgeLabel: 'GCP',
+    issuer: 'Google',
+    issued: 'Oct 2024',
+    url: 'https://www.cloudskillsboost.google/paths/11',
+    badgeText: 'GCP',
+    issuerLogoSrc: GOOGLE_LOGO,
+    certBadgeSrc: '/certs/google-cloud-fundamentals.svg',
+    certDetailImageSrc: googleCloudFundamentalsCertificate,
+    summary: 'Introduced Google Cloud core services, infrastructure basics, and platform navigation for production teams.',
   },
   {
     id: 'google-cloud-digital-leader',
     name: 'Google Cloud Digital Leader',
-    issuedBy: 'Google Cloud',
-    issuedDate: 'Issued Feb 2025',
-    credentialUrl: CERTIFICATION_FALLBACK_URL,
-    badgeLabel: 'GCP',
+    issuer: 'Google Cloud',
+    issued: 'Feb 2025',
+    url: LINKEDIN_CERTIFICATIONS_URL,
+    badgeText: 'GCP',
+    issuerLogoSrc: GOOGLE_LOGO,
+    certBadgeSrc: '/certs/google-cloud-digital-leader.svg',
+    certDetailImageSrc: googleCloudDigitalLeaderCertificate,
+    summary: 'Covers cloud value, digital transformation, and platform decision-making for cross-functional delivery.',
   },
   {
     id: 'oracle-cloud-infrastructure-foundations',
     name: 'Oracle Cloud Infrastructure Foundations',
-    issuedBy: 'Oracle',
-    issuedDate: 'Issued Dec 2024',
-    credentialUrl: CERTIFICATION_FALLBACK_URL,
-    badgeLabel: 'OCI',
+    issuer: 'Oracle',
+    issued: 'Dec 2024',
+    url: LINKEDIN_CERTIFICATIONS_URL,
+    badgeText: 'OCI',
+    issuerLogoSrc: ORACLE_LOGO,
+    certBadgeSrc: '/certs/oracle-cloud-infrastructure-foundations.svg',
+    certDetailImageSrc: oracleCloudInfrastructureCertificate,
+    summary: 'Foundation-level certification for OCI core services, identity, storage, and networking concepts.',
   },
   {
     id: 'aws-cloud-practitioner',
     name: 'AWS Certified Cloud Practitioner',
-    issuedBy: 'Amazon Web Services',
-    issuedDate: 'Issued Nov 2024',
-    credentialUrl: CERTIFICATION_FALLBACK_URL,
-    badgeLabel: 'AWS',
+    issuer: 'Amazon Web Services',
+    issued: 'Nov 2024',
+    url: LINKEDIN_CERTIFICATIONS_URL,
+    badgeText: 'AWS',
+    issuerLogoSrc: AWS_LOGO,
+    certBadgeSrc: '/certs/aws-cloud-practitioner.svg',
+    certDetailImageSrc: awsCloudPractitionerCertificate,
+    summary: 'Baseline AWS certification covering cloud concepts, pricing, security, and foundational services.',
   },
   {
     id: 'docker-foundations',
     name: 'Docker Foundations Professional Certificate',
-    issuedBy: 'Docker',
-    issuedDate: 'Issued Jan 2025',
-    credentialUrl: CERTIFICATION_FALLBACK_URL,
-    badgeLabel: 'DOC',
+    issuer: 'Docker',
+    issued: 'Jan 2025',
+    url: LINKEDIN_CERTIFICATIONS_URL,
+    badgeText: 'DOC',
+    issuerLogoSrc: DOCKER_LOGO,
+    certBadgeSrc: '/certs/docker-foundations.svg',
+    certDetailImageSrc: dockerFoundationsCertificate,
+    summary: 'Focuses on container fundamentals, image workflows, local development, and portable runtime practices.',
   },
   {
     id: 'kubernetes-fundamentals',
     name: 'Kubernetes Fundamentals',
-    issuedBy: 'Cloud Native Computing Foundation',
-    issuedDate: 'Issued Feb 2025',
-    credentialUrl: CERTIFICATION_FALLBACK_URL,
-    badgeLabel: 'K8S',
+    issuer: 'Cloud Native Computing Foundation',
+    issued: 'Feb 2025',
+    url: LINKEDIN_CERTIFICATIONS_URL,
+    badgeText: 'K8S',
+    issuerLogoSrc: CNCF_LOGO,
+    certBadgeSrc: '/certs/kubernetes-fundamentals.svg',
+    certDetailImageSrc: kubernetesFundamentalsCertificate,
+    summary: 'Introduces core Kubernetes primitives, deployment models, and orchestration concepts for scalable systems.',
   },
   {
     id: 'github-foundations',
     name: 'GitHub Foundations',
-    issuedBy: 'GitHub',
-    issuedDate: 'Issued Mar 2025',
-    credentialUrl: CERTIFICATION_FALLBACK_URL,
-    badgeLabel: 'GH',
+    issuer: 'GitHub',
+    issued: 'Mar 2025',
+    url: LINKEDIN_CERTIFICATIONS_URL,
+    badgeText: 'GH',
+    issuerLogoSrc: GITHUB_LOGO,
+    certBadgeSrc: '/certs/github-foundations.svg',
+    certDetailImageSrc: githubFoundationsCertificate,
+    summary: 'Validates GitHub collaboration, repository management, branching, and workflow automation fundamentals.',
   },
   {
     id: 'microsoft-azure-fundamentals',
     name: 'Microsoft Azure Fundamentals',
-    issuedBy: 'Microsoft',
-    issuedDate: 'Issued Apr 2025',
-    credentialUrl: CERTIFICATION_FALLBACK_URL,
-    badgeLabel: 'AZ',
+    issuer: 'Microsoft',
+    issued: 'Apr 2025',
+    url: LINKEDIN_CERTIFICATIONS_URL,
+    badgeText: 'AZ',
+    issuerLogoSrc: MICROSOFT_LOGO,
+    certBadgeSrc: '/certs/microsoft-azure-fundamentals.svg',
+    certDetailImageSrc: microsoftAzureFundamentalsCertificate,
+    summary: 'Baseline Azure credential covering cloud concepts, core services, governance, and platform capabilities.',
   },
 ]
 
 export const featuredCertifications = allCertifications
+
+export function getCertificationBadgeText(certification: CertificationItem) {
+  return certification.badgeText || certification.name.slice(0, 3).toUpperCase()
+}
+
+export function getCertificationIssuerText(certification: CertificationItem) {
+  const normalizedIssuer = certification.issuer.trim().toLowerCase()
+
+  if (normalizedIssuer === 'oracle') return 'ORA'
+  if (normalizedIssuer === 'amazon web services') return 'AWS'
+  if (normalizedIssuer === 'google') return 'GGL'
+  if (normalizedIssuer === 'google cloud') return 'GCP'
+  if (normalizedIssuer === 'docker') return 'DOC'
+  if (normalizedIssuer === 'cloud native computing foundation') return 'CNCF'
+  if (normalizedIssuer === 'github') return 'GH'
+  if (normalizedIssuer === 'microsoft') return 'MS'
+
+  return certification.issuer
+    .split(/\s+/)
+    .map((part) => part[0])
+    .filter(Boolean)
+    .join('')
+    .slice(0, 4)
+    .toUpperCase()
+}

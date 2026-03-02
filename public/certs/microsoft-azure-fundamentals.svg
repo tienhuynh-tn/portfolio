@@ -1,0 +1,8 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="160" rx="32" fill="#F8FAFC"/>
+  <rect x="14" y="14" width="132" height="132" rx="28" fill="#ECFEFF" stroke="#67E8F9"/>
+  <circle cx="80" cy="68" r="28" fill="#CFFAFE"/>
+  <path d="M80 50 94 87H66L80 50Z" fill="#0284C7"/>
+  <path d="M85 87h-8l-7 10h29L85 87Z" fill="#0369A1"/>
+  <text x="80" y="124" text-anchor="middle" fill="#075985" font-family="Arial, sans-serif" font-size="18" font-weight="700">AZURE</text>
+</svg>

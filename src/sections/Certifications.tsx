@@ -1,10 +1,14 @@
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Section from '../components/layout/Section'
 import CertificationBadgeTile from '../components/CertificationBadgeTile'
-import { featuredCertifications } from '../data/certifications'
+import CertificationModal from '../components/certifications/CertificationModal'
+import { featuredCertifications, type CertificationItem } from '../data/certifications'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 
 function Certifications() {
   const revealRef = useRevealOnScroll<HTMLDivElement>()
+  const [selectedCertification, setSelectedCertification] = useState<CertificationItem | null>(null)
 
   return (
     <Section id="certifications" className="skillsSection">
@@ -13,7 +17,8 @@ function Certifications() {
           Certifications
         </h2>
 
-        <div className="certificationsContent">
+        <div className="certificationsSectionInner">
+          <div className="certificationsContent">
           <div className="skillsIntro certificationsIntro reveal">
             <p className="skillsSubtitle">
               Professional certifications and verified credentials.
@@ -29,23 +34,34 @@ function Certifications() {
                   className="certificationBadgeGridItem reveal"
                   style={{ ['--reveal-delay' as string]: `${index * 70}ms` }}
                 >
-                  <CertificationBadgeTile certification={certification} />
+                  <CertificationBadgeTile
+                    certification={certification}
+                    onSelect={setSelectedCertification}
+                  />
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="certificationsCtaRow reveal">
-            <a
-              href="/certifications"
+            <Link
+              to="/certifications"
               className="cardLink"
               aria-label="View all certifications"
             >
               View all certifications &#8594;
-            </a>
+            </Link>
+          </div>
           </div>
         </div>
       </div>
+
+      {selectedCertification ? (
+        <CertificationModal
+          certification={selectedCertification}
+          onClose={() => setSelectedCertification(null)}
+        />
+      ) : null}
     </Section>
   )
 }

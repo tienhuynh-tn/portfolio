@@ -1671,8 +1671,16 @@ p {
   padding: 0 clamp(16px, 1.4vw, 20px) clamp(16px, 1.4vw, 20px);
 }
 
+.certificationsSectionInner {
+  width: 100%;
+  margin: 0 auto;
+  padding-inline: 0;
+  box-sizing: border-box;
+}
+
 .certificationsContent {
   width: 100%;
+  box-sizing: border-box;
 }
 
 .certificationsIntro {
@@ -1682,9 +1690,8 @@ p {
 .certificationBadgeGridCenter {
   display: flex;
   justify-content: center;
-  width: calc(100% + clamp(24px, 4vw, 48px));
-  max-width: min(1400px, calc(100vw - 24px));
-  margin-inline: calc(clamp(24px, 4vw, 48px) * -0.5);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .certificationBadgeGrid {
@@ -1698,6 +1705,7 @@ p {
   gap: 20px;
   width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 .certificationBadgeGridItem {
@@ -1721,20 +1729,13 @@ p {
   background: color-mix(in srgb, var(--surface) 98%, var(--bg));
 }
 
-.certificationBadgeAction {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 28px;
-  height: 28px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  color: var(--muted);
-  background: color-mix(in srgb, var(--surface) 90%, var(--bg));
-  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
-  z-index: 1;
+.certificationBadgeTileTrigger {
+  cursor: pointer;
+}
+
+.certificationBadgeTileTrigger:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
 }
 
 .certificationBadgeTileInner {
@@ -1768,7 +1769,8 @@ p {
   overflow: hidden;
 }
 
-.certificationBadgeImage {
+.certificationBadgeImage,
+.certificationIssuerLogo {
   width: 40px;
   height: 40px;
   object-fit: contain;
@@ -1779,6 +1781,23 @@ p {
   font-weight: 800;
   letter-spacing: 0.08em;
   color: var(--primary);
+}
+
+.certificationBadgeCertImageWrap {
+  width: 100%;
+  min-height: 56px;
+  display: grid;
+  place-items: center;
+}
+
+.certificationBadgeCertImage {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg));
+  box-shadow: var(--shadow-soft);
 }
 
 .certificationBadgeBody {
@@ -1823,17 +1842,256 @@ p {
   text-align: center;
 }
 
+.certificationsBackLink {
+  width: fit-content;
+}
+
+.certificationModalContainer {
+  width: min(720px, calc(100vw - 32px));
+}
+
+.certificationModalContent {
+  padding: clamp(20px, 3vw, 26px);
+}
+
+.certificationModalShell {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+}
+
+.certificationModalMediaStack {
+  display: grid;
+  gap: 14px;
+}
+
+.certificationModalIssuerWrap,
+.certificationModalBadgeWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.certificationModalIssuerCircle {
+  width: clamp(72px, 12vw, 84px);
+  height: clamp(72px, 12vw, 84px);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.certificationModalBadge {
+  width: clamp(120px, 20vw, 156px);
+  min-height: clamp(120px, 20vw, 156px);
+  padding: 12px;
+  border-radius: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg));
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.certificationModalIssuerLogo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.certificationModalBadgeImage {
+  width: 100%;
+  max-width: 132px;
+  max-height: 132px;
+  object-fit: contain;
+}
+
+.certificationModalBadgeText {
+  font-size: clamp(1.2rem, 3vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+}
+
+.certificationModalBody {
+  gap: 18px;
+}
+
+.certificationModalHeader {
+  gap: 6px;
+  align-items: center;
+  text-align: center;
+}
+
+.certificationModalTitle {
+  padding-right: 0;
+  font-size: clamp(1.45rem, 3vw, 1.9rem);
+}
+
+.certificationModalIssuer {
+  font-size: 0.95rem;
+  color: var(--text-strong);
+}
+
+.certificationModalSummary {
+  max-width: 44ch;
+}
+
+.certificationPreviewSection {
+  display: flex;
+  justify-content: center;
+}
+
+.certificationPreviewButton {
+  width: 100%;
+  max-width: 760px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.certificationPreviewFrame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-height: 420px;
+  min-height: 220px;
+  padding: clamp(14px, 2vw, 18px);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: color-mix(in srgb, var(--surface) 92%, var(--bg));
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.certificationPreviewImage {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: calc(420px - 36px);
+  object-fit: contain;
+}
+
+.certificationPreviewUnavailable {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.certificationModalFooter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.certificationModalInlineAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  color: var(--text-strong);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.certificationModalInlineActionPrimary {
+  color: var(--primary);
+}
+
+.certificationLightboxOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 24px);
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.certificationLightboxContent {
+  position: relative;
+  width: min(92vw, 1120px);
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  background: var(--surface);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.certificationLightboxImageWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.certificationLightboxImage {
+  display: block;
+  max-width: 92vw;
+  max-height: calc(90vh - 84px);
+  object-fit: contain;
+}
+
+.certificationLightboxLink {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .certificationModalInlineAction:hover,
+  .certificationModalInlineAction:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-card);
+    text-decoration: none;
+  }
+
+  .certificationPreviewButton:hover,
+  .certificationPreviewButton:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .certificationPreviewButton:hover .certificationPreviewFrame,
+  .certificationPreviewButton:focus-visible .certificationPreviewFrame {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .certificationLightboxLink:hover,
+  .certificationLightboxLink:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
 @media (hover: hover) {
   .certificationBadgeTile:hover,
   .certificationBadgeTile:focus-within {
     transform: translateY(-3px);
     box-shadow: var(--shadow-card-hover);
-  }
-
-  .certificationBadgeAction:hover,
-  .certificationBadgeAction:focus-visible {
-    color: var(--primary);
-    background: color-mix(in srgb, var(--primary) 10%, transparent);
   }
 }
 
@@ -1885,6 +2143,62 @@ p {
   .certificationBadgeMark {
     width: 60px;
     height: 60px;
+  }
+
+  .certificationBadgeCertImage {
+    width: 52px;
+    height: 52px;
+  }
+
+  .certificationModalContainer {
+    width: min(100%, calc(100vw - 24px));
+  }
+
+  .certificationModalShell {
+    gap: 20px;
+  }
+
+  .certificationModalMediaStack {
+    gap: 12px;
+  }
+
+  .certificationModalIssuerLogo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .certificationModalBadge {
+    width: min(148px, 100%);
+    min-height: 148px;
+    padding: 10px;
+  }
+
+  .certificationModalBadgeImage {
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .certificationPreviewFrame {
+    max-height: 260px;
+    min-height: 180px;
+    padding: 12px;
+  }
+
+  .certificationPreviewImage {
+    max-height: calc(260px - 24px);
+  }
+
+  .certificationModalTitle {
+    padding-right: 0;
+  }
+
+  .certificationModalFooter {
+    justify-content: center;
+  }
+
+  .certificationLightboxContent {
+    width: min(92vw, 100%);
+    padding: 16px;
   }
 }
 
