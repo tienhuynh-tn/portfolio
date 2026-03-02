@@ -1,10 +1,7 @@
 import { ArrowSquareOut, X } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import {
-  getCertificationIssuerText,
-  type CertificationItem,
-} from '../../data/certifications'
+import { type CertificationItem } from '../../data/certifications'
 import ImageLightbox from '../shared/ImageLightbox'
 
 type CertificationModalProps = {
@@ -27,8 +24,6 @@ function CertificationModal({
 }: CertificationModalProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
-  const badgeText = getCertificationIssuerText(certification)
-  const [issuerLogoOk, setIssuerLogoOk] = useState(Boolean(certification.issuerLogoSrc))
   const [certBadgeOk, setCertBadgeOk] = useState(Boolean(certification.certBadgeSrc))
   const [certDetailImageOk, setCertDetailImageOk] = useState(Boolean(certification.certDetailImageSrc))
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -91,7 +86,6 @@ function CertificationModal({
   }, [isPreviewOpen, onClose])
 
   useEffect(() => {
-    setIssuerLogoOk(Boolean(certification.issuerLogoSrc))
     setCertBadgeOk(Boolean(certification.certBadgeSrc))
     setCertDetailImageOk(Boolean(certification.certDetailImageSrc))
     setIsPreviewOpen(false)
@@ -99,7 +93,6 @@ function CertificationModal({
     certification.certBadgeSrc,
     certification.certDetailImageSrc,
     certification.id,
-    certification.issuerLogoSrc,
   ])
 
   const modalContent = (
@@ -126,22 +119,6 @@ function CertificationModal({
           <div className="modalContent certificationModalContent">
             <div className="certificationModalShell">
               <div className="certificationModalMediaStack">
-                <div className="certificationModalIssuerWrap">
-                  <div className="certificationModalIssuerCircle">
-                    {issuerLogoOk ? (
-                      <img
-                        src={certification.issuerLogoSrc}
-                        alt={`${certification.issuer} logo`}
-                        className="certificationModalIssuerLogo"
-                        loading="lazy"
-                        onError={() => setIssuerLogoOk(false)}
-                      />
-                    ) : (
-                      <span className="certificationModalBadgeText">{badgeText}</span>
-                    )}
-                  </div>
-                </div>
-
                 {certification.certBadgeSrc && certBadgeOk ? (
                   <div className="certificationModalBadgeWrap">
                     <div className="certificationModalBadge">

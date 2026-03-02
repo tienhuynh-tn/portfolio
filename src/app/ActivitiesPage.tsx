@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import ActivityCard from '../components/activities/ActivityCard'
 import ActivityModal from '../components/activities/ActivityModal'
+import BackLink from '../components/layout/BackLink'
 import Section from '../components/layout/Section'
 import {
   allActivities,
@@ -16,15 +16,12 @@ function ActivitiesPage() {
   const visibleActivities = useMemo(() => allActivities, [])
 
   return (
-    <Section id="all-activities" className="skillsSection pt-[var(--navbar-height)]">
+    <Section id="all-activities" className="skillsSection">
       <div className="skillsBody" ref={revealRef}>
-        <Link
+        <BackLink
           to="/#activities"
-          className="cardLink certificationsBackLink reveal"
-          aria-label="Back to activities section"
-        >
-          ← Back
-        </Link>
+          ariaLabel="Back to activities section"
+        />
 
         <h1 className="mb-8 text-center text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-[color:var(--primary)] reveal">
           All Activities

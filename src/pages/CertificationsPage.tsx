@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import BackLink from '../components/layout/BackLink'
 import Section from '../components/layout/Section'
 import CertificationBadgeTile from '../components/CertificationBadgeTile'
 import CertificationModal from '../components/certifications/CertificationModal'
@@ -14,15 +14,12 @@ function CertificationsPage() {
   const [selectedCertification, setSelectedCertification] = useState<CertificationItem | null>(null)
 
   return (
-    <Section id="all-certifications" className="skillsSection pt-[var(--navbar-height)]">
+    <Section id="all-certifications" className="skillsSection">
       <div className="skillsBody" ref={revealRef}>
-        <Link
+        <BackLink
           to="/#certifications"
-          className="cardLink certificationsBackLink reveal"
-          aria-label="Back to certifications section"
-        >
-          ← Back
-        </Link>
+          ariaLabel="Back to certifications section"
+        />
 
         <h1 className="mb-8 text-center text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-[color:var(--primary)] reveal">
           All Certifications

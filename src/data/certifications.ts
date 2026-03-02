@@ -23,13 +23,14 @@ export type CertificationItem = {
 }
 
 const LINKEDIN_CERTIFICATIONS_URL = 'https://www.linkedin.com/in/tienhuynh-tn/'
-const ORACLE_LOGO = '/issuers/oracle.svg'
-const AWS_LOGO = '/issuers/aws.svg'
-const GOOGLE_LOGO = '/issuers/google.svg'
-const DOCKER_LOGO = '/issuers/docker.svg'
-const CNCF_LOGO = '/issuers/cncf.svg'
-const GITHUB_LOGO = '/issuers/github.svg'
-const MICROSOFT_LOGO = '/issuers/microsoft.svg'
+const withBaseUrl = (path: string) => `${import.meta.env.BASE_URL}${path}`
+const ORACLE_LOGO = withBaseUrl('issuers/oracle.svg')
+const AWS_LOGO = withBaseUrl('issuers/aws.svg')
+const GOOGLE_LOGO = withBaseUrl('issuers/google.svg')
+const DOCKER_LOGO = withBaseUrl('issuers/docker.svg')
+const CNCF_LOGO = withBaseUrl('issuers/cncf.svg')
+const GITHUB_LOGO = withBaseUrl('issuers/github.svg')
+const MICROSOFT_LOGO = withBaseUrl('issuers/microsoft.svg')
 
 export const allCertifications: CertificationItem[] = [
   {
@@ -40,7 +41,7 @@ export const allCertifications: CertificationItem[] = [
     url: 'https://www.oracle.com/education/certification/',
     badgeText: 'OCP',
     issuerLogoSrc: ORACLE_LOGO,
-    certBadgeSrc: '/certs/oracle-java-ocp-17.svg',
+    certBadgeSrc: withBaseUrl('certs/oracle-java-ocp-17.svg'),
     certDetailImageSrc: oracleJavaOcp17Certificate,
     summary: 'Professional Java certification focused on modern Java 17 language features and enterprise development.',
   },
@@ -52,7 +53,7 @@ export const allCertifications: CertificationItem[] = [
     url: 'https://aws.amazon.com/certification/certified-developer-associate/',
     badgeText: 'AWS',
     issuerLogoSrc: AWS_LOGO,
-    certBadgeSrc: '/certs/aws-certified-developer-associate.svg',
+    certBadgeSrc: withBaseUrl('certs/aws-certified-developer-associate.svg'),
     certDetailImageSrc: awsDeveloperAssociateCertificate,
     summary: 'Validated AWS application development, deployment, and troubleshooting skills across cloud-native workloads.',
   },
@@ -64,7 +65,7 @@ export const allCertifications: CertificationItem[] = [
     url: 'https://www.cloudskillsboost.google/paths/11',
     badgeText: 'GCP',
     issuerLogoSrc: GOOGLE_LOGO,
-    certBadgeSrc: '/certs/google-cloud-fundamentals.svg',
+    certBadgeSrc: withBaseUrl('certs/google-cloud-fundamentals.svg'),
     certDetailImageSrc: googleCloudFundamentalsCertificate,
     summary: 'Introduced Google Cloud core services, infrastructure basics, and platform navigation for production teams.',
   },
@@ -76,7 +77,7 @@ export const allCertifications: CertificationItem[] = [
     url: LINKEDIN_CERTIFICATIONS_URL,
     badgeText: 'GCP',
     issuerLogoSrc: GOOGLE_LOGO,
-    certBadgeSrc: '/certs/google-cloud-digital-leader.svg',
+    certBadgeSrc: withBaseUrl('certs/google-cloud-digital-leader.svg'),
     certDetailImageSrc: googleCloudDigitalLeaderCertificate,
     summary: 'Covers cloud value, digital transformation, and platform decision-making for cross-functional delivery.',
   },
@@ -88,7 +89,7 @@ export const allCertifications: CertificationItem[] = [
     url: LINKEDIN_CERTIFICATIONS_URL,
     badgeText: 'OCI',
     issuerLogoSrc: ORACLE_LOGO,
-    certBadgeSrc: '/certs/oracle-cloud-infrastructure-foundations.svg',
+    certBadgeSrc: withBaseUrl('certs/oracle-cloud-infrastructure-foundations.svg'),
     certDetailImageSrc: oracleCloudInfrastructureCertificate,
     summary: 'Foundation-level certification for OCI core services, identity, storage, and networking concepts.',
   },
@@ -100,7 +101,7 @@ export const allCertifications: CertificationItem[] = [
     url: LINKEDIN_CERTIFICATIONS_URL,
     badgeText: 'AWS',
     issuerLogoSrc: AWS_LOGO,
-    certBadgeSrc: '/certs/aws-cloud-practitioner.svg',
+    certBadgeSrc: withBaseUrl('certs/aws-cloud-practitioner.svg'),
     certDetailImageSrc: awsCloudPractitionerCertificate,
     summary: 'Baseline AWS certification covering cloud concepts, pricing, security, and foundational services.',
   },
@@ -112,7 +113,7 @@ export const allCertifications: CertificationItem[] = [
     url: LINKEDIN_CERTIFICATIONS_URL,
     badgeText: 'DOC',
     issuerLogoSrc: DOCKER_LOGO,
-    certBadgeSrc: '/certs/docker-foundations.svg',
+    certBadgeSrc: withBaseUrl('certs/docker-foundations.svg'),
     certDetailImageSrc: dockerFoundationsCertificate,
     summary: 'Focuses on container fundamentals, image workflows, local development, and portable runtime practices.',
   },
@@ -124,7 +125,7 @@ export const allCertifications: CertificationItem[] = [
     url: LINKEDIN_CERTIFICATIONS_URL,
     badgeText: 'K8S',
     issuerLogoSrc: CNCF_LOGO,
-    certBadgeSrc: '/certs/kubernetes-fundamentals.svg',
+    certBadgeSrc: withBaseUrl('certs/kubernetes-fundamentals.svg'),
     certDetailImageSrc: kubernetesFundamentalsCertificate,
     summary: 'Introduces core Kubernetes primitives, deployment models, and orchestration concepts for scalable systems.',
   },
@@ -136,7 +137,7 @@ export const allCertifications: CertificationItem[] = [
     url: LINKEDIN_CERTIFICATIONS_URL,
     badgeText: 'GH',
     issuerLogoSrc: GITHUB_LOGO,
-    certBadgeSrc: '/certs/github-foundations.svg',
+    certBadgeSrc: withBaseUrl('certs/github-foundations.svg'),
     certDetailImageSrc: githubFoundationsCertificate,
     summary: 'Validates GitHub collaboration, repository management, branching, and workflow automation fundamentals.',
   },
@@ -148,7 +149,7 @@ export const allCertifications: CertificationItem[] = [
     url: LINKEDIN_CERTIFICATIONS_URL,
     badgeText: 'AZ',
     issuerLogoSrc: MICROSOFT_LOGO,
-    certBadgeSrc: '/certs/microsoft-azure-fundamentals.svg',
+    certBadgeSrc: withBaseUrl('certs/microsoft-azure-fundamentals.svg'),
     certDetailImageSrc: microsoftAzureFundamentalsCertificate,
     summary: 'Baseline Azure credential covering cloud concepts, core services, governance, and platform capabilities.',
   },

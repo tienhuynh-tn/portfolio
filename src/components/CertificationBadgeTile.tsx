@@ -1,8 +1,5 @@
 import { useEffect, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
-import {
-  getCertificationIssuerText,
-  type CertificationItem,
-} from '../data/certifications'
+import { type CertificationItem } from '../data/certifications'
 
 type CertificationBadgeTileProps = {
   certification: CertificationItem
@@ -13,14 +10,11 @@ function CertificationBadgeTile({
   certification,
   onSelect,
 }: CertificationBadgeTileProps) {
-  const badgeText = getCertificationIssuerText(certification)
-  const [issuerLogoOk, setIssuerLogoOk] = useState(Boolean(certification.issuerLogoSrc))
   const [certImageOk, setCertImageOk] = useState(Boolean(certification.certBadgeSrc))
 
   useEffect(() => {
-    setIssuerLogoOk(Boolean(certification.issuerLogoSrc))
     setCertImageOk(Boolean(certification.certBadgeSrc))
-  }, [certification.certBadgeSrc, certification.id, certification.issuerLogoSrc])
+  }, [certification.certBadgeSrc, certification.id])
 
   const handleActivate = () => {
     onSelect(certification)
@@ -43,24 +37,6 @@ function CertificationBadgeTile({
       onKeyDown={handleKeyDown}
     >
       <div className="certificationBadgeTileInner">
-        <div className="certificationBadgeRow">
-          <div className="certificationBadgeMark" aria-hidden="true">
-            {issuerLogoOk ? (
-              <img
-                src={certification.issuerLogoSrc}
-                alt={`${certification.issuer} logo`}
-                width={40}
-                height={40}
-                className="certificationIssuerLogo"
-                loading="lazy"
-                onError={() => setIssuerLogoOk(false)}
-              />
-            ) : (
-              <span className="certificationBadgeMonogram">{badgeText}</span>
-            )}
-          </div>
-        </div>
-
         {certification.certBadgeSrc && certImageOk ? (
           <div className="certificationBadgeCertImageWrap">
             <img
