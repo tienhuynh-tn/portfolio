@@ -5,6 +5,7 @@ import {
   getCertificationIssuerText,
   type CertificationItem,
 } from '../../data/certifications'
+import ImageLightbox from '../shared/ImageLightbox'
 
 type CertificationModalProps = {
   certification: CertificationItem
@@ -218,49 +219,11 @@ function CertificationModal({
       </article>
 
       {isPreviewOpen && certification.certDetailImageSrc && certDetailImageOk ? (
-        <div
-          className="certificationLightboxOverlay"
-          role="presentation"
-          onClick={(event) => {
-            event.stopPropagation()
-            setIsPreviewOpen(false)
-          }}
-        >
-          <div
-            className="certificationLightboxContent"
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${certification.name} certificate preview`}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="modalClose certificationLightboxClose"
-              onClick={() => setIsPreviewOpen(false)}
-              aria-label="Close certificate preview"
-            >
-              <X size={18} weight="bold" aria-hidden="true" />
-            </button>
-
-            <div className="certificationLightboxImageWrap">
-              <img
-                src={certification.certDetailImageSrc}
-                alt={`${certification.name} certificate document`}
-                className="certificationLightboxImage"
-              />
-            </div>
-
-            <a
-              href={certification.certDetailImageSrc}
-              target="_blank"
-              rel="noreferrer"
-              className="certificationLightboxLink"
-            >
-              <span>Open in new tab</span>
-              <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
-            </a>
-          </div>
-        </div>
+        <ImageLightbox
+          src={certification.certDetailImageSrc}
+          alt={`${certification.name} certificate preview`}
+          onClose={() => setIsPreviewOpen(false)}
+        />
       ) : null}
     </div>
   )

@@ -1608,67 +1608,387 @@ p {
   justify-content: flex-end;
 }
 
-.activityDates {
-  margin-top: 4px;
-  font-size: 0.86rem;
+.activityCardsGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.activityCardsGridAll {
+  margin-top: 18px;
+}
+
+.activityGridItem {
+  min-width: 0;
+  height: 100%;
 }
 
 .activityCardInner {
   padding: 0;
-  gap: 10px;
+  gap: 0;
+  overflow: hidden;
+}
+
+.activityCardButton {
+  min-height: 100%;
+  cursor: pointer;
+}
+
+.activityCardButton:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--ring);
+}
+
+.activityCardMedia {
+  position: relative;
+  min-height: clamp(150px, 19vw, 168px);
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+  overflow: hidden;
+}
+
+.activityCardMediaTrack {
+  display: flex;
+  transition: transform 0.35s var(--ease-out);
+  will-change: transform;
+}
+
+.activityCardMediaSlide {
+  flex: 0 0 100%;
 }
 
 .activityCardImage,
 .activityCardImagePlaceholder {
   width: 100%;
-  height: clamp(96px, 12vw, 120px);
+  height: clamp(150px, 19vw, 168px);
   display: block;
 }
 
 .activityCardImage {
   object-fit: cover;
-  border-top-left-radius: var(--radius-lg);
-  border-top-right-radius: var(--radius-lg);
 }
 
-.activityCardImagePlaceholder {
-  border-top-left-radius: var(--radius-lg);
-  border-top-right-radius: var(--radius-lg);
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--primary) 88%, #ffffff 12%),
-    #22d3ee,
-    #d946ef
-  );
+.activityCardImagePlaceholder,
+.activityModalGalleryPlaceholder {
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--primary) 18%, transparent), transparent 52%),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface) 94%, var(--bg)),
+      color-mix(in srgb, var(--primary) 8%, var(--surface))
+    );
+  color: color-mix(in srgb, var(--text-strong) 86%, transparent);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-align: center;
 }
 
-:root[data-theme='dark'] .activityCardImagePlaceholder {
-  background: linear-gradient(135deg, var(--grad-border-from), var(--grad-border-to));
+:root[data-theme='dark'] .activityCardImagePlaceholder,
+:root[data-theme='dark'] .activityModalGalleryPlaceholder {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--primary) 24%, transparent), transparent 52%),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface) 94%, #07111d),
+      color-mix(in srgb, var(--primary) 12%, #091321)
+    );
 }
 
-.activityCardContent {
+.activityCardArrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  min-height: 34px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  color: color-mix(in srgb, var(--primary) 92%, var(--text-strong));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: opacity 0.2s var(--ease-out), background-color 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.activityCardArrowPrev {
+  left: 12px;
+}
+
+.activityCardArrowNext {
+  right: 12px;
+}
+
+.activityCardBody {
   padding: clamp(16px, 1.4vw, 20px) clamp(16px, 1.4vw, 20px) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.activityDescription {
-  margin-top: 6px;
+.activityCardTitle {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.activityCardMeta,
+.activityCardDates {
+  margin: 0;
+}
+
+.activityCardMeta {
+  color: var(--text-strong);
+  font-size: 0.93rem;
+}
+
+.activityCardDates {
+  margin-top: 2px;
+  font-size: 0.84rem;
+}
+
+.activityCardSummary {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.activityCardInner .skillsBadges {
-  padding: 0 clamp(16px, 1.4vw, 20px);
+.activityCardTags {
+  margin-top: auto;
+  padding: 14px clamp(16px, 1.4vw, 20px) clamp(16px, 1.4vw, 20px);
 }
 
-.activityLinks {
+.activityFiltersPanel {
+  margin-bottom: 20px;
+  padding: clamp(16px, 2.4vw, 22px);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--primary) 10%, transparent), transparent 44%),
+    color-mix(in srgb, var(--surface) 96%, var(--bg));
+  box-shadow: var(--shadow-card);
+}
+
+.activityFiltersTopRow {
+  display: grid;
+  grid-template-columns: minmax(220px, 260px);
+  gap: 14px;
+  justify-content: end;
+}
+
+.activitySortField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.activityFilterLabel {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.activityFilterSelect {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  background: color-mix(in srgb, var(--surface) 92%, var(--bg));
+  color: var(--text-strong);
+  padding: 0 14px;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 28%, transparent);
+}
+
+.activityFilterSelect:focus-visible,
+.activityTagFilter:focus-visible,
+.activityCardArrow:focus-visible,
+.activityModalGalleryItem:focus-visible,
+.activityModalPrimaryLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.activityTagFilterRow {
+  margin-top: 14px;
   display: flex;
   flex-wrap: wrap;
+  gap: 10px;
+}
+
+.activityTagFilter {
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: color-mix(in srgb, var(--surface) 88%, var(--bg));
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: border-color 0.2s var(--ease-out), color 0.2s var(--ease-out),
+    background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.activityTagFilter.is-active {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+  background: color-mix(in srgb, var(--primary) 14%, var(--surface));
+  color: var(--primary);
+}
+
+.activityResultsCount {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.activityEmptyState {
+  padding: clamp(22px, 4vw, 30px);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg));
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.activityEmptyState > * {
+  margin: 0;
+}
+
+.activityEmptyState .cardDesc {
+  margin-top: 8px;
+}
+
+.activityModalContainer {
+  width: min(880px, calc(100vw - 32px));
+}
+
+.activityModalContent {
+  padding: clamp(20px, 3vw, 28px);
+}
+
+.activityModalBody {
+  gap: 22px;
+}
+
+.activityModalHeader {
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.activityModalTitle {
+  padding-right: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.activityModalMeta {
+  color: var(--text-strong);
+}
+
+.activityModalDates {
+  margin: 0;
+}
+
+.activityModalSection {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.activityModalDescription {
+  padding: clamp(16px, 2vw, 20px);
+  border-radius: calc(var(--radius-lg) - 6px);
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: color-mix(in srgb, var(--surface) 94%, var(--bg));
+  color: var(--text-strong);
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.activityModalGalleryHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
   gap: 12px;
-  margin-top: auto;
-  padding: 0 clamp(16px, 1.4vw, 20px) clamp(16px, 1.4vw, 20px);
+}
+
+.activityModalGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activityModalGalleryItem {
+  padding: 0;
+  border-radius: calc(var(--radius-lg) - 8px);
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg));
+  overflow: hidden;
+  cursor: zoom-in;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.activityModalGalleryImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.activityModalGalleryPlaceholder {
+  min-height: 220px;
+  border-radius: calc(var(--radius-lg) - 6px);
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+}
+
+.activityModalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.activityModalTags {
+  margin: 0;
+}
+
+.activityModalPrimaryLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
 }
 
 .certificationsSectionInner {
@@ -2012,6 +2332,7 @@ p {
   color: var(--primary);
 }
 
+.imageLightboxOverlay,
 .certificationLightboxOverlay {
   position: fixed;
   inset: 0;
@@ -2025,6 +2346,7 @@ p {
   -webkit-backdrop-filter: blur(8px);
 }
 
+.imageLightboxContent,
 .certificationLightboxContent {
   position: relative;
   width: min(92vw, 1120px);
@@ -2035,6 +2357,7 @@ p {
   box-shadow: var(--shadow-card-hover);
 }
 
+.imageLightboxImageWrap,
 .certificationLightboxImageWrap {
   display: flex;
   align-items: center;
@@ -2044,6 +2367,7 @@ p {
   overflow: hidden;
 }
 
+.imageLightboxImage,
 .certificationLightboxImage {
   display: block;
   max-width: 92vw;
@@ -2093,12 +2417,48 @@ p {
     transform: translateY(-3px);
     box-shadow: var(--shadow-card-hover);
   }
+
+  .activityCardButton:hover .activityCardArrow,
+  .activityCardButton:focus-within .activityCardArrow {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .activityCardArrow {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .activityTagFilter:hover,
+  .activityTagFilter:focus-visible,
+  .activityModalPrimaryLink:hover,
+  .activityModalPrimaryLink:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .activityCardArrow:hover,
+  .activityCardArrow:focus-visible {
+    border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+    background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+    box-shadow: 0 10px 22px color-mix(in srgb, #04111f 24%, transparent);
+  }
+
+  .activityModalGalleryItem:hover,
+  .activityModalGalleryItem:focus-visible {
+    box-shadow: var(--shadow-card);
+  }
 }
 
 @media (min-width: 768px) {
   .certificationBadgeGrid {
     grid-template-columns: repeat(3, 200px);
     width: fit-content;
+  }
+
+  .activityCardsGrid {
+    grid-template-columns: repeat(auto-fit, 320px);
+    justify-content: center;
   }
 }
 
@@ -2196,6 +2556,36 @@ p {
     justify-content: center;
   }
 
+  .activityCardMedia,
+  .activityCardImage,
+  .activityCardImagePlaceholder {
+    min-height: 120px;
+    height: 120px;
+  }
+
+  .activityCardArrow {
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+  }
+
+  .activityFiltersTopRow {
+    grid-template-columns: 1fr;
+  }
+
+  .activityCardsGrid {
+    gap: 14px;
+  }
+
+  .activityModalContainer {
+    width: min(100%, calc(100vw - 24px));
+  }
+
+  .activityModalFooter {
+    justify-content: center;
+  }
+
+  .imageLightboxContent,
   .certificationLightboxContent {
     width: min(92vw, 100%);
     padding: 16px;

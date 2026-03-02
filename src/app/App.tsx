@@ -56,8 +56,8 @@ function App() {
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/certifications" element={<CertificationsPage />} />
         <Route path="/credentials" element={<Navigate to="/certifications" replace />} />
+        <Route path="/activities" element={<ActivitiesPage />} />
       </Route>
-      <Route path="/activities" element={<ActivitiesPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

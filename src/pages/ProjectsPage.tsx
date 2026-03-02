@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Section from '../components/layout/Section'
 import ProjectModal from '../components/projects/ProjectModal'
 import ProjectCard from '../components/projects/ProjectCard'
@@ -12,6 +13,14 @@ function ProjectsPage() {
   return (
     <Section id="all-projects" className="skillsSection pt-[var(--navbar-height)]">
       <div className="skillsBody" ref={revealRef}>
+        <Link
+          to="/#projects"
+          className="cardLink certificationsBackLink reveal"
+          aria-label="Back to projects section"
+        >
+          ← Back
+        </Link>
+
         <h1 className="mb-8 text-center text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-[color:var(--primary)] reveal">
           All Projects
         </h1>

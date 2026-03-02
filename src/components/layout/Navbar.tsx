@@ -192,6 +192,11 @@ function Navbar() {
       return
     }
 
+    if (location.pathname.startsWith('/activities')) {
+      setActiveId('activities')
+      return
+    }
+
     if (location.pathname === '/') {
       const hashId = location.hash.replace('#', '') as NavItemId
       if (HASH_ACTIVE_IDS.has(hashId)) {
