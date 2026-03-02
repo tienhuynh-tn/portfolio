@@ -25,9 +25,7 @@ function Experience() {
               style={{ ['--reveal-delay' as string]: `${index * 80}ms` }}
             >
               <div className="experienceCenterRail" aria-hidden="true">
-                <span className="experienceCenterNode">
-                  <span className="experienceCenterNodeInner" />
-                </span>
+                <span className="milestoneDot" />
               </div>
 
               <article

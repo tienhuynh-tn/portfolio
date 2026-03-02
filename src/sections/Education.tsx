@@ -17,34 +17,37 @@ function Education() {
           <span className="skillsDivider" aria-hidden="true" />
         </div>
 
-        <div className="experienceTimeline">
+        <ol className="educationTimeline" aria-label="Education timeline">
           {educationItems.map((item, index) => (
-            <article
+            <li
               key={item.id}
-              className="experienceMilestone reveal"
+              className={`educationTimelineItem educationTimelineItem--${index % 2 === 0 ? 'left' : 'right'} reveal`}
               style={{ ['--reveal-delay' as string]: `${index * 80}ms` }}
             >
-              <span className="experienceNode" aria-hidden="true" />
+              <div className="educationTimelineRail" aria-hidden="true">
+                <span className="milestoneDot" />
+              </div>
 
-              <div className="skillsGroup experienceCard">
-                <div className="skillsGroupInner experienceCardInner">
-                  <div className="experienceMetaRow">
+              <article
+                className="skillsGroup educationCard"
+                aria-labelledby={`${item.id}-title`}
+                aria-label={`${item.degree} at ${item.institution}`}
+              >
+                <div className="skillsGroupInner educationCardInner">
+                  <p className="itemMeta educationInstitution">{item.institution}</p>
+                  <div className="experienceMetaRow educationMetaRow">
                     <span className="itemDates">{item.period}</span>
+                    {item.grade ? <span className="educationGrade">{item.grade}</span> : null}
                   </div>
 
-                  <h3 className="itemTitle">{item.degree}</h3>
-                  <p className="itemMeta">{item.institution}</p>
-
-                  {item.description ? (
-                    <ul className="bullets experienceBullets">
-                      <li>{item.description}</li>
-                    </ul>
-                  ) : null}
+                  <h3 id={`${item.id}-title`} className="itemTitle">
+                    {item.degree}
+                  </h3>
                 </div>
-              </div>
-            </article>
+              </article>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </Section>
   )
