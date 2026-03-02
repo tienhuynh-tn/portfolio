@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom'
 import ProjectModal from '../components/projects/ProjectModal'
 import Section from '../components/layout/Section'
 import ProjectCard from '../components/projects/ProjectCard'
-import { projects, type Project } from '../data/projects'
+import { featuredProjects, type Project } from '../data/projects'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 
 function Projects() {
   const revealRef = useRevealOnScroll<HTMLDivElement>()
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const featuredProjects = projects.filter((project) => project.featured)
 
   return (
     <Section id="projects" className="skillsSection">
@@ -20,7 +19,7 @@ function Projects() {
 
         <div className="skillsIntro reveal">
           <p className="skillsSubtitle">
-            A few highlights of what I&apos;ve built recently.
+            Featured backend, platform, and university projects from production delivery to capstone work.
           </p>
           <span className="skillsDivider" aria-hidden="true" />
         </div>
@@ -28,7 +27,7 @@ function Projects() {
         <div className="projectsGrid">
           {featuredProjects.map((project, index) => (
             <div
-              key={project.slug}
+              key={project.id}
               className="reveal"
               style={{ ['--reveal-delay' as string]: `${index * 80}ms` }}
             >

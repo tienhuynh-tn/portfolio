@@ -1,206 +1,365 @@
-export type ProjectLinkSet = {
-  live?: string
-  source?: string
-  caseStudy?: string
-}
+import fintechImg from '../assets/projects/fintech.svg'
+import healthImg from '../assets/projects/health.svg'
+import iotImg from '../assets/projects/iot.svg'
+import mapImg from '../assets/projects/map.svg'
+import mobileImg from '../assets/projects/mobile.svg'
+import platformImg from '../assets/projects/platform.svg'
+import universityImg from '../assets/projects/university.svg'
+import webImg from '../assets/projects/web.svg'
+
+export type ProjectCategory =
+  | 'Fintech'
+  | 'Platform'
+  | 'Mobile'
+  | 'Web'
+  | 'IoT'
+  | 'University'
 
 export type Project = {
-  slug: string
+  id: string
   title: string
-  featured: boolean
-  coverImage: string
-  shortDesc: string
-  context?: string
-  teamSize?: string
-  duration?: string
-  longDesc: string[]
-  tech: string[]
-  links: ProjectLinkSet
+  timeframe: string
+  org: string
+  role: string
+  teamSize: string
+  category: ProjectCategory
+  tagline: string
   highlights: string[]
-  architecture?: string[]
-  role?: string
-  outcomes?: string[]
+  tech: string[]
+  links?: {
+    live?: string
+    source?: string
+    caseStudy?: string
+  }
+  image?: {
+    src: string
+    alt: string
+    credit?: string
+  }
+  featured?: boolean
+  responsibilities?: string[]
+  metrics?: string[]
 }
 
-export const projects: Project[] = [
+export const PROJECT_CATEGORIES: ProjectCategory[] = [
+  'Fintech',
+  'Platform',
+  'Mobile',
+  'Web',
+  'IoT',
+  'University',
+]
+
+export const allProjects: Project[] = [
   {
-    slug: 'inventory-control-service',
-    title: 'Inventory Control Service',
+    id: 'next-generation-fintech-aggregator-platform',
+    title: 'Next-Generation Fintech Aggregator Platform',
+    timeframe: 'Nov 2024 – Present',
+    org: 'FPT Software',
+    role: 'Backend Engineer (Java)',
+    teamSize: 'Cross-functional',
+    category: 'Fintech',
+    tagline:
+      'Production-grade digital lending backend enabling onboarding, eligibility, and credit approval across multiple UAE banks via shared rule + workflow core.',
+    highlights: [
+      'Built core credit decisioning services for credit limit assignment, DBR computation, and multi-product eligibility scoring.',
+      'Designed and maintained a Drools rule engine for segmentation, filtration, and deviation handling in automated offer matching.',
+      'Implemented limit assignment logic using finalized income, product configurations, and institutional constraints.',
+      'Integrated AECB, FTS, and FinOne for financial and identity validation across underwriting flows.',
+      'Orchestrated submission-to-approval journeys with Camunda BPM and real-time status updates.',
+      'Hardened production readiness with monitoring, recovery controls, incident support, and performance tuning.',
+    ],
+    tech: ['Java 17', 'Spring Boot', 'Drools', 'Camunda', 'Oracle DB', 'Jenkins', 'ArgoCD', 'AWS', 'Git'],
+    links: {
+      live: '',
+      source: '',
+      caseStudy: '',
+    },
+    image: {
+      src: fintechImg,
+      alt: 'Fintech dashboard illustration',
+    },
     featured: true,
-    coverImage:
-      'https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=1200&q=80',
-    shortDesc:
-      'A resilient inventory backend that handles stock movements, forecasting inputs, and audit-safe change history for operations teams.',
-    longDesc: [
-      'Inventory Control Service centralizes warehouse stock updates, receiving flows, and adjustment events into one consistent backend API.',
-      'The system was designed around predictable transaction boundaries, clear validation rules, and auditable event history to support day-to-day operations.',
-      'This project emphasized reliability under concurrent updates and maintainable service contracts that are easy to evolve over time.',
+    responsibilities: [
+      'Designed backend domain flows for onboarding, decisioning, and approval orchestration.',
+      'Maintained underwriting integrations with external financial data providers.',
+      'Collaborated with QA, product, and operations during release and incident cycles.',
     ],
-    tech: ['Java', 'Spring Boot', 'PostgreSQL', 'AWS'],
-    links: {
-      live: 'https://tienhuynh-tn.github.io',
-      source: 'https://github.com/tienhuynh-tn',
-      caseStudy: 'https://github.com/tienhuynh-tn',
-    },
-    highlights: [
-      'Built stock movement APIs with validation and optimistic concurrency rules.',
-      'Added audit-safe event records for every inventory adjustment and transfer.',
-      'Implemented health checks and release-safe deployment workflows on AWS.',
-    ],
-    architecture: [
-      'Layered service design with dedicated domain services and repositories.',
-      'Transactional command handlers for stock-in, stock-out, and transfer flows.',
-      'Asynchronous event publishing for downstream analytics consumers.',
-    ],
-    role: 'Backend developer responsible for service design, API delivery, and production readiness.',
-    outcomes: [
-      'Reduced inventory mismatch incidents by improving data consistency checks.',
-      'Improved issue triage speed with structured logs and traceable event IDs.',
+    metrics: [
+      'Supported multi-bank reuse through a shared rules and workflow core.',
+      'Improved operational visibility with production monitoring and recovery controls.',
     ],
   },
   {
-    slug: 'order-processing-pipeline',
-    title: 'Order Processing Pipeline',
+    id: 'next-gen-platform',
+    title: 'Next Gen Platform',
+    timeframe: 'Mar 2024 – Oct 2024',
+    org: 'FPT Software',
+    role: 'Backend Engineer',
+    teamSize: 'Cross-functional',
+    category: 'Platform',
+    tagline:
+      'Microservices modernization for booking channels and driver apps with event-driven architecture and scalable cloud foundations.',
+    highlights: [
+      'Contributed to a microservices migration focused on secure, multi-tenant, and scalable platform behavior.',
+      'Implemented OpenAPI improvements and event notifications through Kafka and ActiveMQ.',
+      'Supported platform design alignment across teams on service boundaries and API standards.',
+      'Built data integration pipelines using AWS Glue for downstream consumers.',
+      'Worked through QA, UAT, go-live readiness, and operational handover activities.',
+      'Improved SonarCloud coverage, logging quality, and release readiness practices.',
+    ],
+    tech: [
+      'Java 17',
+      'Spring Boot',
+      'Kafka',
+      'ActiveMQ',
+      'PostgreSQL',
+      'MongoDB',
+      'AWS',
+      'Terraform',
+      'SonarCloud',
+      'Docker',
+      'OpenAPI',
+      'Git',
+    ],
+    links: {
+      live: '',
+      source: '',
+      caseStudy: '',
+    },
+    image: {
+      src: platformImg,
+      alt: 'Platform architecture illustration',
+    },
     featured: true,
-    coverImage:
-      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80',
-    shortDesc:
-      'An event-driven pipeline that validates, enriches, and routes orders with retry policies and observability for high-throughput traffic.',
-    longDesc: [
-      'Order Processing Pipeline handles order ingestion and orchestration through an event-driven architecture for better decoupling.',
-      'Each stage introduces validation, enrichment, and routing policies with clear retry behavior and dead-letter handling.',
-      'The pipeline was focused on stable throughput and transparent operational monitoring for incident response.',
+    responsibilities: [
+      'Implemented backend features across modernized booking and driver-facing services.',
+      'Aligned API contracts and integration patterns with platform standards.',
+      'Supported handover activities for testing, release, and operations teams.',
     ],
-    tech: ['Java', 'Kafka', 'Redis', 'Docker'],
-    links: {
-      live: 'https://tienhuynh-tn.github.io',
-      source: 'https://github.com/tienhuynh-tn',
-      caseStudy: 'https://github.com/tienhuynh-tn',
-    },
-    highlights: [
-      'Implemented idempotent processors to avoid duplicate order side effects.',
-      'Added retry and dead-letter queue workflows for resilience.',
-      'Created operational dashboards for lag, error rates, and throughput trends.',
-    ],
-    architecture: [
-      'Kafka topics partitioned by order key to preserve processing order.',
-      'Redis-backed deduplication cache to support idempotent consumers.',
-      'Containerized processing workers deployed with rolling updates.',
-    ],
-    role: 'Led backend pipeline design and operational readiness checks.',
-    outcomes: [
-      'Lowered failed order processing rates during peak traffic windows.',
-      'Improved release confidence with deterministic retry behavior.',
+    metrics: [
+      'Expanded event-driven coverage with Kafka and ActiveMQ notifications.',
+      'Raised code quality visibility through SonarCloud and logging improvements.',
     ],
   },
   {
-    slug: 'customer-insights-platform',
-    title: 'Customer Insights Platform',
+    id: 'social-toilet-map',
+    title: 'Social Toilet Map',
+    timeframe: 'Feb 2023 – Aug 2023',
+    org: 'FPT University',
+    role: 'Backend Developer / Database Designer',
+    teamSize: 'Team of 5',
+    category: 'University',
+    tagline:
+      'Map-based app helping people find nearby public toilets with host management and operational insights.',
+    highlights: [
+      'Built the backend for nearby toilet discovery and direction-based search flows.',
+      'Designed host and manager functions for availability, amenities, and location updates.',
+      'Implemented multi-role permissions for visitors, hosts, and management staff.',
+      'Added analytics and notification support for operational visibility.',
+      'Designed the database model for map, facility, and feedback data.',
+      'Supported team delivery through API integration and testing collaboration.',
+    ],
+    tech: ['Java', 'Spring Boot', 'Azure', 'SQL', 'Git'],
+    links: {
+      live: '',
+      source: '',
+      caseStudy: '',
+    },
+    image: {
+      src: mapImg,
+      alt: 'Map service illustration',
+    },
     featured: true,
-    coverImage:
-      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80',
-    shortDesc:
-      'A data-to-API platform for customer behavior insights, combining scheduled ingestion, domain services, and reporting endpoints.',
-    longDesc: [
-      'Customer Insights Platform consolidates event and profile data into domain-ready datasets for product and operations teams.',
-      'The backend supports scheduled imports, rule-based data shaping, and API endpoints for trend and segment analysis.',
-      'Strong focus was placed on clean domain boundaries to keep ingestion and reporting concerns maintainable.',
+    responsibilities: [
+      'Owned backend services and database design for the capstone team.',
+      'Designed access control and management-side workflows.',
+      'Worked with frontend teammates on API integration and validation.',
     ],
-    tech: ['Java', 'Spring Batch', 'MySQL', 'OpenSearch'],
-    links: {
-      live: 'https://tienhuynh-tn.github.io',
-      source: 'https://github.com/tienhuynh-tn',
-      caseStudy: 'https://github.com/tienhuynh-tn',
-    },
-    highlights: [
-      'Built scheduled ingestion jobs with checkpointing and restart support.',
-      'Exposed reporting APIs with filtering, aggregation, and pagination.',
-      'Integrated indexed search for rapid customer segment exploration.',
-    ],
-    architecture: [
-      'Batch pipelines for ETL and denormalized reporting snapshots.',
-      'MySQL for transactional integrity and OpenSearch for query-heavy access.',
-      'REST API layer with query constraints to protect service performance.',
-    ],
-    role: 'Implemented backend modules across ingestion, query, and indexing layers.',
-    outcomes: [
-      'Cut reporting latency for customer segment requests.',
-      'Enabled product analytics use cases without manual data pulls.',
+    metrics: [
+      'Delivered a graduation capstone with mapped discovery and host operations support.',
+      'Covered both consumer search flows and administrative management scenarios.',
     ],
   },
   {
-    slug: 'payments-reconciliation-tool',
-    title: 'Payments Reconciliation Tool',
-    featured: false,
-    coverImage:
-      'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80',
-    shortDesc:
-      'A reconciliation workflow that matches gateway transactions and ledger records with exception queues for manual review.',
-    longDesc: [
-      'Payments Reconciliation Tool compares payment gateway activity against internal ledger records to detect mismatches early.',
-      'The system supports automated matching, exception queueing, and operator workflows for manual resolution.',
-    ],
-    tech: ['Java', 'Spring Boot', 'MongoDB', 'Kubernetes'],
-    links: {
-      source: 'https://github.com/tienhuynh-tn',
-      caseStudy: 'https://github.com/tienhuynh-tn',
-    },
+    id: 'eat-clean-menu-app',
+    title: 'Eat Clean Menu App',
+    timeframe: 'Sep 2022 – Mar 2023',
+    org: 'FPT University',
+    role: 'Backend Developer / Database Designer',
+    teamSize: 'Team of 4',
+    category: 'Mobile',
+    tagline:
+      'Personalized clean-menu recommender using BMI + preferences with ingredient planning.',
     highlights: [
-      'Built matching strategies for partial, exact, and delayed settlement cases.',
-      'Added operator-friendly exception views and retry controls.',
+      'Built recommendation APIs using BMI data, user goals, and food preferences.',
+      'Designed database structures for menus, ingredients, nutrition data, and user profiles.',
+      'Supported ingredient planning workflows for meal preparation scenarios.',
+      'Implemented secure authentication with JWT for mobile access.',
+      'Published and documented backend APIs for smoother frontend integration.',
+      'Deployed services to Azure App Service and connected supporting Firebase features.',
     ],
-    outcomes: ['Improved reconciliation accuracy across multiple payment channels.'],
-  },
-  {
-    slug: 'service-health-dashboard',
-    title: 'Service Health Dashboard',
-    featured: false,
-    coverImage:
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
-    shortDesc:
-      'A frontend observability dashboard with service status views, incident timelines, and trend summaries for engineering teams.',
-    longDesc: [
-      'Service Health Dashboard surfaces incidents, uptime trends, and dependency status in a single operational view.',
-      'It combines service metrics and event timelines to help teams understand system health quickly.',
-    ],
-    tech: ['React', 'TypeScript', 'Vite', 'Charting'],
+    tech: ['Java', 'Spring Boot', 'React Native', 'SQL Server', 'Azure App Service', 'Firebase', 'JWT', 'Swagger', 'Git'],
     links: {
-      live: 'https://tienhuynh-tn.github.io',
-      source: 'https://github.com/tienhuynh-tn',
+      live: '',
+      source: '',
+      caseStudy: '',
     },
-    highlights: [
-      'Built responsive status views for desktop and mobile monitoring.',
-      'Implemented chart-driven trend summaries for recent incidents.',
+    image: {
+      src: mobileImg,
+      alt: 'Nutrition mobile app illustration',
+    },
+    responsibilities: [
+      'Implemented recommendation and account APIs for the mobile application.',
+      'Maintained the database schema and deployment configuration.',
     ],
   },
   {
-    slug: 'api-gateway-modernization',
-    title: 'API Gateway Modernization',
-    featured: false,
-    coverImage:
-      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80',
-    shortDesc:
-      'A modernization effort that standardized API contracts, security policies, and release workflows across core backend services.',
-    longDesc: [
-      'API Gateway Modernization introduced consistent routing, policy, and contract standards across service teams.',
-      'It reduced fragmentation in authentication rules and deployment procedures while improving delivery safety.',
-    ],
-    tech: ['Java', 'Spring Cloud', 'SQL', 'AWS'],
-    links: {
-      source: 'https://github.com/tienhuynh-tn',
-      caseStudy: 'https://github.com/tienhuynh-tn',
-    },
+    id: 'viral-music-web',
+    title: 'Viral Music Web',
+    timeframe: 'Jan 2023 – Mar 2023',
+    org: 'FPT University',
+    role: 'Backend Developer / Database Designer',
+    teamSize: 'Team of 4',
+    category: 'Web',
+    tagline:
+      'Web app aggregating viral music with secure storage and API-driven architecture.',
     highlights: [
-      'Unified API policy enforcement across multiple backend domains.',
-      'Standardized release checklists and deployment guardrails.',
+      'Built backend APIs for music aggregation, listing, and retrieval workflows.',
+      'Designed database entities for tracks, categories, and user interactions.',
+      'Implemented secure data persistence with Entity Framework and SQL Server.',
+      'Documented APIs with Swagger to support frontend development.',
+      'Integrated cloud storage for media-related content management.',
+      'Collaborated on a clean API-driven structure between frontend and backend layers.',
     ],
-    architecture: [
-      'Gateway policy modules for auth, throttling, and request validation.',
-      'Service contract templates with shared versioning rules.',
+    tech: ['React', 'C# .NET Core', 'Entity Framework', 'SQL Server', 'Cloud Storage', 'Swagger', 'Git'],
+    links: {
+      live: '',
+      source: '',
+      caseStudy: '',
+    },
+    image: {
+      src: webImg,
+      alt: 'Music web platform illustration',
+    },
+  },
+  {
+    id: 'blood-donor-webapp',
+    title: 'Blood Donor WebApp',
+    timeframe: 'Sep 2022 – Nov 2022',
+    org: 'FPT University',
+    role: 'Backend Developer / Database Designer',
+    teamSize: 'Team of 4',
+    category: 'Web',
+    tagline:
+      'Platform connecting blood donors with donation centers for streamlined coordination.',
+    highlights: [
+      'Built backend workflows for donor registration and center coordination.',
+      'Designed database models for donors, requests, appointments, and center records.',
+      'Implemented core CRUD APIs and data validation for donation workflows.',
+      'Supported a responsive web interface built with HTML, CSS, JavaScript, and Bootstrap.',
+      'Used Entity Framework to simplify persistence and query handling.',
+      'Collaborated on end-to-end testing of donor and center scenarios.',
     ],
+    tech: ['HTML', 'CSS', 'JavaScript', 'Bootstrap', 'C# .NET Core', 'Entity Framework', 'SQL Server', 'Git'],
+    links: {
+      live: '',
+      source: '',
+      caseStudy: '',
+    },
+    image: {
+      src: healthImg,
+      alt: 'Health platform illustration',
+    },
+  },
+  {
+    id: 'co-tam-website-and-android-mobile-app',
+    title: 'Cô Tấm Website + Android Mobile App',
+    timeframe: 'Sep 2022 – Nov 2022',
+    org: 'FPT University',
+    role: 'Backend Developer / Database Designer',
+    teamSize: 'Team of 5',
+    category: 'Mobile',
+    tagline:
+      'Domestic help booking platform with admin web portal and customer/worker mobile apps.',
+    highlights: [
+      'Built backend services for booking, user profiles, and service management flows.',
+      'Designed shared data models for admin web and customer or worker mobile apps.',
+      'Implemented authentication with OAuth2 and JWT for multiple client types.',
+      'Supported Azure App Service deployment and Firebase-backed mobile features.',
+      'Documented service APIs with Swagger for team-wide integration.',
+      'Coordinated database design for bookings, workers, customers, and service catalogs.',
+    ],
+    tech: ['React', 'Flutter', 'C# .NET Core', 'SQL Server', 'Azure App Service', 'Firebase', 'OAuth2', 'JWT', 'Swagger', 'Git'],
+    links: {
+      live: '',
+      source: '',
+      caseStudy: '',
+    },
+    image: {
+      src: mobileImg,
+      alt: 'Service booking mobile app illustration',
+    },
+  },
+  {
+    id: 'publish-graduation-capstone-webapp',
+    title: 'Publish Graduation Capstone WebApp',
+    timeframe: 'Jan 2022 – Apr 2022',
+    org: 'FPT University',
+    role: 'Backend Developer / Database Designer',
+    teamSize: 'Team of 4',
+    category: 'University',
+    tagline:
+      'Capstone management web system for topics, submissions, and evaluation workflows.',
+    highlights: [
+      'Built backend flows for topic registration, approvals, submissions, and evaluation tracking.',
+      'Designed relational data structures for capstone topics, teams, mentors, and grading artifacts.',
+      'Implemented REST endpoints for role-based capstone management actions.',
+      'Applied OAuth-secured access to protect student and faculty workflows.',
+      'Supported MVC-based application structure for maintainable delivery.',
+      'Helped test end-to-end academic management scenarios across the system.',
+    ],
+    tech: ['Java', 'SQL Server', 'REST', 'OAuth', 'MVC', 'Git'],
+    links: {
+      live: '',
+      source: '',
+      caseStudy: '',
+    },
+    image: {
+      src: universityImg,
+      alt: 'Academic dashboard illustration',
+    },
+  },
+  {
+    id: 'sleepy-3-friends-clock',
+    title: 'SEF Project — Sleepy 3 Friends Clock',
+    timeframe: 'Sep 2021 – Oct 2021',
+    org: 'FPT University',
+    role: 'Embedded/IoT Student Project',
+    teamSize: 'Team of 3',
+    category: 'IoT',
+    tagline:
+      'Arduino-based clock prototype built with C and basic IoT integration.',
+    highlights: [
+      'Built a clock prototype on Arduino hardware using C.',
+      'Implemented core timekeeping and device interaction logic for the project demo.',
+      'Explored basic IoT integration concepts as part of the system setup.',
+      'Worked through low-level hardware interaction and debugging tasks.',
+      'Collaborated on assembling, testing, and validating the prototype behavior.',
+      'Delivered an early-stage embedded system project within a short academic schedule.',
+    ],
+    tech: ['C', 'Arduino', 'IoT'],
+    links: {
+      live: '',
+      source: '',
+      caseStudy: '',
+    },
+    image: {
+      src: iotImg,
+      alt: 'IoT hardware clock illustration',
+    },
   },
 ]
 
-export const featuredProjects = projects.filter((project) => project.featured)
-
-export const allProjects = [...projects]
+export const featuredProjects = allProjects.filter((project) => project.featured).slice(0, 3)
+export const projects = allProjects

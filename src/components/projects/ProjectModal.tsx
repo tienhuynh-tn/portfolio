@@ -1,155 +1,242 @@
-import { X } from '@phosphor-icons/react'
-import { useEffect } from 'react'
+import { ArrowSquareOut, FileText, GithubLogo, GlobeHemisphereWest, X } from '@phosphor-icons/react'
+import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import type { Project } from '../../data/projects'
+import BulletList from './BulletList'
+import TechChips from './TechChips'
 
 type ProjectModalProps = {
   project: Project
   onClose: () => void
 }
 
+const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'textarea:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',')
+
 function ProjectModal({ project, onClose }: ProjectModalProps) {
+  const dialogRef = useRef<HTMLDivElement | null>(null)
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
     const previousHtmlOverflow = document.documentElement.style.overflow
+    const previousActiveElement =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null
+
     document.body.style.overflow = 'hidden'
     document.documentElement.style.overflow = 'hidden'
 
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose()
+        return
+      }
+
+      if (event.key !== 'Tab' || !dialogRef.current) {
+        return
+      }
+
+      const focusableElements = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      ).filter((element) => !element.hasAttribute('disabled'))
+
+      if (focusableElements.length === 0) {
+        event.preventDefault()
+        closeButtonRef.current?.focus()
+        return
+      }
+
+      const firstFocusable = focusableElements[0]
+      const lastFocusable = focusableElements[focusableElements.length - 1]
+
+      if (event.shiftKey && document.activeElement === firstFocusable) {
+        event.preventDefault()
+        lastFocusable.focus()
+      } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+        event.preventDefault()
+        firstFocusable.focus()
       }
     }
 
     document.addEventListener('keydown', handleKeydown)
+    window.setTimeout(() => closeButtonRef.current?.focus(), 0)
 
     return () => {
       document.body.style.overflow = previousOverflow
       document.documentElement.style.overflow = previousHtmlOverflow
       document.removeEventListener('keydown', handleKeydown)
+      previousActiveElement?.focus()
     }
   }, [onClose])
 
-  const links = [
-    { label: 'Live Demo', href: project.links.live, kind: 'primary' as const },
-    { label: 'GitHub', href: project.links.source, kind: 'secondary' as const },
-  ].filter((link): link is { label: string; href: string; kind: 'primary' | 'secondary' } =>
-    Boolean(link.href),
+  const actionLinks = [
+    {
+      label: 'Live',
+      href: project.links?.live,
+      Icon: GlobeHemisphereWest,
+      kind: 'primary' as const,
+    },
+    {
+      label: 'Source',
+      href: project.links?.source,
+      Icon: GithubLogo,
+      kind: 'secondary' as const,
+    },
+    {
+      label: 'Case Study',
+      href: project.links?.caseStudy,
+      Icon: FileText,
+      kind: 'secondary' as const,
+    },
+  ].filter(
+    (link): link is {
+      label: string
+      href: string
+      Icon: typeof GlobeHemisphereWest
+      kind: 'primary' | 'secondary'
+    } => Boolean(link.href),
   )
-
-  const projectContext = project.context ?? 'Personal Project · Case Study'
-  const overview = project.longDesc[0] ?? project.shortDesc
-  const responsibilities = project.highlights
-  const impacts =
-    project.outcomes?.length
-      ? project.outcomes
-      : ['Improved reliability, delivery confidence, and day-to-day operability.']
-  const projectMeta = [
-    { label: 'Role', value: 'Backend Developer' },
-    { label: 'Team', value: '1 (Solo)' },
-    { label: 'Duration', value: '8-12 weeks' },
-    { label: 'Architecture', value: 'Layered service design' },
-  ]
 
   const modalContent = (
     <div className="modalOverlay" role="presentation" onClick={onClose}>
       <article
-        className="modalContainer"
+        ref={dialogRef}
+        className="modalContainer projectModalContainer"
         role="dialog"
         aria-modal="true"
-        aria-labelledby={`project-modal-title-${project.slug}`}
+        aria-labelledby={`project-modal-title-${project.id}`}
         onClick={(event) => event.stopPropagation()}
       >
-        <button
-          type="button"
-          onClick={onClose}
-          className="modalClose"
-          aria-label="Close project details"
-        >
-          <X size={18} weight="bold" aria-hidden="true" />
-        </button>
+        <div className="projectModalSurface">
+          <button
+            ref={closeButtonRef}
+            type="button"
+            onClick={onClose}
+            className="modalClose"
+            aria-label="Close project details"
+          >
+            <X size={18} weight="bold" aria-hidden="true" />
+          </button>
 
-        <div className="modalScroll">
-          <div className="modalContent">
-            <div className="modalMedia">
-              <img src={project.coverImage} alt={`${project.title} cover`} loading="lazy" />
-            </div>
+          <div className="modalScroll">
+            <div className="modalContent projectModalContent">
+              <div className="projectModalMedia rounded-2xl">
+                {project.image?.src ? (
+                  <img
+                    src={project.image.src}
+                    alt={project.image.alt}
+                    className="projectModalImage h-56 sm:h-64 md:h-72 rounded-2xl object-cover"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="projectModalImagePlaceholder h-56 sm:h-64 md:h-72 rounded-2xl">
+                    <span className="projectCardPlaceholderEyebrow">{project.category}</span>
+                    <strong>{project.title}</strong>
+                    <span>Preview coming soon</span>
+                  </div>
+                )}
+              </div>
 
-            <div className="modalBody">
-              <header className="modalHeader">
-                <h2
-                  id={`project-modal-title-${project.slug}`}
-                  className="itemTitle pr-10 text-2xl sm:text-3xl"
-                >
-                  {project.title}
-                </h2>
-                <p className="cardDesc">{project.shortDesc}</p>
-                <p className="modalContext">{projectContext}</p>
-                <ul className="projectMetaRow" aria-label="Project quick metadata">
-                  {projectMeta.map((item) => (
-                    <li key={item.label} className="skillBadge projectMetaPill">
-                      <span className="projectMetaLabel">{item.label}</span>
-                      <span>{item.value}</span>
-                    </li>
-                  ))}
-                </ul>
-              </header>
+              <div className="px-6 sm:px-7">
+                <div className="modalBody projectModalBody">
+                  <header className="modalHeader projectModalHeader">
+                    <div className="projectCardMetaRow">
+                      <span className="projectCardCategory">{project.category}</span>
+                      <span className="itemDates">{project.timeframe}</span>
+                    </div>
 
-              {links.length ? (
-                <section className="modalSection modalActions">
-                  {links.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={
-                        link.kind === 'primary'
-                          ? 'modalAction modalActionPrimary'
-                          : 'modalAction modalActionSecondary'
-                      }
+                    <h2
+                      id={`project-modal-title-${project.id}`}
+                      className="itemTitle projectModalTitle text-2xl font-semibold text-[color:var(--text)] sm:text-3xl"
                     >
-                      {link.label}
-                    </a>
-                  ))}
-                </section>
-              ) : null}
+                      {project.title}
+                    </h2>
+                    <p className="projectModalTagline">
+                      {project.tagline}
+                    </p>
 
-              <hr className="modalDivider" />
+                    <ul
+                      className="projectMetaRow"
+                      aria-label="Project quick metadata"
+                    >
+                      <li className="skillBadge projectMetaPill">
+                        <span className="projectMetaLabel">Organization</span>
+                        <span>{project.org}</span>
+                      </li>
+                      <li className="skillBadge projectMetaPill">
+                        <span className="projectMetaLabel">Role</span>
+                        <span>{project.role}</span>
+                      </li>
+                      <li className="skillBadge projectMetaPill">
+                        <span className="projectMetaLabel">Team</span>
+                        <span>{project.teamSize}</span>
+                      </li>
+                    </ul>
+                  </header>
 
-              <section className="modalSection">
-                <h3 className="itemTitle">Overview</h3>
-                <p className="cardDesc">{overview}</p>
-              </section>
+                  <section className="modalSection mt-10">
+                    <h3 className="itemTitle projectModalSectionTitle">Impact</h3>
+                    <BulletList items={project.highlights} className="projectModalList" />
+                  </section>
 
-              <section className="modalSection">
-                <h3 className="itemTitle">Responsibilities</h3>
-                <ul className="list-disc space-y-2 pl-5 text-[color:var(--text-strong)]">
-                  {responsibilities.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </section>
+                  {project.responsibilities?.length ? (
+                    <section className="modalSection mt-10">
+                      <h3 className="itemTitle projectModalSectionTitle">Responsibilities</h3>
+                      <BulletList
+                        items={project.responsibilities}
+                        className="projectModalList"
+                      />
+                    </section>
+                  ) : null}
 
-              <section className="modalSection">
-                <h3 className="itemTitle">Impact</h3>
-                <ul className="list-disc space-y-2 pl-5 text-[color:var(--text-strong)]">
-                  {impacts.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </section>
+                  {project.metrics?.length ? (
+                    <section className="modalSection mt-10">
+                      <h3 className="itemTitle projectModalSectionTitle">Metrics</h3>
+                      <BulletList items={project.metrics} className="projectModalList" />
+                    </section>
+                  ) : null}
 
-              <section className="modalSection">
-                <h3 className="itemTitle">Tech Stack</h3>
-                <ul className="skillsBadges" aria-label={`${project.title} technology stack`}>
-                  {project.tech.map((tech) => (
-                    <li key={tech} className="skillBadge">
-                      <span>{tech}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+                  <section className="modalSection mt-10">
+                    <h3 className="itemTitle projectModalSectionTitle">Tech Stack</h3>
+                    <TechChips
+                      tech={project.tech}
+                      label={`${project.title} technology stack`}
+                      className="projectModalTech projectModalChips"
+                    />
+                  </section>
+
+                  {actionLinks.length ? (
+                    <section className="modalSection modalActions projectModalActions mt-10">
+                      <div className="projectModalActionsRow">
+                        {actionLinks.map(({ label, href, Icon, kind }) => (
+                          <a
+                            key={label}
+                            href={href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className={
+                              kind === 'primary'
+                                ? 'modalAction modalActionPrimary'
+                                : 'modalAction modalActionSecondary'
+                            }
+                            aria-label={`${label} for ${project.title}`}
+                          >
+                            <Icon size={16} weight="regular" aria-hidden="true" />
+                            <span>{label}</span>
+                            <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
+                          </a>
+                        ))}
+                      </div>
+                    </section>
+                  ) : null}
+                </div>
+              </div>
             </div>
           </div>
         </div>

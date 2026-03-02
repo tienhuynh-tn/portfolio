@@ -1,0 +1,19 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="40" fill="#F8FAFC"/>
+  <rect x="60" y="76" width="1080" height="568" rx="30" fill="#0F172A"/>
+  <rect x="60" y="76" width="1080" height="72" rx="30" fill="#111827"/>
+  <circle cx="112" cy="112" r="10" fill="#F87171"/>
+  <circle cx="144" cy="112" r="10" fill="#FBBF24"/>
+  <circle cx="176" cy="112" r="10" fill="#34D399"/>
+  <rect x="110" y="188" width="230" height="356" rx="24" fill="#111827"/>
+  <rect x="374" y="188" width="656" height="148" rx="26" fill="url(#hero)"/>
+  <rect x="374" y="364" width="204" height="180" rx="24" fill="#E2E8F0"/>
+  <rect x="600" y="364" width="204" height="180" rx="24" fill="#DBEAFE"/>
+  <rect x="826" y="364" width="204" height="180" rx="24" fill="#DCFCE7"/>
+  <defs>
+    <linearGradient id="hero" x1="374" y1="188" x2="1030" y2="336" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1C3879"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
+    </linearGradient>
+  </defs>
+</svg>

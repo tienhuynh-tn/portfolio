@@ -1,5 +1,8 @@
-import { type MouseEvent } from 'react'
+import { useEffect, useState, type MouseEvent } from 'react'
+import { ArrowSquareOut, GithubLogo } from '@phosphor-icons/react'
+import webImg from '../../assets/projects/web.svg'
 import type { Project } from '../../data/projects'
+import TechChips from './TechChips'
 
 type ProjectCardProps = {
   project: Project
@@ -7,11 +10,17 @@ type ProjectCardProps = {
 }
 
 function ProjectCard({ project, onSelect }: ProjectCardProps) {
-  const links = [
-    { label: 'Live', href: project.links.live },
-    { label: 'Source', href: project.links.source },
-    { label: 'Case Study', href: project.links.caseStudy },
-  ].filter((link): link is { label: string; href: string } => Boolean(link.href))
+  const fallbackImage = webImg
+  const [imageSrc, setImageSrc] = useState(project.image?.src ?? fallbackImage)
+
+  useEffect(() => {
+    setImageSrc(project.image?.src ?? fallbackImage)
+  }, [project.id, project.image?.src])
+
+  const actionLinks = [
+    { label: 'Live project', href: project.links?.live, Icon: ArrowSquareOut },
+    { label: 'Source code', href: project.links?.source, Icon: GithubLogo },
+  ].filter((link): link is { label: string; href: string; Icon: typeof ArrowSquareOut } => Boolean(link.href))
 
   const handleActionClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.stopPropagation()
@@ -19,7 +28,7 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
 
   return (
     <article className="skillsGroup projectCard">
-      <div className="skillsGroupInner relative">
+      <div className="skillsGroupInner projectCardInner relative">
         <button
           type="button"
           onClick={() => onSelect(project)}
@@ -29,39 +38,47 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
           <span className="sr-only">Open project details</span>
         </button>
 
-        {project.coverImage ? (
+        <div className="projectCardMedia relative z-0" aria-hidden="true">
           <img
-            src={project.coverImage}
-            alt={`${project.title} preview`}
-            className="h-44 w-full rounded-xl object-cover"
+            src={imageSrc}
+            alt={project.image?.alt ?? `${project.title} preview`}
+            className="projectCardImage h-44 w-full rounded-2xl object-cover"
             loading="lazy"
+            onError={() => setImageSrc(fallbackImage)}
           />
-        ) : null}
+        </div>
 
-        <h3 className="itemTitle relative z-0">{project.title}</h3>
+        <div className="projectCardBody relative z-0">
+          <div className="projectCardMetaRow">
+            <span className="projectCardCategory">{project.category}</span>
+            <span className="itemDates">{project.timeframe}</span>
+          </div>
 
-        <ul className="skillsBadges relative z-0" aria-label={`${project.title} technology stack`}>
-          {project.tech.map((tech) => (
-            <li key={tech} className="skillBadge">
-              <span>{tech}</span>
-            </li>
-          ))}
-        </ul>
+          <h3 className="itemTitle projectCardTitle">{project.title}</h3>
+          <p className="cardDesc projectCardTagline">{project.tagline}</p>
 
-        <p className="cardDesc relative z-0">{project.shortDesc}</p>
+          <TechChips
+            tech={project.tech}
+            label={`${project.title} technology stack`}
+            className="projectCardTech"
+          />
+        </div>
 
-        {links.length > 0 ? (
-          <div className="cardLinks relative z-20">
-            {links.map((link) => (
+        {actionLinks.length ? (
+          <div className="projectCardActions relative z-20">
+            {actionLinks.map(({ label, href, Icon }) => (
               <a
-                key={link.label}
-                href={link.href}
-                className="cardLink"
+                key={label}
+                href={href}
+                className="projectCardAction"
                 target="_blank"
                 rel="noreferrer"
+                aria-label={label}
+                title={label}
                 onClick={handleActionClick}
               >
-                {link.label}
+                <Icon size={18} weight="regular" aria-hidden="true" />
+                <span className="sr-only">{label}</span>
               </a>
             ))}
           </div>
