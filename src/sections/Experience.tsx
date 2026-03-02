@@ -17,34 +17,40 @@ function Experience() {
           <span className="skillsDivider" aria-hidden="true" />
         </div>
 
-        <div className="experienceTimeline">
+        <ol className="experienceCenterTimeline" aria-label="Professional experience timeline">
           {experienceItems.map((item, index) => (
-            <article
+            <li
               key={item.id}
-              className="experienceMilestone reveal"
+              className={`experienceCenterItem experienceCenterItem--${index % 2 === 0 ? 'left' : 'right'} reveal`}
               style={{ ['--reveal-delay' as string]: `${index * 80}ms` }}
             >
-              <span className="experienceNode" aria-hidden="true" />
+              <div className="experienceCenterRail" aria-hidden="true">
+                <span className="experienceCenterNode">
+                  <span className="experienceCenterNodeInner" />
+                </span>
+              </div>
 
-              <div className="skillsGroup experienceCard">
-                <div className="skillsGroupInner experienceCardInner">
-                  <div className="experienceMetaRow">
-                    <span className="itemDates">{item.period}</span>
-                    {item.location ? (
-                      <span className="experienceLocation">{item.location}</span>
-                    ) : null}
+              <article
+                className="skillsGroup experienceCenterCard"
+                aria-labelledby={`${item.id}-title`}
+                aria-label={`${item.role} at ${item.company}`}
+              >
+                <div className="skillsGroupInner experienceCenterCardInner">
+                  <div className="experienceCenterMeta">
+                    <p className="itemMeta experienceCompany">{item.company}</p>
+                    <div className="experienceMetaRow">
+                      <span className="itemDates">{item.period}</span>
+                      {item.location ? (
+                        <span className="experienceLocation">{item.location}</span>
+                      ) : null}
+                    </div>
                   </div>
 
-                  <h3 className="itemTitle">{item.role}</h3>
-                  <p className="itemMeta">{item.company}</p>
+                  <h3 id={`${item.id}-title`} className="itemTitle">
+                    {item.role}
+                  </h3>
 
-                  <ul className="bullets experienceBullets">
-                    {item.highlights.map((highlight) => (
-                      <li key={highlight}>{highlight}</li>
-                    ))}
-                  </ul>
-
-                  <ul className="skillsBadges" aria-label={`${item.role} technology stack`}>
+                  <ul className="skillsBadges experienceTechList" aria-label={`${item.role} technology stack`}>
                     {item.tech.map((tech) => (
                       <li key={tech} className="skillBadge">
                         <span>{tech}</span>
@@ -52,10 +58,10 @@ function Experience() {
                     ))}
                   </ul>
                 </div>
-              </div>
-            </article>
+              </article>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </Section>
   )
