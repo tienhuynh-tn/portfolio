@@ -1,5 +1,5 @@
 import Section from '../components/layout/Section'
-import { ArrowSquareOut } from '@phosphor-icons/react'
+import CertificationBadgeTile from '../components/CertificationBadgeTile'
 import { featuredCertifications } from '../data/certifications'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 
@@ -21,49 +21,19 @@ function Certifications() {
             <span className="skillsDivider" aria-hidden="true" />
           </div>
 
-          <ul className="certificationsGrid" aria-label="Certifications">
-            {featuredCertifications.map((certification, index) => (
-              <li
-                key={certification.id}
-                className="certificationGridItem reveal"
-                style={{ ['--reveal-delay' as string]: `${index * 70}ms` }}
-              >
-                <div className="certificationCardInner">
-                  <div className="certificationLinkedMetaWrap">
-                    {certification.issuerLogo ? (
-                      <img
-                        src={certification.issuerLogo}
-                        alt=""
-                        width={24}
-                        height={24}
-                        className="certificationIssuerLogo"
-                        loading="lazy"
-                      />
-                    ) : null}
-                    <div>
-                      <h3 className="certificationLinkedName">
-                        {certification.name}
-                      </h3>
-                      <p className="itemMeta certificationLinkedMeta">
-                        {certification.issuedBy} · {certification.issuedDate}
-                      </p>
-                    </div>
-                  </div>
-
-                  <a
-                    href={certification.credentialUrl}
-                    className="cardLink certificationInlineLink"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label={`Show credential for ${certification.name}`}
-                  >
-                    <span>Show credential</span>
-                    <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
-                  </a>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="certificationBadgeGridCenter">
+            <ul className="certificationBadgeGrid" aria-label="Certifications">
+              {featuredCertifications.map((certification, index) => (
+                <li
+                  key={certification.id}
+                  className="certificationBadgeGridItem reveal"
+                  style={{ ['--reveal-delay' as string]: `${index * 70}ms` }}
+                >
+                  <CertificationBadgeTile certification={certification} />
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div className="certificationsCtaRow reveal">
             <a

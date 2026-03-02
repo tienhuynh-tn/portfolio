@@ -1604,7 +1604,7 @@ p {
 }
 
 .certificationsCtaRow {
-  margin-top: 8px;
+  margin-top: 18px;
   justify-content: flex-end;
 }
 
@@ -1676,12 +1676,215 @@ p {
 }
 
 .certificationsIntro {
-  margin-bottom: 8px;
+  margin-bottom: 18px;
+}
+
+.certificationBadgeGridCenter {
+  display: flex;
+  justify-content: center;
+  width: calc(100% + clamp(24px, 4vw, 48px));
+  max-width: min(1400px, calc(100vw - 24px));
+  margin-inline: calc(clamp(24px, 4vw, 48px) * -0.5);
+}
+
+.certificationBadgeGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-auto-flow: row;
+  align-items: stretch;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.certificationBadgeGridItem {
+  min-width: 0;
+  height: 100%;
+}
+
+.certificationBadgeTile {
+  position: relative;
+  display: block;
+  height: 100%;
+  min-height: 210px;
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg));
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+:root[data-theme='dark'] .certificationBadgeTile {
+  background: color-mix(in srgb, var(--surface) 98%, var(--bg));
+}
+
+.certificationBadgeAction {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface) 90%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  z-index: 1;
+}
+
+.certificationBadgeTileInner {
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  padding: 16px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  text-align: center;
+}
+
+.certificationBadgeRow {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.certificationBadgeMark {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--primary) 10%, transparent);
+  overflow: hidden;
+}
+
+.certificationBadgeImage {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.certificationBadgeMonogram {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+}
+
+.certificationBadgeBody {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  max-width: 100%;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.certificationBadgeTitle {
+  color: var(--text-strong);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  width: 100%;
+  min-width: 0;
+  max-width: 220px;
+  max-height: calc(1.25em * 2);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.certificationBadgeIssuer,
+.certificationBadgeIssued {
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.2;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 220px;
+  max-height: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+}
+
+@media (hover: hover) {
+  .certificationBadgeTile:hover,
+  .certificationBadgeTile:focus-within {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .certificationBadgeAction:hover,
+  .certificationBadgeAction:focus-visible {
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+}
+
+@media (min-width: 768px) {
+  .certificationBadgeGrid {
+    grid-template-columns: repeat(3, 200px);
+    width: fit-content;
+  }
+}
+
+@media (min-width: 1080px) {
+  .certificationBadgeGrid {
+    grid-template-columns: repeat(4, 200px);
+  }
+}
+
+@media (min-width: 1360px) {
+  .certificationBadgeGrid {
+    grid-template-columns: repeat(5, 200px);
+  }
+}
+
+@media (min-width: 1600px) {
+  .certificationBadgeGrid {
+    grid-template-columns: repeat(6, 200px);
+  }
 }
 
 @media (max-width: 700px) {
   .certificationsCtaRow {
     justify-content: flex-start;
+  }
+
+  .certificationBadgeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 16px;
+  }
+
+  .certificationBadgeTile {
+    min-height: 210px;
+  }
+
+  .certificationBadgeTileInner {
+    min-height: 210px;
+    padding: 14px 12px 12px;
+  }
+
+  .certificationBadgeMark {
+    width: 60px;
+    height: 60px;
   }
 }
 

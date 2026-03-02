@@ -26,45 +26,62 @@ function CertificationsPage() {
 
               <ul className="certificationsGrid" aria-label="All certifications">
                 {allCertifications.map((certification, index) => (
-                  <li
-                    key={certification.id}
-                    className="certificationGridItem reveal"
-                    style={{ ['--reveal-delay' as string]: `${index * 70}ms` }}
-                  >
-                    <div className="certificationCardInner">
-                      <div className="certificationLinkedMetaWrap">
-                        {certification.issuerLogo ? (
-                          <img
-                            src={certification.issuerLogo}
-                            alt=""
-                            width={24}
-                            height={24}
-                            className="certificationIssuerLogo"
-                            loading="lazy"
-                          />
-                        ) : null}
-                        <div>
-                          <h3 className="certificationLinkedName">
-                            {certification.name}
-                          </h3>
-                          <p className="itemMeta certificationLinkedMeta">
-                            {certification.issuedBy} · {certification.issuedDate}
-                          </p>
-                        </div>
-                      </div>
+                  (() => {
+                    const normalizedCredentialUrl =
+                      typeof certification.credentialUrl === 'string' &&
+                      certification.credentialUrl.trim().length > 0
+                        ? certification.credentialUrl.trim()
+                        : undefined
+                    const metaParts = [
+                      certification.issuedBy?.trim(),
+                      certification.issuedDate?.trim(),
+                    ].filter((part): part is string => Boolean(part))
+                    const metaText = metaParts.join(' · ')
 
-                      <a
-                        href={certification.credentialUrl}
-                        className="cardLink certificationInlineLink"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        aria-label={`Show credential for ${certification.name}`}
+                    return (
+                      <li
+                        key={certification.id}
+                        className="certificationGridItem reveal"
+                        style={{ ['--reveal-delay' as string]: `${index * 70}ms` }}
                       >
-                        <span>Show credential</span>
-                        <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
-                      </a>
-                    </div>
-                  </li>
+                        <div className="certificationCardInner">
+                          <div className="certificationLinkedMetaWrap">
+                            {certification.issuerLogo ? (
+                              <img
+                                src={certification.issuerLogo}
+                                alt=""
+                                width={24}
+                                height={24}
+                                className="certificationIssuerLogo"
+                                loading="lazy"
+                              />
+                            ) : null}
+                            <div>
+                              <h3 className="certificationLinkedName">
+                                {certification.name}
+                              </h3>
+                              <p className="itemMeta certificationLinkedMeta">
+                                {metaText}
+                              </p>
+                            </div>
+                          </div>
+
+                          {normalizedCredentialUrl ? (
+                            <a
+                              href={normalizedCredentialUrl}
+                              className="cardLink certificationInlineLink"
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              aria-label={`Show credential for ${certification.name}`}
+                            >
+                              <span>Show credential</span>
+                              <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
+                            </a>
+                          ) : null}
+                        </div>
+                      </li>
+                    )
+                  })()
                 ))}
               </ul>
             </div>
