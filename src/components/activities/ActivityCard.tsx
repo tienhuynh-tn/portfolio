@@ -24,11 +24,17 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
   const [isInView, setIsInView] = useState(false)
 
   const images = useMemo(
-    () =>
-      activity.images.filter(
+    () => {
+      const previewImages =
+        activity.image?.trim().length
+          ? [activity.image]
+          : activity.images.slice(0, 1)
+
+      return previewImages.filter(
         (image) => image.trim().length > 0 && !failedImages.includes(image),
-      ),
-    [activity.images, failedImages],
+      )
+    },
+    [activity.image, activity.images, failedImages],
   )
   const hasMultipleImages = images.length > 1
 

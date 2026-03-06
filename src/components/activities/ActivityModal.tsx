@@ -25,11 +25,19 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
 
   const images = useMemo(
-    () =>
-      activity.images.filter(
+    () => {
+      const galleryImages =
+        activity.images.length > 0
+          ? activity.images
+          : activity.image?.trim().length
+            ? [activity.image]
+            : []
+
+      return galleryImages.filter(
         (image) => image.trim().length > 0 && !failedImages.includes(image),
-      ),
-    [activity.images, failedImages],
+      )
+    },
+    [activity.image, activity.images, failedImages],
   )
   const primaryLink = activity.links?.[0]
 
