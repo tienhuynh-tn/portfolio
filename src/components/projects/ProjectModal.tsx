@@ -1,4 +1,4 @@
-import { ArrowSquareOut, FileText, GithubLogo, GlobeHemisphereWest, X } from '@phosphor-icons/react'
+import { ArrowSquareOut, X } from '@phosphor-icons/react'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import type { Project } from '../../data/projects'
@@ -18,6 +18,23 @@ const FOCUSABLE_SELECTOR = [
   'select:not([disabled])',
   '[tabindex]:not([tabindex="-1"])',
 ].join(',')
+
+function renderMetaLine(items: string[], secondary = false) {
+  const visibleItems = items.filter(Boolean)
+
+  if (!visibleItems.length) return null
+
+  return (
+    <p className={secondary ? 'detailModalMetaLine detailModalMetaLineSecondary' : 'detailModalMetaLine'}>
+      {visibleItems.map((item, index) => (
+        <span key={`${secondary ? 'secondary' : 'primary'}-${item}-${index}`} className="detailModalMetaFragment">
+          {index > 0 ? <span className="detailModalMetaSeparator" aria-hidden="true">•</span> : null}
+          <span>{item}</span>
+        </span>
+      ))}
+    </p>
+  )
+}
 
 function ProjectModal({ project, onClose }: ProjectModalProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null)
@@ -79,29 +96,27 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
     {
       label: 'Live',
       href: project.links?.live,
-      Icon: GlobeHemisphereWest,
       kind: 'primary' as const,
     },
     {
       label: 'Source',
       href: project.links?.source,
-      Icon: GithubLogo,
       kind: 'secondary' as const,
     },
     {
       label: 'Case Study',
       href: project.links?.caseStudy,
-      Icon: FileText,
       kind: 'secondary' as const,
     },
   ].filter(
     (link): link is {
       label: string
       href: string
-      Icon: typeof GlobeHemisphereWest
       kind: 'primary' | 'secondary'
     } => Boolean(link.href),
   )
+  const primaryMetaLine = renderMetaLine([project.role, project.category, project.teamSize])
+  const secondaryMetaLine = renderMetaLine([project.timeframe], true)
 
   const modalContent = (
     <div className="modalOverlay" role="presentation" onClick={onClose}>
@@ -146,48 +161,55 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
               <div className="px-6 sm:px-7">
                 <div className="modalBody projectModalBody">
                   <header className="modalHeader projectModalHeader">
-                    <div className="projectCardMetaRow">
-                      <span className="projectCardCategory">{project.category}</span>
-                      <span className="itemDates">{project.timeframe}</span>
+                    <div className="detailModalHeaderTop">
+                      <div className="detailModalHeaderCopy">
+                        <p className="detailModalEyebrow">{project.org}</p>
+
+                        <h2
+                          id={`project-modal-title-${project.id}`}
+                          className="itemTitle projectModalTitle text-2xl font-semibold text-[color:var(--text)] sm:text-3xl"
+                        >
+                          {project.title}
+                        </h2>
+
+                        <div className="detailModalMetaStack">
+                          {primaryMetaLine}
+                          {secondaryMetaLine}
+                        </div>
+
+                        <p className="projectModalTagline detailModalLead">
+                          {project.tagline}
+                        </p>
+                      </div>
+
+                      {actionLinks.length ? (
+                        <div className="detailModalHeaderActions">
+                          {actionLinks.map(({ label, href, kind }) => (
+                            <a
+                              key={label}
+                              href={href}
+                              target="_blank"
+                              rel="noreferrer"
+                              className={kind === 'primary' ? 'detailModalInlineAction detailModalInlineActionPrimary' : 'detailModalInlineAction'}
+                              aria-label={`${label} for ${project.title}`}
+                            >
+                              <span>{label}</span>
+                              <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
-
-                    <h2
-                      id={`project-modal-title-${project.id}`}
-                      className="itemTitle projectModalTitle text-2xl font-semibold text-[color:var(--text)] sm:text-3xl"
-                    >
-                      {project.title}
-                    </h2>
-                    <p className="projectModalTagline">
-                      {project.tagline}
-                    </p>
-
-                    <ul
-                      className="projectMetaRow"
-                      aria-label="Project quick metadata"
-                    >
-                      <li className="skillBadge projectMetaPill">
-                        <span className="projectMetaLabel">Organization</span>
-                        <span>{project.org}</span>
-                      </li>
-                      <li className="skillBadge projectMetaPill">
-                        <span className="projectMetaLabel">Role</span>
-                        <span>{project.role}</span>
-                      </li>
-                      <li className="skillBadge projectMetaPill">
-                        <span className="projectMetaLabel">Team</span>
-                        <span>{project.teamSize}</span>
-                      </li>
-                    </ul>
                   </header>
 
                   <section className="modalSection mt-10">
-                    <h3 className="itemTitle projectModalSectionTitle">Impact</h3>
+                    <h3 className="itemTitle detailModalSectionTitle">Impact</h3>
                     <BulletList items={project.highlights} className="projectModalList" />
                   </section>
 
                   {project.responsibilities?.length ? (
                     <section className="modalSection mt-10">
-                      <h3 className="itemTitle projectModalSectionTitle">Responsibilities</h3>
+                      <h3 className="itemTitle detailModalSectionTitle">Responsibilities</h3>
                       <BulletList
                         items={project.responsibilities}
                         className="projectModalList"
@@ -197,44 +219,19 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 
                   {project.metrics?.length ? (
                     <section className="modalSection mt-10">
-                      <h3 className="itemTitle projectModalSectionTitle">Metrics</h3>
+                      <h3 className="itemTitle detailModalSectionTitle">Metrics</h3>
                       <BulletList items={project.metrics} className="projectModalList" />
                     </section>
                   ) : null}
 
                   <section className="modalSection mt-10">
-                    <h3 className="itemTitle projectModalSectionTitle">Tech Stack</h3>
+                    <h3 className="itemTitle detailModalSectionTitle">Tech Stack</h3>
                     <TechChips
                       tech={project.tech}
                       label={`${project.title} technology stack`}
                       className="projectModalTech projectModalChips"
                     />
                   </section>
-
-                  {actionLinks.length ? (
-                    <section className="modalSection modalActions projectModalActions mt-10">
-                      <div className="projectModalActionsRow">
-                        {actionLinks.map(({ label, href, Icon, kind }) => (
-                          <a
-                            key={label}
-                            href={href}
-                            target="_blank"
-                            rel="noreferrer"
-                            className={
-                              kind === 'primary'
-                                ? 'modalAction modalActionPrimary'
-                                : 'modalAction modalActionSecondary'
-                            }
-                            aria-label={`${label} for ${project.title}`}
-                          >
-                            <Icon size={16} weight="regular" aria-hidden="true" />
-                            <span>{label}</span>
-                            <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
-                          </a>
-                        ))}
-                      </div>
-                    </section>
-                  ) : null}
                 </div>
               </div>
             </div>
