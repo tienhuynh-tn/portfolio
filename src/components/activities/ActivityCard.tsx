@@ -14,6 +14,23 @@ type ActivityCardProps = {
 }
 
 const AUTOPLAY_DELAY_MS = 4200
+const WORK_MODE_TOKENS = new Set(['remote', 'hybrid', 'on-site', 'onsite'])
+
+function getPreviewLocation(location?: string) {
+  if (!location?.trim()) return ''
+
+  return location
+    .split('·')
+    .map((part) => part.trim())
+    .filter((part) => part && !WORK_MODE_TOKENS.has(part.toLowerCase()))
+    .join(' · ')
+}
+
+function getPreviewDate(date: string) {
+  return date
+    .split('·')
+    .map((part) => part.trim())[0] ?? ''
+}
 
 function ActivityCard({ activity, onSelect }: ActivityCardProps) {
   const cardRef = useRef<HTMLElement | null>(null)
@@ -37,6 +54,9 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
     [activity.image, activity.images, failedImages],
   )
   const hasMultipleImages = images.length > 1
+  const previewLocation = getPreviewLocation(activity.location)
+  const previewDate = getPreviewDate(activity.date)
+  const supportingDetails = [previewLocation, previewDate].filter(Boolean).join(' • ')
 
   useEffect(() => {
     setFailedImages([])
@@ -171,11 +191,11 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
       </div>
 
       <div className="activityCardBody">
+        <p className="activityCardOrg">{activity.org}</p>
         <h3 className="activityCardTitle">{activity.title}</h3>
-        <p className="itemMeta activityCardMeta">
-          {activity.org} · {activity.role}
-        </p>
-        <p className="itemDates activityCardDates">{activity.date}</p>
+        {supportingDetails ? (
+          <p className="itemDates activityCardDates">{supportingDetails}</p>
+        ) : null}
         <p className="activityCardSummary">{activity.summary}</p>
       </div>
 

@@ -1087,11 +1087,11 @@ p {
 }
 
 .projectModalHeader {
-  gap: 10px;
+  gap: 14px;
 }
 
 .projectModalTitle {
-  padding-right: 40px;
+  padding-right: 0;
 }
 
 .projectModalTagline {
@@ -1110,11 +1110,6 @@ p {
   background: color-mix(in srgb, var(--surface) 88%, var(--bg));
   border-color: color-mix(in srgb, var(--border) 88%, transparent);
   box-shadow: none;
-}
-
-.projectModalSectionTitle {
-  padding-left: 12px;
-  border-left: 3px solid color-mix(in srgb, var(--primary) 68%, transparent);
 }
 
 .projectModalList {
@@ -1155,32 +1150,115 @@ p {
   gap: 12px;
 }
 
-.projectMetaRow {
+.detailModalHeaderTop {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detailModalHeaderCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detailModalHeaderActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  padding-right: 56px;
+}
+
+.detailModalEyebrow {
+  margin: 0;
+  color: color-mix(in srgb, var(--primary) 76%, var(--text-strong));
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.detailModalMetaStack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detailModalMetaLine {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin: 0;
-  padding: 0;
-  list-style: none;
+  color: color-mix(in srgb, var(--text-strong) 88%, var(--muted));
+  font-size: 0.94rem;
+  line-height: 1.6;
 }
 
-.projectMetaPill {
-  border-radius: 999px;
-  padding: 8px 12px;
-}
-
-.projectMetaLabel {
+.detailModalMetaLineSecondary {
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.72rem;
+  font-size: 0.89rem;
 }
 
-:root[data-theme='dark'] .projectMetaPill {
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
-  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+.detailModalMetaFragment {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detailModalMetaSeparator {
+  color: color-mix(in srgb, var(--muted) 72%, transparent);
+}
+
+.detailModalLead {
+  margin: 4px 0 0;
+  color: color-mix(in srgb, var(--muted) 92%, var(--text-strong));
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.detailModalTags {
+  margin-top: 2px;
+}
+
+.detailModalTags .skillBadge {
+  border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+  background: color-mix(in srgb, var(--surface) 90%, var(--bg));
+  color: color-mix(in srgb, var(--text-strong) 92%, var(--primary));
+  box-shadow: none;
+}
+
+.detailModalInlineAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--text-strong);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.detailModalInlineActionPrimary {
+  color: var(--primary);
+}
+
+.detailModalInlineLink {
+  color: var(--primary);
   font-weight: 500;
+  text-decoration: none;
+}
+
+.detailModalSectionTitle {
+  color: var(--text-strong);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.detailModalSectionDivider {
+  padding-top: 20px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
 }
 
 .modalActions {
@@ -1254,8 +1332,16 @@ p {
 }
 
 @media (min-width: 700px) {
-  .projectMetaRow {
-    gap: 10px;
+  .detailModalHeaderTop {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .detailModalHeaderActions {
+    justify-content: flex-end;
+    max-width: min(260px, 100%);
+    padding-right: 64px;
   }
 }
 
@@ -2022,40 +2108,40 @@ p {
   padding: clamp(16px, 1.4vw, 20px) clamp(16px, 1.4vw, 20px) 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+}
+
+.activityCardOrg {
+  margin: 0;
+  color: color-mix(in srgb, var(--primary) 74%, var(--text-strong));
+  font-size: 0.89rem;
+  font-weight: 500;
+  line-height: 1.45;
 }
 
 .activityCardTitle {
   margin: 0;
   color: var(--text);
-  font-size: 1.08rem;
+  font-size: 1.06rem;
   font-weight: 600;
   line-height: 1.35;
 }
 
-.activityCardMeta,
 .activityCardDates {
   margin: 0;
-}
-
-.activityCardMeta {
-  color: var(--text-strong);
-  font-size: 0.93rem;
-}
-
-.activityCardDates {
-  margin-top: 2px;
+  color: var(--muted);
   font-size: 0.84rem;
+  line-height: 1.5;
 }
 
 .activityCardSummary {
-  margin: 6px 0 0;
+  margin: 2px 0 0;
   color: var(--muted);
   font-size: 0.92rem;
-  line-height: 1.5;
+  line-height: 1.6;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -2112,7 +2198,7 @@ p {
 .activityTagFilter:focus-visible,
 .activityCardArrow:focus-visible,
 .activityModalGalleryItem:focus-visible,
-.activityModalPrimaryLink:focus-visible {
+.detailModalInlineAction:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
@@ -2175,26 +2261,22 @@ p {
 }
 
 .activityModalBody {
-  gap: 22px;
+  gap: 24px;
 }
 
 .activityModalHeader {
-  align-items: center;
-  text-align: center;
-  gap: 6px;
+  align-items: stretch;
+  text-align: left;
+  gap: 14px;
 }
 
 .activityModalTitle {
   padding-right: 0;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.28rem, 2.2vw, 1.68rem);
 }
 
-.activityModalMeta {
-  color: var(--text-strong);
-}
-
-.activityModalDates {
-  margin: 0;
+.activityModalLead {
+  max-width: 62ch;
 }
 
 .activityModalSection {
@@ -2204,13 +2286,22 @@ p {
 }
 
 .activityModalDescription {
-  padding: clamp(16px, 2vw, 20px);
-  border-radius: calc(var(--radius-lg) - 6px);
-  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
-  background: color-mix(in srgb, var(--surface) 94%, var(--bg));
-  color: var(--text-strong);
-  line-height: 1.75;
-  white-space: pre-line;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.activityModalContentGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+}
+
+.activityModalContentGroupFirst {
+  padding-top: 0;
+  border-top: 0;
 }
 
 .activityModalGalleryHeader {
@@ -2218,6 +2309,7 @@ p {
   align-items: baseline;
   justify-content: flex-start;
   gap: 12px;
+  margin-bottom: 2px;
 }
 
 .activityModalGallery {
@@ -2250,34 +2342,6 @@ p {
   min-height: 220px;
   border-radius: calc(var(--radius-lg) - 6px);
   border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
-}
-
-.activityModalFooter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.activityModalTags {
-  margin: 0;
-}
-
-.activityModalPrimaryLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 40px;
-  padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
-  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
-  color: var(--primary);
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: var(--shadow-soft);
 }
 
 .certificationsSectionInner {
@@ -2726,11 +2790,22 @@ p {
   }
 
   .activityTagFilter:hover,
-  .activityTagFilter:focus-visible,
-  .activityModalPrimaryLink:hover,
-  .activityModalPrimaryLink:focus-visible {
+  .activityTagFilter:focus-visible {
     transform: translateY(-1px);
     box-shadow: var(--shadow-card);
+  }
+
+  .detailModalInlineAction:hover,
+  .detailModalInlineAction:focus-visible {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .detailModalInlineLink:hover,
+  .detailModalInlineLink:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 
   .activityCardArrow:hover,
@@ -2875,10 +2950,6 @@ p {
 
   .activityModalContainer {
     width: min(100%, calc(100vw - 24px));
-  }
-
-  .activityModalFooter {
-    justify-content: center;
   }
 
   .imageLightboxContent,
