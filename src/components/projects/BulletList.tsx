@@ -13,12 +13,12 @@ function BulletList({ items, className = '' }: BulletListProps) {
           const body = item.slice(separatorIndex + 2)
 
           return (
-            <li key={item} className="flex gap-3">
+            <li key={item} className="detailModalBulletItem">
               <span
                 aria-hidden="true"
-                className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:color-mix(in_srgb,var(--muted)_72%,transparent)]"
+                className="detailModalBulletDot"
               />
-              <p className="text-sm leading-6 text-[color:var(--muted)]">
+              <p className="detailModalBodyText text-sm leading-6 text-[color:var(--muted)]">
                 <strong className="text-[color:var(--text-strong)]">{heading}:</strong> {body}
               </p>
             </li>
@@ -26,12 +26,12 @@ function BulletList({ items, className = '' }: BulletListProps) {
         }
 
         return (
-          <li key={item} className="flex gap-3">
+          <li key={item} className="detailModalBulletItem">
             <span
               aria-hidden="true"
-              className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:color-mix(in_srgb,var(--muted)_72%,transparent)]"
+              className="detailModalBulletDot"
             />
-            <p className="text-sm leading-6 text-[color:var(--muted)]">
+            <p className="detailModalBodyText text-sm leading-6 text-[color:var(--muted)]">
               {item}
             </p>
           </li>

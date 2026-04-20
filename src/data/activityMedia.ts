@@ -39,6 +39,23 @@ import sheCodesHackathon4 from '../assets/activities/shecodes-hackathon-2023/4.j
 import sheCodesHackathon5 from '../assets/activities/shecodes-hackathon-2023/5.jpg'
 import sheCodesHackathon6 from '../assets/activities/shecodes-hackathon-2023/6.jpg'
 
+import sitiGroupCover from '../assets/activities/siti-group/cover.jpg'
+import sitiGroup2 from '../assets/activities/siti-group/2.jpg'
+import sitiGroup3 from '../assets/activities/siti-group/3.jpg'
+import sitiGroup4 from '../assets/activities/siti-group/4.jpg'
+import sitiGroup5 from '../assets/activities/siti-group/5.jpg'
+import sitiGroup6 from '../assets/activities/siti-group/6.jpg'
+import sitiGroup7 from '../assets/activities/siti-group/7.jpg'
+import sitiGroup8 from '../assets/activities/siti-group/8.jpg'
+import sitiGroup9 from '../assets/activities/siti-group/9.jpg'
+import sitiGroup10 from '../assets/activities/siti-group/10.jpg'
+import sitiGroup11 from '../assets/activities/siti-group/11.jpg'
+import sitiGroup12 from '../assets/activities/siti-group/12.jpg'
+import sitiGroup13 from '../assets/activities/siti-group/13.png'
+import sitiGroup14 from '../assets/activities/siti-group/14.jpg'
+import sitiGroup15 from '../assets/activities/siti-group/15.jpg'
+import sitiGroup16 from '../assets/activities/siti-group/16.jpg'
+
 type ActivityMedia = {
   image?: string
   images: string[]
@@ -101,6 +118,27 @@ const activityMediaBySlug: Record<string, ActivityMedia> = {
       sheCodesHackathon4,
       sheCodesHackathon5,
       sheCodesHackathon6,
+    ],
+  },
+  'sitigroup-human-resources-logistics-journey': {
+    image: sitiGroupCover,
+    images: [
+      sitiGroupCover,
+      sitiGroup2,
+      sitiGroup3,
+      sitiGroup4,
+      sitiGroup5,
+      sitiGroup6,
+      sitiGroup7,
+      sitiGroup8,
+      sitiGroup9,
+      sitiGroup10,
+      sitiGroup11,
+      sitiGroup12,
+      sitiGroup13,
+      sitiGroup14,
+      sitiGroup15,
+      sitiGroup16,
     ],
   },
 }

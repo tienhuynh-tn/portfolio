@@ -14,22 +14,91 @@ type ActivityCardProps = {
 }
 
 const AUTOPLAY_DELAY_MS = 4200
-const WORK_MODE_TOKENS = new Set(['remote', 'hybrid', 'on-site', 'onsite'])
+const PREVIEW_TAG_LIMIT = 3
+const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const MONTH_INDEX: Record<string, number> = {
+  jan: 0,
+  feb: 1,
+  mar: 2,
+  apr: 3,
+  may: 4,
+  jun: 5,
+  jul: 6,
+  aug: 7,
+  sep: 8,
+  oct: 9,
+  nov: 10,
+  dec: 11,
+}
+const PREVIEW_TAG_PRIORITY: Record<string, number> = {
+  Leadership: 0,
+  Operations: 1,
+  Logistics: 2,
+  Organizer: 3,
+  Speaker: 4,
+  Mentor: 5,
+  'Human Resources': 6,
+  Backend: 7,
+  Competition: 8,
+  Volunteer: 20,
+  Community: 21,
+}
 
-function getPreviewLocation(location?: string) {
-  if (!location?.trim()) return ''
+function formatPreviewDatePoint(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return ''
+  if (trimmed.toLowerCase() === 'present') return 'Present'
 
-  return location
-    .split('·')
-    .map((part) => part.trim())
-    .filter((part) => part && !WORK_MODE_TOKENS.has(part.toLowerCase()))
-    .join(' · ')
+  const exactDateMatch = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
+  if (exactDateMatch) {
+    const [, day, month, year] = exactDateMatch
+    const exactDate = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)))
+
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).format(exactDate)
+  }
+
+  const monthYearMatch = trimmed.match(/^([A-Za-z]{3,9})\s+(\d{4})$/)
+  if (!monthYearMatch) return trimmed
+
+  const [, monthText, yearText] = monthYearMatch
+  const monthIndex = MONTH_INDEX[monthText.slice(0, 3).toLowerCase()]
+  if (monthIndex === undefined) return trimmed
+
+  return `${MONTH_LABELS[monthIndex]} ${yearText}`
 }
 
 function getPreviewDate(date: string) {
-  return date
+  const previewDate = date
     .split('·')
     .map((part) => part.trim())[0] ?? ''
+
+  if (!previewDate) return ''
+
+  return previewDate
+    .split(/\s+[–-]\s+/)
+    .map((part) => formatPreviewDatePoint(part))
+    .filter(Boolean)
+    .join(' - ')
+}
+
+function getPreviewTags(tags: ActivityItem['tags']) {
+  return [...tags]
+    .sort((left, right) => {
+      const leftPriority = PREVIEW_TAG_PRIORITY[left] ?? 10
+      const rightPriority = PREVIEW_TAG_PRIORITY[right] ?? 10
+
+      if (leftPriority !== rightPriority) {
+        return leftPriority - rightPriority
+      }
+
+      return left.localeCompare(right)
+    })
+    .slice(0, PREVIEW_TAG_LIMIT)
 }
 
 function ActivityCard({ activity, onSelect }: ActivityCardProps) {
@@ -54,9 +123,8 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
     [activity.image, activity.images, failedImages],
   )
   const hasMultipleImages = images.length > 1
-  const previewLocation = getPreviewLocation(activity.location)
   const previewDate = getPreviewDate(activity.date)
-  const supportingDetails = [previewLocation, previewDate].filter(Boolean).join(' • ')
+  const previewTags = getPreviewTags(activity.tags)
 
   useEffect(() => {
     setFailedImages([])
@@ -193,14 +261,12 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
       <div className="activityCardBody">
         <p className="activityCardOrg">{activity.org}</p>
         <h3 className="activityCardTitle">{activity.title}</h3>
-        {supportingDetails ? (
-          <p className="itemDates activityCardDates">{supportingDetails}</p>
-        ) : null}
+        {previewDate ? <p className="itemDates activityCardDates">{previewDate}</p> : null}
         <p className="activityCardSummary">{activity.summary}</p>
       </div>
 
       <ul className="skillsBadges activityCardTags" aria-label={`${activity.title} tags`}>
-        {activity.tags.map((tag) => (
+        {previewTags.map((tag) => (
           <li key={tag} className="skillBadge">
             <span>{tag}</span>
           </li>

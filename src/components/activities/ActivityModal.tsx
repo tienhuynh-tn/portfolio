@@ -89,6 +89,47 @@ function capitalizeFirst(text: string) {
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
+function normalizeSentenceForComparison(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function getWordSet(text: string) {
+  return new Set(
+    normalizeSentenceForComparison(text)
+      .split(' ')
+      .filter((word) => word.length > 2),
+  )
+}
+
+function isSentenceTooSimilar(candidate: string, existing: string[]) {
+  const candidateWords = getWordSet(candidate)
+  if (!candidateWords.size) return true
+
+  return existing.some((sentence) => {
+    const existingWords = getWordSet(sentence)
+    if (!existingWords.size) return false
+
+    let overlapCount = 0
+    candidateWords.forEach((word) => {
+      if (existingWords.has(word)) overlapCount += 1
+    })
+
+    const overlapRatio = overlapCount / Math.min(candidateWords.size, existingWords.size)
+    return overlapRatio >= 0.65
+  })
+}
+
+function splitIntoSentences(text: string) {
+  return text
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean)
+}
+
 function normalizeIntroText(text: string) {
   let normalized = text.trim()
   const colonIndex = normalized.indexOf(': ')
@@ -119,14 +160,15 @@ function refineSummaryContinuation(summary: string, introText: string) {
 }
 
 function mergeSummary(summary: string, introText: string) {
-  const parts = [summary.trim()]
+  const parts = [summary.trim()].filter(Boolean)
 
   if (introText) {
     const continuation = refineSummaryContinuation(summary, introText)
-
-    if (continuation && !summary.toLowerCase().includes(continuation.toLowerCase())) {
-      parts.push(continuation)
-    }
+    splitIntoSentences(continuation).forEach((sentence) => {
+      if (!isSentenceTooSimilar(sentence, parts)) {
+        parts.push(sentence)
+      }
+    })
   }
 
   return parts
@@ -141,12 +183,7 @@ function cleanHighlightText(item: string) {
 
 function deriveActivityTags(activity: ActivityItem, introText: string, cleanHighlights: string[]) {
   const tags = new Set<string>(activity.tags)
-  const source = [
-    activity.org,
-    activity.summary,
-    introText,
-    cleanHighlights.join(' '),
-  ]
+  const source = [activity.org, activity.summary, introText, cleanHighlights.join(' ')]
     .join(' ')
     .toLowerCase()
 
@@ -168,6 +205,7 @@ function parseActivityDescription(description: string) {
     .filter(Boolean)
 
   const intro: string[] = []
+  let rolesProgression: string[] = []
   let responsibilities: string[] = []
   let highlights: string[] = []
 
@@ -175,6 +213,11 @@ function parseActivityDescription(description: string) {
     const lines = parseDescriptionBlock(block)
     const [headingLine = ''] = lines
     const normalizedHeading = headingLine.replace(/:$/, '').toLowerCase()
+
+    if (normalizedHeading === 'roles & progression' || normalizedHeading === 'milestones') {
+      rolesProgression = parseBulletLines(lines.slice(1))
+      return
+    }
 
     if (normalizedHeading === 'responsibilities') {
       responsibilities = parseBulletLines(lines.slice(1))
@@ -189,7 +232,7 @@ function parseActivityDescription(description: string) {
     intro.push(block)
   })
 
-  return { intro, responsibilities, highlights }
+  return { intro, rolesProgression, responsibilities, highlights }
 }
 
 function renderMetaLine(items: string[], secondary = false) {
@@ -198,10 +241,23 @@ function renderMetaLine(items: string[], secondary = false) {
   if (!visibleItems.length) return null
 
   return (
-    <p className={secondary ? 'detailModalMetaLine detailModalMetaLineSecondary' : 'detailModalMetaLine'}>
+    <p
+      className={
+        secondary
+          ? 'detailModalMetaLine detailModalMetaLineSecondary'
+          : 'detailModalMetaLine'
+      }
+    >
       {visibleItems.map((item, index) => (
-        <span key={`${secondary ? 'secondary' : 'primary'}-${item}-${index}`} className="detailModalMetaFragment">
-          {index > 0 ? <span className="detailModalMetaSeparator" aria-hidden="true">•</span> : null}
+        <span
+          key={`${secondary ? 'secondary' : 'primary'}-${item}-${index}`}
+          className="detailModalMetaFragment"
+        >
+          {index > 0 ? (
+            <span className="detailModalMetaSeparator" aria-hidden="true">
+              •
+            </span>
+          ) : null}
           <span>{item}</span>
         </span>
       ))}
@@ -209,7 +265,7 @@ function renderMetaLine(items: string[], secondary = false) {
   )
 }
 
-function ActivityModalContent({ activity, onClose }: ActivityModalProps) {
+function ActivityModal({ activity, onClose }: ActivityModalProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
   const [failedImages, setFailedImages] = useState<string[]>([])
@@ -233,7 +289,9 @@ function ActivityModalContent({ activity, onClose }: ActivityModalProps) {
   const primaryLink = activity.links?.[0]
   const { place } = splitActivityLocation(activity.location)
   const { dateRange } = splitActivityDate(activity.date)
-  const { intro, responsibilities, highlights } = parseActivityDescription(activity.description)
+  const { intro, rolesProgression, responsibilities, highlights } = parseActivityDescription(
+    activity.description,
+  )
   const effectiveLightboxImage =
     lightboxImage && images.includes(lightboxImage) ? lightboxImage : null
   const introUrls = extractUrls(intro[0] ?? '')
@@ -243,7 +301,10 @@ function ActivityModalContent({ activity, onClose }: ActivityModalProps) {
   const summaryProfileLink = introUrls[0] ?? ''
   const primaryMetaLine = renderMetaLine([place, dateRange], true)
   const modalTags = deriveActivityTags(activity, cleanIntroText, cleanHighlights)
-  const hasBodySections = responsibilities.length > 0 || cleanHighlights.length > 0
+  const hasBodySections =
+    rolesProgression.length > 0 ||
+    responsibilities.length > 0 ||
+    cleanHighlights.length > 0
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -302,6 +363,17 @@ function ActivityModalContent({ activity, onClose }: ActivityModalProps) {
     }
   }, [effectiveLightboxImage, onClose])
 
+  useEffect(() => {
+    setFailedImages([])
+    setLightboxImage(null)
+  }, [activity.id])
+
+  useEffect(() => {
+    if (lightboxImage && !images.includes(lightboxImage)) {
+      setLightboxImage(images[0] ?? null)
+    }
+  }, [images, lightboxImage])
+
   const modalContent = (
     <div className="modalOverlay" role="presentation" onClick={onClose}>
       <article
@@ -341,7 +413,10 @@ function ActivityModalContent({ activity, onClose }: ActivityModalProps) {
                     ) : null}
 
                     {modalTags.length ? (
-                      <ul className="skillsBadges detailModalTags" aria-label={`${activity.title} tags`}>
+                      <ul
+                        className="skillsBadges detailModalTags"
+                        aria-label={`${activity.title} tags`}
+                      >
                         {modalTags.map((tag) => (
                           <li key={tag} className="skillBadge">
                             <span>{tag}</span>
@@ -350,51 +425,72 @@ function ActivityModalContent({ activity, onClose }: ActivityModalProps) {
                       </ul>
                     ) : null}
 
-                    <p className="detailModalLead activityModalLead">
-                      {mergedSummary}
-                      {summaryProfileLink ? (
-                        <>
-                          {' '}
+                    <div className="detailModalIntroSection">
+                      <p className="detailModalLead activityModalLead">
+                        {mergedSummary}
+                        {summaryProfileLink ? (
+                          <>
+                            {' '}
+                            <a
+                              href={summaryProfileLink}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="detailModalInlineLink"
+                            >
+                              Google for Developers profile
+                            </a>
+                            .
+                          </>
+                        ) : null}
+                      </p>
+
+                      {primaryLink ? (
+                        <div className="detailModalHeaderActions">
                           <a
-                            href={summaryProfileLink}
+                            href={primaryLink.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="detailModalInlineLink"
+                            className="detailModalInlineAction"
+                            aria-label={`Open link for ${activity.title}`}
                           >
-                            Google for Developers profile
+                            <span>Open link</span>
+                            <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
                           </a>
-                          .
-                        </>
+                        </div>
                       ) : null}
-                    </p>
+                    </div>
                   </div>
-
-                  {primaryLink ? (
-                    <a
-                      href={primaryLink.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="detailModalInlineAction"
-                      aria-label={`Open link for ${activity.title}`}
-                    >
-                      <span>Open link</span>
-                      <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
-                    </a>
-                  ) : null}
                 </div>
               </header>
 
               {hasBodySections ? (
-                <section className="activityModalSection">
+                <section className="activityModalSection activityModalTextSection">
                   <div className="activityModalDescription">
-                    {responsibilities.length ? (
+                    {rolesProgression.length ? (
                       <div className="activityModalContentGroup activityModalContentGroupFirst">
-                        <h3 className="itemTitle detailModalSectionTitle">Responsibilities</h3>
+                        <h3 className="itemTitle detailModalSectionTitle">
+                          Roles & Progression
+                        </h3>
+                        <BulletList items={rolesProgression} className="projectModalList" />
+                      </div>
+                    ) : null}
+
+                    {responsibilities.length ? (
+                      <div
+                        className={
+                          rolesProgression.length
+                            ? 'activityModalContentGroup'
+                            : 'activityModalContentGroup activityModalContentGroupFirst'
+                        }
+                      >
+                        <h3 className="itemTitle detailModalSectionTitle">
+                          Responsibilities
+                        </h3>
                         <BulletList items={responsibilities} className="projectModalList" />
                       </div>
                     ) : null}
 
-                    {highlights.length ? (
+                    {cleanHighlights.length ? (
                       <div className="activityModalContentGroup">
                         <h3 className="itemTitle detailModalSectionTitle">Highlights</h3>
                         <BulletList items={cleanHighlights} className="projectModalList" />
@@ -460,10 +556,6 @@ function ActivityModalContent({ activity, onClose }: ActivityModalProps) {
 
   if (typeof document === 'undefined') return null
   return createPortal(modalContent, document.body)
-}
-
-function ActivityModal(props: ActivityModalProps) {
-  return <ActivityModalContent key={props.activity.id} {...props} />
 }
 
 export default ActivityModal

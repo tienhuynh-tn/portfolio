@@ -8,6 +8,10 @@ export type ActivityTag =
   | 'Mentor'
   | 'Community'
   | 'Backend'
+  | 'Leadership'
+  | 'Operations'
+  | 'Human Resources'
+  | 'Logistics'
 
 export type ActivityLink = {
   label: 'Details' | 'Proof' | 'Post'
@@ -32,12 +36,14 @@ export type ActivityItem = {
 
 type ActivityDescriptionInput = {
   description?: string
+  rolesProgression?: string[]
   responsibilities?: string[]
   highlights?: string[]
 }
 
 function buildActivityDescription({
   description,
+  rolesProgression,
   responsibilities,
   highlights,
 }: ActivityDescriptionInput) {
@@ -45,6 +51,10 @@ function buildActivityDescription({
 
   if (description?.trim()) {
     blocks.push(description.trim())
+  }
+
+  if (rolesProgression?.length) {
+    blocks.push(['Roles & Progression:', ...rolesProgression.map((item) => `- ${item}`)].join('\n'))
   }
 
   if (responsibilities?.length) {
@@ -209,42 +219,24 @@ export const activities: ActivityItem[] = [
     featured: true,
   },
   {
-    id: 'sitigroup-leader-human-resources-logistics-team',
-    title: 'Leader of Human Resources – Logistics Team',
-    org: 'Cộng đồng Sinh viên Tình nguyện SiTiGroup - Student Volunteer Community SiTiGroup',
+    id: 'sitigroup-human-resources-logistics-journey',
+    title: 'Human Resources & Logistics Team',
+    org: 'Cộng đồng Sinh viên Tình nguyện SiTiGroup – Student Volunteer Community SiTiGroup',
     role: 'Volunteer / Student Community',
-    date: 'Nov 2020 - May 2021 · 7 mos',
-    summary: 'Led human resources and logistics support for student volunteer community activities.',
-    description:
-      'Served as Leader of Human Resources in the Logistics Team for the SiTiGroup student volunteer community.',
-    tags: ['Organizer', 'Volunteer', 'Community'],
-    ...getActivityMedia('sitigroup-human-resources-logistics-team-leader'),
-    featured: false,
-  },
-  {
-    id: 'sitigroup-member-logistics-team',
-    title: 'Member of the Logistics Team',
-    org: 'Cộng đồng Sinh viên Tình nguyện SiTiGroup - Student Volunteer Community SiTiGroup',
-    role: 'Volunteer / Student Community',
-    date: 'Nov 2019 - Nov 2020 · 1 yr 1 mo',
-    summary: 'Supported logistics operations for student volunteer community programs.',
-    description:
-      'Contributed as a member of the Logistics Team for the SiTiGroup student volunteer community.',
-    tags: ['Volunteer', 'Community'],
-    ...getActivityMedia('sitigroup-logistics-team-member'),
-    featured: false,
-  },
-  {
-    id: 'sitigroup-member-human-resource-team',
-    title: 'Member of the Human Resource Team',
-    org: 'Cộng đồng Sinh viên Tình nguyện SiTiGroup - Student Volunteer Community SiTiGroup',
-    role: 'Volunteer / Student Community',
-    date: 'May 2021 - Sep 2022 · 1 yr 5 mos',
-    summary: 'Supported human resource activities in the student volunteer community.',
-    description:
-      'Contributed as a member of the Human Resource Team for the SiTiGroup student volunteer community.',
-    tags: ['Volunteer', 'Community'],
-    ...getActivityMedia('sitigroup-human-resource-team-member'),
+    date: 'Nov 2019 – Sep 2022',
+    summary:
+      'Contributed to logistics and human resource operations within the SiTiGroup student volunteer community, supporting the organization and execution of community initiatives while progressing from team member to a leadership role.',
+    description: buildActivityDescription({
+      description:
+        'Contributed to logistics and human resource operations within the SiTiGroup student volunteer community, supporting the organization and execution of community initiatives. Progressed from team member to a leadership role, coordinating people, planning operations, and ensuring smooth on-the-ground execution.',
+      rolesProgression: [
+        'Member of the Logistics Team (Nov 2019 – Nov 2020)',
+        'Leader of Human Resources – Logistics Team (Nov 2020 – May 2021)',
+        'Member of the Human Resource Team (May 2021 – Sep 2022)',
+      ],
+    }),
+    tags: ['Leadership', 'Operations', 'Human Resources', 'Logistics', 'Volunteer', 'Community'],
+    ...getActivityMedia('sitigroup-human-resources-logistics-journey'),
     featured: false,
   },
   {

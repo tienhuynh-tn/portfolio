@@ -1087,11 +1087,11 @@ p {
 }
 
 .projectModalHeader {
-  gap: 14px;
+  gap: 10px;
 }
 
 .projectModalTitle {
-  padding-right: 0;
+  padding-right: 40px;
 }
 
 .projectModalTagline {
@@ -1112,8 +1112,19 @@ p {
   box-shadow: none;
 }
 
+.projectModalSectionTitle {
+  padding-left: 12px;
+  border-left: 3px solid color-mix(in srgb, var(--primary) 68%, transparent);
+}
+
 .projectModalList {
   margin-top: 0.25rem;
+  width: 100%;
+  max-width: 72ch;
+}
+
+.projectModalList li {
+  min-width: 0;
 }
 
 .projectModalActions {
@@ -1148,6 +1159,18 @@ p {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.projectMetaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: color-mix(in srgb, var(--text-strong) 88%, var(--muted));
+  font-size: 0.94rem;
+  line-height: 1.6;
 }
 
 .detailModalHeaderTop {
@@ -1209,10 +1232,53 @@ p {
 }
 
 .detailModalLead {
+  display: block;
   margin: 4px 0 0;
   color: color-mix(in srgb, var(--muted) 92%, var(--text-strong));
   font-size: 0.98rem;
-  line-height: 1.75;
+  line-height: 1.65;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-align: left;
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.detailModalIntroSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+}
+
+.detailModalBodyText {
+  display: block;
+  margin: 0;
+  text-align: left;
+  line-height: 1.65;
+  letter-spacing: normal;
+  word-spacing: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.detailModalBulletItem {
+  position: relative;
+  display: block;
+  padding-left: 16px;
+}
+
+.detailModalBulletDot {
+  position: absolute;
+  top: 0.72rem;
+  left: 0;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--muted) 72%, transparent);
 }
 
 .detailModalTags {
@@ -1220,9 +1286,11 @@ p {
 }
 
 .detailModalTags .skillBadge {
-  border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
-  background: color-mix(in srgb, var(--surface) 90%, var(--bg));
-  color: color-mix(in srgb, var(--text-strong) 92%, var(--primary));
+  padding: 3px 8px;
+  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  color: color-mix(in srgb, var(--primary) 82%, var(--text-strong));
+  font-size: 0.7rem;
   box-shadow: none;
 }
 
@@ -1259,6 +1327,25 @@ p {
 .detailModalSectionDivider {
   padding-top: 20px;
   border-top: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+}
+
+.projectMetaPill {
+  border-radius: 999px;
+  padding: 8px 12px;
+}
+
+.projectMetaLabel {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+}
+
+:root[data-theme='dark'] .projectMetaPill {
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  color: var(--text-strong);
+  font-weight: 500;
 }
 
 .modalActions {
@@ -1332,16 +1419,8 @@ p {
 }
 
 @media (min-width: 700px) {
-  .detailModalHeaderTop {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-
-  .detailModalHeaderActions {
-    justify-content: flex-end;
-    max-width: min(260px, 100%);
-    padding-right: 64px;
+  .projectMetaRow {
+    gap: 10px;
   }
 }
 
@@ -2108,40 +2187,53 @@ p {
   padding: clamp(16px, 1.4vw, 20px) clamp(16px, 1.4vw, 20px) 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .activityCardOrg {
   margin: 0;
-  color: color-mix(in srgb, var(--primary) 74%, var(--text-strong));
-  font-size: 0.89rem;
-  font-weight: 500;
-  line-height: 1.45;
+  color: var(--primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .activityCardTitle {
   margin: 0;
   color: var(--text);
-  font-size: 1.06rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.35;
 }
 
+.activityCardMeta,
 .activityCardDates {
   margin: 0;
-  color: var(--muted);
+}
+
+.activityCardMeta {
+  color: var(--text-strong);
+  font-size: 0.93rem;
+}
+
+.activityCardDates {
+  margin-top: 2px;
+  color: color-mix(in srgb, var(--text-strong) 72%, var(--primary));
   font-size: 0.84rem;
-  line-height: 1.5;
 }
 
 .activityCardSummary {
-  margin: 2px 0 0;
+  margin: 6px 0 0;
   color: var(--muted);
   font-size: 0.92rem;
-  line-height: 1.6;
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -2149,6 +2241,19 @@ p {
 .activityCardTags {
   margin-top: auto;
   padding: 14px clamp(16px, 1.4vw, 20px) clamp(16px, 1.4vw, 20px);
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.activityCardTags .skillBadge {
+  padding: 3px 8px;
+  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  color: color-mix(in srgb, var(--primary) 82%, var(--text-strong));
+  font-size: 0.7rem;
+  box-shadow: none;
 }
 
 .activityFiltersPanel {
@@ -2198,7 +2303,7 @@ p {
 .activityTagFilter:focus-visible,
 .activityCardArrow:focus-visible,
 .activityModalGalleryItem:focus-visible,
-.detailModalInlineAction:focus-visible {
+.activityModalPrimaryLink:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
@@ -2261,7 +2366,7 @@ p {
 }
 
 .activityModalBody {
-  gap: 24px;
+  gap: 22px;
 }
 
 .activityModalHeader {
@@ -2276,7 +2381,9 @@ p {
 }
 
 .activityModalLead {
-  max-width: 62ch;
+  max-width: 72ch;
+  width: 100%;
+  text-align: left;
 }
 
 .activityModalSection {
@@ -2285,18 +2392,29 @@ p {
   gap: 14px;
 }
 
+.activityModalTextSection {
+  display: block;
+}
+
 .activityModalDescription {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
+  display: block;
+  width: 100%;
+  max-width: 72ch;
+  min-width: 0;
+}
+
+.activityModalDescription > * + * {
+  margin-top: 26px;
 }
 
 .activityModalContentGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: block;
   padding-top: 20px;
   border-top: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+}
+
+.activityModalContentGroup > * + * {
+  margin-top: 12px;
 }
 
 .activityModalContentGroupFirst {
@@ -2309,7 +2427,6 @@ p {
   align-items: baseline;
   justify-content: flex-start;
   gap: 12px;
-  margin-bottom: 2px;
 }
 
 .activityModalGallery {
@@ -2342,6 +2459,34 @@ p {
   min-height: 220px;
   border-radius: calc(var(--radius-lg) - 6px);
   border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+}
+
+.activityModalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.activityModalTags {
+  margin: 0;
+}
+
+.activityModalPrimaryLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
 }
 
 .certificationsSectionInner {
@@ -2790,22 +2935,11 @@ p {
   }
 
   .activityTagFilter:hover,
-  .activityTagFilter:focus-visible {
+  .activityTagFilter:focus-visible,
+  .activityModalPrimaryLink:hover,
+  .activityModalPrimaryLink:focus-visible {
     transform: translateY(-1px);
     box-shadow: var(--shadow-card);
-  }
-
-  .detailModalInlineAction:hover,
-  .detailModalInlineAction:focus-visible {
-    color: var(--primary);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-
-  .detailModalInlineLink:hover,
-  .detailModalInlineLink:focus-visible {
-    text-decoration: underline;
-    text-underline-offset: 4px;
   }
 
   .activityCardArrow:hover,
@@ -2950,6 +3084,10 @@ p {
 
   .activityModalContainer {
     width: min(100%, calc(100vw - 24px));
+  }
+
+  .activityModalFooter {
+    justify-content: center;
   }
 
   .imageLightboxContent,
