@@ -1,0 +1,74 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="180" y1="110" x2="1410" y2="790" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8ED"/>
+      <stop offset="1" stop-color="#FFE7C8"/>
+    </linearGradient>
+    <linearGradient id="card" x1="440" y1="150" x2="1160" y2="730" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFF7EC"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="585" y1="255" x2="1020" y2="650" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFB347"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <filter id="shadow" x="404" y="140" width="792" height="620" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="18"/>
+      <feGaussianBlur stdDeviation="22"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.956863 0 0 0 0 0.45098 0 0 0 0 0.0862745 0 0 0 0.16 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_1"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_1" result="shape"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" rx="36" fill="url(#bg)"/>
+  <circle cx="258" cy="170" r="124" fill="#FFE0B2" fill-opacity="0.72"/>
+  <circle cx="1346" cy="724" r="158" fill="#FFD5A5" fill-opacity="0.55"/>
+  <circle cx="1292" cy="182" r="60" fill="#FFF1DA"/>
+
+  <path d="M220 610C298 560 360 536 432 536C522 536 586 586 660 586C732 586 778 546 846 546C904 546 946 574 998 574C1072 574 1132 506 1214 506C1268 506 1326 530 1386 574" stroke="#F5B35B" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="448" y="166" width="704" height="532" rx="38" fill="url(#card)"/>
+    <rect x="448.75" y="166.75" width="702.5" height="530.5" rx="37.25" stroke="#F8D9A6" stroke-width="1.5"/>
+  </g>
+
+  <rect x="604" y="232" width="392" height="252" rx="34" fill="url(#accent)"/>
+  <path d="M686 402C702 362 744 334 790 334C838 334 878 362 894 402" stroke="#FFF6E8" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="790" cy="292" r="34" fill="#FFF6E8"/>
+  <path d="M860 402C876 362 918 334 964 334" stroke="#FFDDB0" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="964" cy="298" r="24" fill="#FFDDB0"/>
+  <path d="M608 402C624 362 666 334 712 334" stroke="#FFDDB0" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="712" cy="298" r="24" fill="#FFDDB0"/>
+
+  <rect x="574" y="532" width="452" height="26" rx="13" fill="#FFE4BE"/>
+  <rect x="574" y="582" width="338" height="22" rx="11" fill="#FFECD0"/>
+  <rect x="574" y="624" width="288" height="22" rx="11" fill="#FFF2DE"/>
+
+  <g opacity="0.95">
+    <ellipse cx="1132" cy="340" rx="44" ry="60" transform="rotate(18 1132 340)" fill="#F97316"/>
+    <ellipse cx="1112" cy="404" rx="30" ry="42" transform="rotate(18 1112 404)" fill="#FFB347"/>
+    <ellipse cx="1048" cy="302" rx="18" ry="22" fill="#FFD08C"/>
+    <ellipse cx="1088" cy="268" rx="18" ry="22" fill="#FFD08C"/>
+    <ellipse cx="1136" cy="250" rx="18" ry="22" fill="#FFD08C"/>
+    <ellipse cx="1182" cy="258" rx="18" ry="22" fill="#FFD08C"/>
+    <ellipse cx="1218" cy="292" rx="18" ry="22" fill="#FFD08C"/>
+  </g>
+
+  <g opacity="0.95">
+    <ellipse cx="520" cy="516" rx="36" ry="48" transform="rotate(-18 520 516)" fill="#FDBA74"/>
+    <ellipse cx="538" cy="568" rx="24" ry="34" transform="rotate(-18 538 568)" fill="#FB923C"/>
+    <ellipse cx="464" cy="472" rx="14" ry="18" fill="#FED7AA"/>
+    <ellipse cx="500" cy="444" rx="14" ry="18" fill="#FED7AA"/>
+    <ellipse cx="540" cy="434" rx="14" ry="18" fill="#FED7AA"/>
+    <ellipse cx="580" cy="442" rx="14" ry="18" fill="#FED7AA"/>
+    <ellipse cx="612" cy="472" rx="14" ry="18" fill="#FED7AA"/>
+  </g>
+
+  <circle cx="1226" cy="228" r="26" fill="#FFFFFF" fill-opacity="0.72"/>
+  <path d="M1226 210V246" stroke="#F97316" stroke-width="12" stroke-linecap="round"/>
+  <path d="M1208 228H1244" stroke="#F97316" stroke-width="12" stroke-linecap="round"/>
+</svg>

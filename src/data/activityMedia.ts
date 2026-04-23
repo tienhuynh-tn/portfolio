@@ -9,6 +9,12 @@ import gdgCloudCoreTeam7 from '../assets/activities/gdg-cloud-core-team/7.jpeg'
 import gdgCloudCoreTeam8 from '../assets/activities/gdg-cloud-core-team/8.jpeg'
 import gdgCloudCoreTeam9 from '../assets/activities/gdg-cloud-core-team/9.jpg'
 import gdgCloudCoreTeam10 from '../assets/activities/gdg-cloud-core-team/10.jpg'
+import buildWithAi2026Cover from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/cover.jpg'
+import buildWithAi20261 from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/1.jpg'
+import buildWithAi20262 from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/2.jpg'
+import buildWithAi20263 from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/3.jpg'
+import buildWithAi20264 from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/4.jpg'
+import buildWithAi20265 from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/5.jpg'
 
 import gdgSeaSummitCover from '../assets/activities/gdg-sea-summit-2025/cover.jpg'
 import gdgSeaSummit1 from '../assets/activities/gdg-sea-summit-2025/1.jpg'
@@ -38,6 +44,24 @@ import sheCodesHackathon3 from '../assets/activities/shecodes-hackathon-2023/3.j
 import sheCodesHackathon4 from '../assets/activities/shecodes-hackathon-2023/4.jpg'
 import sheCodesHackathon5 from '../assets/activities/shecodes-hackathon-2023/5.jpg'
 import sheCodesHackathon6 from '../assets/activities/shecodes-hackathon-2023/6.jpg'
+
+import enteraCover from '../assets/activities/entera/cover.jpg'
+import entera1 from '../assets/activities/entera/1.jpg'
+import entera2 from '../assets/activities/entera/2.jpg'
+import entera3 from '../assets/activities/entera/3.jpg'
+
+import greenSummerProjectCover from '../assets/activities/green-summer-project/cover.jpeg'
+import hairDonationCover from '../assets/activities/hair-donation/hair-donation-2022.jpg'
+import bloodDonationCover from '../assets/activities/blood-donation/cover.svg'
+import bigStepsCover from '../assets/activities/big-steps/cover.svg'
+import marathonHcmcMidnight2024Cover from '../assets/activities/marathon-hcmc-midnight-2024/cover.png'
+import marathonHcmcMidnight2026Cover from '../assets/activities/marathon-hcmc-midnigh-2026/cover.jpg'
+import marathonHcmcMidnight20261 from '../assets/activities/marathon-hcmc-midnigh-2026/1.jpg'
+import marathonHcmcMidnight20262 from '../assets/activities/marathon-hcmc-midnigh-2026/2.jpg'
+import marathonHcmcMidnight20263 from '../assets/activities/marathon-hcmc-midnigh-2026/3.jpg'
+import marathonHcmcMidnight20264 from '../assets/activities/marathon-hcmc-midnigh-2026/4.jpeg'
+import runToLiveCover from '../assets/activities/run-to-live/cover.jpg'
+import runToLive1 from '../assets/activities/run-to-live/1.jpg'
 
 import sitiGroupCover from '../assets/activities/siti-group/cover.jpg'
 import sitiGroup2 from '../assets/activities/siti-group/2.jpg'
@@ -83,6 +107,17 @@ const activityMediaBySlug: Record<string, ActivityMedia> = {
       gdgCloudCoreTeam10,
     ],
   },
+  'build-with-ai-2026': {
+    image: buildWithAi2026Cover,
+    images: [
+      buildWithAi2026Cover,
+      buildWithAi20261,
+      buildWithAi20262,
+      buildWithAi20263,
+      buildWithAi20264,
+      buildWithAi20265,
+    ],
+  },
   'gdg-sea-summit-2025': {
     image: gdgSeaSummitCover,
     images: [
@@ -119,6 +154,44 @@ const activityMediaBySlug: Record<string, ActivityMedia> = {
       sheCodesHackathon5,
       sheCodesHackathon6,
     ],
+  },
+  'entera-countdown-2024-fanszone': {
+    image: enteraCover,
+    images: [enteraCover, entera1, entera2, entera3],
+  },
+  'green-summer-project-logistic-department': {
+    image: greenSummerProjectCover,
+    images: [greenSummerProjectCover],
+  },
+  'hair-donation-volunteer': {
+    image: hairDonationCover,
+    images: [hairDonationCover],
+  },
+  'blood-donation-volunteer': {
+    image: bloodDonationCover,
+    images: [bloodDonationCover],
+  },
+  'big-steps-event-department': {
+    image: bigStepsCover,
+    images: [bigStepsCover],
+  },
+  'vpbank-vnexpress-marathon-finish-race': {
+    image: marathonHcmcMidnight2024Cover,
+    images: [marathonHcmcMidnight2024Cover],
+  },
+  'vnexpress-marathon-hcmc-midnight-2026-course-marshal': {
+    image: marathonHcmcMidnight2026Cover,
+    images: [
+      marathonHcmcMidnight2026Cover,
+      marathonHcmcMidnight20261,
+      marathonHcmcMidnight20262,
+      marathonHcmcMidnight20263,
+      marathonHcmcMidnight20264,
+    ],
+  },
+  'run-to-live-water-zone': {
+    image: runToLiveCover,
+    images: [runToLiveCover, runToLive1],
   },
   'sitigroup-human-resources-logistics-journey': {
     image: sitiGroupCover,

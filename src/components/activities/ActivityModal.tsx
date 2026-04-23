@@ -1,7 +1,10 @@
 import { ArrowSquareOut, X } from '@phosphor-icons/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import type { ActivityItem } from '../../data/activities'
+import {
+  formatActivityDateRangeForDisplay,
+  type ActivityItem,
+} from '../../data/activities'
 import BulletList from '../projects/BulletList'
 import ImageLightbox from '../shared/ImageLightbox'
 
@@ -56,11 +59,14 @@ function splitActivityLocation(location?: string) {
 }
 
 function splitActivityDate(date: string) {
-  const [dateRange = '', duration = ''] = date
+  const [, duration = ''] = date
     .split('·')
     .map((part) => part.trim())
 
-  return { dateRange, duration }
+  return {
+    dateRange: formatActivityDateRangeForDisplay(date),
+    duration,
+  }
 }
 
 function parseDescriptionBlock(block: string) {
@@ -178,12 +184,51 @@ function mergeSummary(summary: string, introText: string) {
 }
 
 function cleanHighlightText(item: string) {
-  return removeUrls(item.replace(/\(\s*https?:\/\/[^)]+\)/g, '')).replace(/\s+\)$/g, ')')
+  return item
+    .replace(/\(\s*(https?:\/\/[^)]+)\)/g, '$1')
+    .replace(/\s+\)/g, ')')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
 }
 
-function deriveActivityTags(activity: ActivityItem, introText: string, cleanHighlights: string[]) {
+function renderTextWithLinks(text: string) {
+  const parts = text.split(/(https?:\/\/[^\s)]+)/g)
+
+  return parts.map((part, index) => {
+    if (!part) return null
+
+    if (/^https?:\/\/[^\s)]+$/.test(part)) {
+      return (
+        <a
+          key={`${part}-${index}`}
+          href={part}
+          target="_blank"
+          rel="noreferrer"
+          className="detailModalInlineLink"
+        >
+          {part}
+        </a>
+      )
+    }
+
+    return <span key={`${part}-${index}`}>{part}</span>
+  })
+}
+
+function getValidExternalLink(links?: ActivityItem['links']) {
+  return links?.find(({ url }) => {
+    try {
+      const parsedUrl = new URL(url)
+      return parsedUrl.protocol === 'https:' || parsedUrl.protocol === 'http:'
+    } catch {
+      return false
+    }
+  })
+}
+
+function deriveActivityTags(activity: ActivityItem, introText: string, sectionText: string[]) {
   const tags = new Set<string>(activity.tags)
-  const source = [activity.org, activity.summary, introText, cleanHighlights.join(' ')]
+  const source = [activity.org, activity.summary, introText, sectionText.join(' ')]
     .join(' ')
     .toLowerCase()
 
@@ -198,6 +243,12 @@ function deriveActivityTags(activity: ActivityItem, introText: string, cleanHigh
   return Array.from(tags)
 }
 
+type ParsedActivitySection = {
+  title: string
+  paragraphs: string[]
+  bullets: string[]
+}
+
 function parseActivityDescription(description: string) {
   const blocks = description
     .split(/\n\s*\n/)
@@ -205,34 +256,33 @@ function parseActivityDescription(description: string) {
     .filter(Boolean)
 
   const intro: string[] = []
-  let rolesProgression: string[] = []
-  let responsibilities: string[] = []
-  let highlights: string[] = []
+  const sections: ParsedActivitySection[] = []
 
   blocks.forEach((block) => {
     const lines = parseDescriptionBlock(block)
     const [headingLine = ''] = lines
-    const normalizedHeading = headingLine.replace(/:$/, '').toLowerCase()
+    const hasStructuredHeading = headingLine.endsWith(':')
 
-    if (normalizedHeading === 'roles & progression' || normalizedHeading === 'milestones') {
-      rolesProgression = parseBulletLines(lines.slice(1))
-      return
-    }
+    if (hasStructuredHeading) {
+      const bodyLines = lines.slice(1)
+      const bullets = parseBulletLines(bodyLines.filter((line) => /^-\s*/.test(line)))
+      const paragraphs = bodyLines
+        .filter((line) => !/^-\s*/.test(line))
+        .map((line) => line.trim())
+        .filter(Boolean)
 
-    if (normalizedHeading === 'responsibilities') {
-      responsibilities = parseBulletLines(lines.slice(1))
-      return
-    }
-
-    if (normalizedHeading === 'highlights') {
-      highlights = parseBulletLines(lines.slice(1))
+      sections.push({
+        title: headingLine.slice(0, -1).trim(),
+        paragraphs,
+        bullets,
+      })
       return
     }
 
     intro.push(block)
   })
 
-  return { intro, rolesProgression, responsibilities, highlights }
+  return { intro, sections }
 }
 
 function renderMetaLine(items: string[], secondary = false) {
@@ -286,25 +336,28 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
     },
     [activity.image, activity.images, failedImages],
   )
-  const primaryLink = activity.links?.[0]
+  const primaryLink = getValidExternalLink(activity.links)
   const { place } = splitActivityLocation(activity.location)
   const { dateRange } = splitActivityDate(activity.date)
-  const { intro, rolesProgression, responsibilities, highlights } = parseActivityDescription(
-    activity.description,
-  )
+  const { intro, sections } = parseActivityDescription(activity.description)
   const effectiveLightboxImage =
     lightboxImage && images.includes(lightboxImage) ? lightboxImage : null
   const introUrls = extractUrls(intro[0] ?? '')
   const cleanIntroText = normalizeIntroText(intro[0] ?? '')
   const mergedSummary = mergeSummary(activity.summary, cleanIntroText)
-  const cleanHighlights = highlights.map(cleanHighlightText)
+  const cleanSections = sections.map((section) => ({
+    ...section,
+    paragraphs: section.paragraphs.map(cleanHighlightText),
+    bullets: section.bullets.map(cleanHighlightText),
+  })).filter((section) => section.paragraphs.length > 0 || section.bullets.length > 0)
   const summaryProfileLink = introUrls[0] ?? ''
   const primaryMetaLine = renderMetaLine([place, dateRange], true)
-  const modalTags = deriveActivityTags(activity, cleanIntroText, cleanHighlights)
-  const hasBodySections =
-    rolesProgression.length > 0 ||
-    responsibilities.length > 0 ||
-    cleanHighlights.length > 0
+  const modalTags = deriveActivityTags(
+    activity,
+    cleanIntroText,
+    cleanSections.flatMap((section) => [...section.paragraphs, ...section.bullets]),
+  )
+  const hasBodySections = cleanSections.length > 0
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -466,46 +519,45 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
               {hasBodySections ? (
                 <section className="activityModalSection activityModalTextSection">
                   <div className="activityModalDescription">
-                    {rolesProgression.length ? (
-                      <div className="activityModalContentGroup activityModalContentGroupFirst">
-                        <h3 className="itemTitle detailModalSectionTitle">
-                          Roles & Progression
-                        </h3>
-                        <BulletList items={rolesProgression} className="projectModalList" />
-                      </div>
-                    ) : null}
-
-                    {responsibilities.length ? (
+                    {cleanSections.map((section, index) => (
                       <div
+                        key={`${activity.id}-${section.title}`}
                         className={
-                          rolesProgression.length
-                            ? 'activityModalContentGroup'
-                            : 'activityModalContentGroup activityModalContentGroupFirst'
+                          index === 0
+                            ? 'activityModalContentGroup activityModalContentGroupFirst'
+                            : 'activityModalContentGroup'
                         }
                       >
-                        <h3 className="itemTitle detailModalSectionTitle">
-                          Responsibilities
-                        </h3>
-                        <BulletList items={responsibilities} className="projectModalList" />
+                        <h3 className="itemTitle detailModalSectionTitle">{section.title}</h3>
+                        {section.paragraphs.map((paragraph) => (
+                          <p
+                            key={`${activity.id}-${section.title}-${paragraph}`}
+                            className="detailModalBodyText text-sm leading-6 text-[color:var(--muted)]"
+                          >
+                            {renderTextWithLinks(paragraph)}
+                          </p>
+                        ))}
+                        {section.bullets.length ? (
+                          <BulletList items={section.bullets} className="projectModalList" />
+                        ) : null}
                       </div>
-                    ) : null}
-
-                    {cleanHighlights.length ? (
-                      <div className="activityModalContentGroup">
-                        <h3 className="itemTitle detailModalSectionTitle">Highlights</h3>
-                        <BulletList items={cleanHighlights} className="projectModalList" />
-                      </div>
-                    ) : null}
+                    ))}
                   </div>
                 </section>
               ) : null}
 
-              <section className="activityModalSection detailModalSectionDivider">
-                <div className="activityModalGalleryHeader">
-                  <h3 className="itemTitle detailModalSectionTitle">Gallery</h3>
-                </div>
+              {images.length ? (
+                <section
+                  className={
+                    hasBodySections
+                      ? 'activityModalSection detailModalSectionDivider'
+                      : 'activityModalSection'
+                  }
+                >
+                  <div className="activityModalGalleryHeader">
+                    <h3 className="itemTitle detailModalSectionTitle">Gallery</h3>
+                  </div>
 
-                {images.length ? (
                   <div className="activityModalGallery" aria-label={`${activity.title} gallery`}>
                     {images.map((image, index) => (
                       <button
@@ -529,16 +581,8 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
                       </button>
                     ))}
                   </div>
-                ) : (
-                  <div
-                    className="activityModalGalleryPlaceholder"
-                    role="img"
-                    aria-label="No activity images available"
-                  >
-                    <span>Gallery unavailable</span>
-                  </div>
-                )}
-              </section>
+                </section>
+              ) : null}
             </div>
           </div>
         </div>

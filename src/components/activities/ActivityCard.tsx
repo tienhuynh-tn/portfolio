@@ -6,7 +6,10 @@ import {
   useState,
   type KeyboardEvent as ReactKeyboardEvent,
 } from 'react'
-import type { ActivityItem } from '../../data/activities'
+import {
+  formatActivityDateRangeForDisplay,
+  type ActivityItem,
+} from '../../data/activities'
 
 type ActivityCardProps = {
   activity: ActivityItem
@@ -15,21 +18,6 @@ type ActivityCardProps = {
 
 const AUTOPLAY_DELAY_MS = 4200
 const PREVIEW_TAG_LIMIT = 3
-const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-const MONTH_INDEX: Record<string, number> = {
-  jan: 0,
-  feb: 1,
-  mar: 2,
-  apr: 3,
-  may: 4,
-  jun: 5,
-  jul: 6,
-  aug: 7,
-  sep: 8,
-  oct: 9,
-  nov: 10,
-  dec: 11,
-}
 const PREVIEW_TAG_PRIORITY: Record<string, number> = {
   Leadership: 0,
   Operations: 1,
@@ -40,50 +28,25 @@ const PREVIEW_TAG_PRIORITY: Record<string, number> = {
   'Human Resources': 6,
   Backend: 7,
   Competition: 8,
+  Event: 9,
+  Marathon: 10,
+  Environment: 11,
+  'Google Cloud': 12,
+  AI: 13,
+  Workshop: 14,
+  Facilitator: 15,
+  Health: 16,
+  Donation: 17,
+  'Event Support': 24,
+  'Sports Event': 22,
+  'Event Operations': 23,
+  'Youth Project': 30,
   Volunteer: 20,
   Community: 21,
 }
 
-function formatPreviewDatePoint(value: string) {
-  const trimmed = value.trim()
-  if (!trimmed) return ''
-  if (trimmed.toLowerCase() === 'present') return 'Present'
-
-  const exactDateMatch = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
-  if (exactDateMatch) {
-    const [, day, month, year] = exactDateMatch
-    const exactDate = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)))
-
-    return new Intl.DateTimeFormat('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-      timeZone: 'UTC',
-    }).format(exactDate)
-  }
-
-  const monthYearMatch = trimmed.match(/^([A-Za-z]{3,9})\s+(\d{4})$/)
-  if (!monthYearMatch) return trimmed
-
-  const [, monthText, yearText] = monthYearMatch
-  const monthIndex = MONTH_INDEX[monthText.slice(0, 3).toLowerCase()]
-  if (monthIndex === undefined) return trimmed
-
-  return `${MONTH_LABELS[monthIndex]} ${yearText}`
-}
-
 function getPreviewDate(date: string) {
-  const previewDate = date
-    .split('·')
-    .map((part) => part.trim())[0] ?? ''
-
-  if (!previewDate) return ''
-
-  return previewDate
-    .split(/\s+[–-]\s+/)
-    .map((part) => formatPreviewDatePoint(part))
-    .filter(Boolean)
-    .join(' - ')
+  return formatActivityDateRangeForDisplay(date)
 }
 
 function getPreviewTags(tags: ActivityItem['tags']) {

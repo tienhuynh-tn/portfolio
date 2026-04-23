@@ -12,9 +12,22 @@ export type ActivityTag =
   | 'Operations'
   | 'Human Resources'
   | 'Logistics'
+  | 'Environment'
+  | 'Youth Project'
+  | 'Event'
+  | 'Marathon'
+  | 'Sports Event'
+  | 'Event Operations'
+  | 'Google Cloud'
+  | 'AI'
+  | 'Event Support'
+  | 'Workshop'
+  | 'Facilitator'
+  | 'Health'
+  | 'Donation'
 
 export type ActivityLink = {
-  label: 'Details' | 'Proof' | 'Post'
+  label: 'Details' | 'Proof' | 'Post' | 'Codelab resource'
   url: string
 }
 
@@ -39,6 +52,11 @@ type ActivityDescriptionInput = {
   rolesProgression?: string[]
   responsibilities?: string[]
   highlights?: string[]
+  sections?: Array<{
+    title: string
+    paragraphs?: string[]
+    bullets?: string[]
+  }>
 }
 
 function buildActivityDescription({
@@ -46,6 +64,7 @@ function buildActivityDescription({
   rolesProgression,
   responsibilities,
   highlights,
+  sections,
 }: ActivityDescriptionInput) {
   const blocks: string[] = []
 
@@ -65,6 +84,18 @@ function buildActivityDescription({
     blocks.push(['Highlights:', ...highlights.map((item) => `- ${item}`)].join('\n'))
   }
 
+  sections?.forEach(({ title, paragraphs, bullets }) => {
+    const sectionLines = [
+      `${title}:`,
+      ...(paragraphs?.map((item) => item.trim()).filter(Boolean) ?? []),
+      ...(bullets?.map((item) => `- ${item.trim()}`).filter(Boolean) ?? []),
+    ]
+
+    if (sectionLines.length > 1) {
+      blocks.push(sectionLines.join('\n'))
+    }
+  })
+
   return blocks.join('\n\n')
 }
 
@@ -83,12 +114,93 @@ const MONTH_INDEX: Record<string, number> = {
   dec: 11,
 }
 
+const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+function parseActivityExactDate(value: string) {
+  const exactDateMatch = value.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
+  if (!exactDateMatch) return null
+
+  const [, dayText, monthText, yearText] = exactDateMatch
+  const day = Number.parseInt(dayText, 10)
+  const month = Number.parseInt(monthText, 10) - 1
+  const year = Number.parseInt(yearText, 10)
+
+  if (
+    Number.isNaN(day) ||
+    Number.isNaN(month) ||
+    Number.isNaN(year) ||
+    month < 0 ||
+    month > 11
+  ) {
+    return null
+  }
+
+  return { day, month, year }
+}
+
+function formatActivityDatePoint(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return ''
+  if (trimmed.toLowerCase() === 'present') return 'Present'
+
+  const exactDate = parseActivityExactDate(trimmed)
+  if (exactDate) {
+    return `${MONTH_LABELS[exactDate.month]} ${exactDate.day}, ${exactDate.year}`
+  }
+
+  const [monthText, yearText] = trimmed.split(/\s+/)
+  const month = MONTH_INDEX[monthText?.slice(0, 3).toLowerCase()] ?? -1
+
+  if (month >= 0 && /^\d{4}$/.test(yearText ?? '')) {
+    return `${MONTH_LABELS[month]} ${yearText}`
+  }
+
+  return trimmed
+}
+
+export function formatActivityDateRangeForDisplay(date: string) {
+  const dateRange = date
+    .split('·')
+    .map((part) => part.trim())[0] ?? ''
+
+  if (!dateRange) return ''
+
+  const [startText = '', endText = ''] = dateRange.split(/\s+[–-]\s+/)
+  const startExact = parseActivityExactDate(startText)
+  const endExact = parseActivityExactDate(endText)
+
+  if (startExact && endExact) {
+    if (startExact.year === endExact.year && startExact.month === endExact.month) {
+      return `${MONTH_LABELS[startExact.month]} ${startExact.day} – ${MONTH_LABELS[endExact.month]} ${endExact.day}, ${startExact.year}`
+    }
+
+    if (startExact.year === endExact.year) {
+      return `${MONTH_LABELS[startExact.month]} ${startExact.day} – ${MONTH_LABELS[endExact.month]} ${endExact.day}, ${startExact.year}`
+    }
+
+    return `${MONTH_LABELS[startExact.month]} ${startExact.day}, ${startExact.year} – ${MONTH_LABELS[endExact.month]} ${endExact.day}, ${endExact.year}`
+  }
+
+  if (!endText) {
+    return formatActivityDatePoint(startText)
+  }
+
+  return [formatActivityDatePoint(startText), formatActivityDatePoint(endText)]
+    .filter(Boolean)
+    .join(' – ')
+}
+
 function parseActivityDatePoint(value: string) {
   const trimmed = value.trim()
   if (!trimmed) return 0
 
   if (trimmed.toLowerCase() === 'present') {
     return Number.MAX_SAFE_INTEGER
+  }
+
+  const exactDate = parseActivityExactDate(trimmed)
+  if (exactDate) {
+    return Date.UTC(exactDate.year, exactDate.month, exactDate.day)
   }
 
   const [monthText, yearText] = trimmed.split(/\s+/)
@@ -290,14 +402,95 @@ export const activities: ActivityItem[] = [
     featured: false,
   },
   {
+    id: 'gdg-build-with-ai-2026-check-in-collaborator-facilitator',
+    title: 'Check-in Collaborator & Facilitator – Build with AI 2026',
+    org: 'Google Developer Group - GDG Cloud HCM',
+    role: 'Community / Tech',
+    date: '18/04/2026 · 1 day',
+    summary:
+      'Supported attendee check-in and event preparation while also assisting participants during the Build with AI 2026 codelab session.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'Build with AI 2026 was a community tech event organized by GDG Cloud HCM, bringing developers together to explore hands-on AI tools, cloud platforms, and practical learning experiences.',
+          ],
+        },
+        {
+          title: 'My Contribution',
+          paragraphs: [
+            'I contributed as both a Check-in Collaborator and Codelab Facilitator. I supported attendee check-in, helped prepare event logistics, and assisted participants throughout the hands-on workshop session.',
+          ],
+        },
+        {
+          title: 'Facilitator Responsibilities',
+          paragraphs: [
+            'As a Codelab Facilitator, I helped participants claim Google Cloud Credits and answered questions during the practical lab. The role required basic knowledge of Google Cloud and familiarity with AI-related tools and concepts to support developers effectively during the workshop. Codelab resource: https://codelabs.developers.google.com/building-with-google-antigravity#0',
+          ],
+        },
+        {
+          title: 'Highlights / Experience',
+          paragraphs: [
+            'This role involved direct on-site support during an offline event in Ho Chi Minh City, including participant coordination, workshop assistance, and collaboration with the organizing team. It was a valuable opportunity to contribute to a developer community event focused on AI, learning, and hands-on practice.',
+          ],
+        },
+        {
+          title: 'Requirements / Context',
+          paragraphs: [
+            'The facilitator role required basic knowledge or hands-on experience with AI, Machine Learning, or tools such as Gemini, Vertex AI, AI Studio, and NotebookLM. It also required active support for workshop participants, strong communication, teamwork, and readiness to join event guidance sessions before the event.',
+          ],
+        },
+        {
+          title: 'Impact',
+          paragraphs: [
+            'This experience strengthened my event support, technical communication, and community collaboration skills, while allowing me to help create a smoother and more supportive learning environment for developers attending the workshop.',
+          ],
+        },
+        {
+          title: 'Milestones',
+          bullets: [
+            'Supported attendee check-in and on-site event preparation for Build with AI 2026',
+            'Assisted participants in claiming Google Cloud Credits during the codelab session',
+            'Helped answer participant questions and provided hands-on workshop support',
+            'Contributed to a community AI event organized by GDG Cloud HCM',
+          ],
+        },
+      ],
+    }),
+    tags: [
+      'Volunteer',
+      'Community',
+      'Google Cloud',
+      'AI',
+      'Event Support',
+      'Workshop',
+      'Facilitator',
+    ],
+    links: [
+      {
+        label: 'Details',
+        url: 'https://gdg.community.dev/events/details/google-gdg-cloud-hcmc-presents-build-with-ai-2026-hands-on-exploration-with-google-ai/',
+      },
+    ],
+    ...getActivityMedia('build-with-ai-2026'),
+    featured: false,
+  },
+  {
     id: 'bcnv-hair-donation-volunteer',
     title: 'Hair Donation Volunteer',
     org: 'Breast Cancer Network Vietnam (BCNV)',
     role: 'Health / Community',
-    date: 'May 2022 · 1 mo',
+    date: '13/05/2022 · 1 day',
     summary: 'Donated hair to support cancer patients through BCNV.',
-    description: 'Donating hair for the benefit of cancer patients.',
-    tags: ['Volunteer'],
+    description: '',
+    tags: ['Volunteer', 'Community', 'Health', 'Donation'],
+    links: [
+      {
+        label: 'Details',
+        url: 'https://www.facebook.com/bcnvietnam',
+      },
+    ],
     ...getActivityMedia('hair-donation-volunteer'),
     featured: false,
   },
@@ -305,7 +498,7 @@ export const activities: ActivityItem[] = [
     id: 'blood-donation-volunteer',
     title: 'Blood Donation Volunteer',
     org: 'Blood Donation Organization',
-    role: 'Health',
+    role: 'Volunteer',
     date: 'Dec 2019 - Present · 6 yrs 4 mos',
     summary: 'Recurring blood donation volunteer participation since December 2019.',
     description: buildActivityDescription({
@@ -322,7 +515,7 @@ export const activities: ActivityItem[] = [
         '9th: 29/10/2025',
       ],
     }),
-    tags: ['Volunteer'],
+    tags: ['Volunteer', 'Community', 'Health', 'Donation'],
     ...getActivityMedia('blood-donation-volunteer'),
     featured: false,
   },
@@ -330,11 +523,48 @@ export const activities: ActivityItem[] = [
     id: 'entera-countdown-2024-fanszone-volunteer',
     title: 'Fanszone Volunteer - Entera Countdown 2024',
     org: 'Entera Music Festival',
-    role: 'Events',
+    role: 'Event Volunteer',
     date: 'Dec 2023 · 1 mo',
-    summary: 'Supported fanszone operations for Entera Countdown 2024.',
-    description: 'Served as a fanszone volunteer for Entera Countdown 2024.',
-    tags: ['Volunteer', 'Community'],
+    summary:
+      'Supported fanszone operations for Entera Countdown 2024, helping guide attendees, coordinate activity flow, and keep the festival experience organized and welcoming.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'Entera Countdown 2024 was a live music and year-end entertainment event that brought together a large audience for performances, crowd activities, and fan engagement.',
+          ],
+        },
+        {
+          title: 'My Contribution',
+          paragraphs: [
+            'As a Fanszone Volunteer, I supported attendee guidance, queue coordination, and on-site assistance around the fanszone area. I helped maintain smooth movement, answered participant questions, and supported the event team in keeping the space organized during peak crowd periods.',
+          ],
+        },
+        {
+          title: 'Highlights / Experience',
+          paragraphs: [
+            'Working in a fast-paced event environment required quick communication, attention to detail, and teamwork. The role involved staying responsive to crowd needs while helping preserve a positive and energetic experience for attendees.',
+          ],
+        },
+        {
+          title: 'Impact',
+          paragraphs: [
+            'This activity strengthened my coordination, communication, and event support skills, while giving me more practical experience in working with large public events.',
+          ],
+        },
+        {
+          title: 'Milestones',
+          bullets: [
+            'Supported attendee guidance and queue coordination in the fanszone area',
+            'Assisted on-site operations during Entera Countdown 2024',
+            'Helped maintain an organized and welcoming experience for participants',
+            'Strengthened teamwork and communication in a high-energy event environment',
+          ],
+        },
+      ],
+    }),
+    tags: ['Volunteer', 'Community', 'Event'],
     ...getActivityMedia('entera-countdown-2024-fanszone'),
     featured: false,
   },
@@ -343,12 +573,47 @@ export const activities: ActivityItem[] = [
     title: 'Finish Race Volunteer',
     org: 'VPBank VnExpress Marathon Ho Chi Minh City Midnight',
     role: 'Sports Event',
-    date: 'Mar 2024 · 1 mo',
+    date: '02/03/2024 - 03/03/2024 · 2 days',
     summary:
-      'Supported finish-line volunteer activities for VPBank VnExpress Marathon Ho Chi Minh City Midnight.',
-    description:
-      'Served as a finish race volunteer at VPBank VnExpress Marathon Ho Chi Minh City Midnight.',
-    tags: ['Volunteer', 'Community'],
+      'Supported finish-zone operations during VPBank VnExpress Marathon Ho Chi Minh City Midnight 2024, helping runners complete the race smoothly and safely at the final stage.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'VPBank VnExpress Marathon Ho Chi Minh City Midnight 2024 was a large-scale night running event that brought together runners, organizers, and volunteers in an energetic city race atmosphere.',
+          ],
+        },
+        {
+          title: 'My Contribution',
+          paragraphs: [
+            'As a Finish Race Volunteer, I supported finish-zone operations by guiding runners, assisting post-race flow, and helping maintain an organized handoff area at the end of the course. The role required attentiveness, quick coordination, and steady support during busy race moments.',
+          ],
+        },
+        {
+          title: 'Highlights / Experience',
+          paragraphs: [
+            'Working at the finish area meant responding to a constant flow of runners completing the race with different levels of fatigue and emotion. It was a fast-paced environment that required teamwork, situational awareness, and a calm approach while contributing to a positive end-of-race experience.',
+          ],
+        },
+        {
+          title: 'Impact',
+          paragraphs: [
+            'This activity strengthened my event coordination, teamwork, and on-ground support skills. It was a meaningful opportunity to contribute to a community sports event that celebrated endurance, discipline, and shared energy.',
+          ],
+        },
+        {
+          title: 'Milestones',
+          bullets: [
+            'Supported finish-zone operations for VPBank VnExpress Marathon Ho Chi Minh City Midnight 2024',
+            'Assisted runner flow and coordination at the final stage of the race',
+            'Contributed to smooth on-ground event operations in a high-energy environment',
+            'Participated in a large-scale community marathon event as a volunteer',
+          ],
+        },
+      ],
+    }),
+    tags: ['Volunteer', 'Community', 'Marathon', 'Sports Event', 'Event Operations'],
     ...getActivityMedia('vpbank-vnexpress-marathon-finish-race'),
     featured: false,
   },
@@ -357,11 +622,109 @@ export const activities: ActivityItem[] = [
     title: 'Water Zone Volunteer',
     org: 'Run To Live',
     role: 'Sports Event',
-    date: 'Mar 2024 · 1 mo',
-    summary: 'Supported Water Zone operations at Run To Live.',
-    description: 'Served as a Water Zone volunteer at Run To Live.',
-    tags: ['Volunteer', 'Community'],
+    date: '09/03/2024 - 10/03/2024 · 2 days',
+    summary:
+      'Supported Water Zone operations during Run To Live Half Marathon 2024, ensuring hydration support and smooth runner experience throughout the race.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'Run To Live Half Marathon 2024 marked its first season as a large-scale community running event, bringing together athletes, organizers, and volunteers to create an energetic and memorable race experience.',
+          ],
+        },
+        {
+          title: 'My Contribution',
+          paragraphs: [
+            'As a Water Zone Volunteer, I supported hydration stations along the race route, ensuring runners received water efficiently and safely during their run. The role required coordination, responsiveness, and high energy throughout the event.',
+          ],
+        },
+        {
+          title: 'Highlights / Experience',
+          paragraphs: [
+            'The success of the first Run To Live season was strongly supported by a passionate volunteer team. Working in a fast-paced environment, I contributed to maintaining smooth operations while directly supporting runners on their journey. The experience was physically engaging, highly interactive, and filled with positive energy from both participants and the organizing team.',
+          ],
+        },
+        {
+          title: 'Impact',
+          paragraphs: [
+            'This activity strengthened my ability to work under pressure, collaborate in large-scale events, and contribute to community-driven initiatives. It was a meaningful experience being part of an event that promoted health, endurance, and connection.',
+          ],
+        },
+        {
+          title: 'Milestones',
+          bullets: [
+            'Supported Water Zone operations for Run To Live Half Marathon 2024',
+            'Assisted runners with hydration during race execution',
+            'Contributed to smooth on-ground coordination in a high-energy environment',
+            'Participated in a large-scale community sports event as a volunteer',
+          ],
+        },
+      ],
+    }),
+    tags: ['Volunteer', 'Community', 'Marathon', 'Sports Event', 'Event Operations'],
+    links: [
+      {
+        label: 'Details',
+        url: 'https://www.facebook.com/share/p/1B5ga63DnP/',
+      },
+    ],
     ...getActivityMedia('run-to-live-water-zone'),
+    featured: false,
+  },
+  {
+    id: 'vnexpress-marathon-hcmc-midnight-2026-course-marshal-volunteer',
+    title: 'Course Marshal Volunteer',
+    org: 'VnExpress Marathon Ho Chi Minh City Midnight 2026',
+    role: 'Sports Event',
+    date: '21/03/2026 - 22/03/2026 · 2 days',
+    summary:
+      'Supported course operations during VnExpress Marathon Ho Chi Minh City Midnight 2026, helping guide runners, maintain route order, and contribute to a safe race experience.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'VnExpress Marathon Ho Chi Minh City Midnight 2026 was a large-scale night running event that gathered runners, organizers, and volunteers for an energetic community race across the city.',
+          ],
+        },
+        {
+          title: 'My Contribution',
+          paragraphs: [
+            'As a Course Marshal Volunteer, I supported route guidance, on-ground coordination, and runner direction along the race course. The role focused on helping participants stay on track while supporting smooth movement and safety in active race areas.',
+          ],
+        },
+        {
+          title: 'Highlights / Experience',
+          paragraphs: [
+            'Working on the course required focus, quick communication, and steady coordination in a fast-moving environment. It was a highly engaging experience that combined teamwork, public support, and the shared energy of a large city marathon.',
+          ],
+        },
+        {
+          title: 'Impact',
+          paragraphs: [
+            'This activity strengthened my event operations, coordination, and teamwork skills while giving me more practical experience in supporting large-scale community sports events.',
+          ],
+        },
+        {
+          title: 'Milestones',
+          bullets: [
+            'Supported route guidance and on-ground coordination for VnExpress Marathon Ho Chi Minh City Midnight 2026',
+            'Helped direct runners and maintain course flow during race execution',
+            'Contributed to safe and organized operations in an active marathon environment',
+            'Participated in a large-scale community marathon event as a volunteer',
+          ],
+        },
+      ],
+    }),
+    tags: ['Volunteer', 'Community', 'Marathon', 'Sports Event', 'Event Operations'],
+    links: [
+      {
+        label: 'Details',
+        url: 'https://www.facebook.com/share/p/1DfgWPgQqb/',
+      },
+    ],
+    ...getActivityMedia('vnexpress-marathon-hcmc-midnight-2026-course-marshal'),
     featured: false,
   },
   {
@@ -369,10 +732,59 @@ export const activities: ActivityItem[] = [
     title: 'Member of the Logistic Department',
     org: 'Green Summer Project',
     role: 'Environment',
-    date: 'Jun 2019 - Jul 2019 · 2 mos',
-    summary: 'Supported logistics activities for the Green Summer Project.',
-    description: 'Served as a member of the Logistic Department for the Green Summer Project.',
-    tags: ['Volunteer', 'Community'],
+    date: 'Jun 2019 – Jul 2019',
+    summary:
+      'Contributed to logistics and on-ground operations for Green Summer Project 2019 in Tay Ninh, supporting environmental activities, community engagement, and project coordination during a 3-day experiential campaign.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'Green Summer Project (GSP) is a student-led interprovincial initiative for high school students across Vietnam. In 2019, the program was organized in five locations: Nghe An, Da Nang, Binh Phuoc, Tay Ninh, and Vinh Long, with a shared goal of inspiring young people to take action for the environment.',
+          ],
+        },
+        {
+          title: 'Mission',
+          paragraphs: [
+            "GSP focused on environmental protection through waste reduction, cleaner living spaces, reduced plastic use, recycling, and the promotion of eco-friendly habits. With the message 'I do, you do, and we will make a change,' the project encouraged collective action through small but meaningful everyday choices.",
+          ],
+        },
+        {
+          title: 'My Contribution',
+          paragraphs: [
+            'As a member of the Logistic Department, I supported activity preparation, coordination, and on-site logistics for the Tay Ninh branch. My role helped ensure the project’s environmental and community activities ran smoothly throughout the campaign.',
+          ],
+        },
+        {
+          title: 'Highlights / Experience',
+          paragraphs: [
+            'The 3-day experience was not only about volunteering, but also about directly facing the realities of environmental issues. It involved hands-on cleanup work, exposure to waste and pollution, working under hot weather, and stepping outside everyday comfort zones. The experience made the message of environmental responsibility much more personal and memorable.',
+          ],
+        },
+        {
+          title: 'Impact',
+          paragraphs: [
+            'This activity strengthened my sense of responsibility, teamwork, and community engagement. It also reinforced the belief that meaningful change starts from action, even in small steps.',
+          ],
+        },
+        {
+          title: 'Milestones',
+          bullets: [
+            'Supported logistics and coordination for Green Summer Project 2019 in Tay Ninh',
+            'Contributed to environmental and community-focused activities during a 3-day campaign',
+            'Participated in hands-on cleanup and awareness efforts promoting greener habits',
+            'Strengthened teamwork, responsibility, and community service mindset through real-world volunteering',
+          ],
+        },
+      ],
+    }),
+    tags: ['Volunteer', 'Community', 'Environment', 'Logistics', 'Youth Project'],
+    links: [
+      {
+        label: 'Details',
+        url: 'https://www.facebook.com/greenyouthprojectvn',
+      },
+    ],
     ...getActivityMedia('green-summer-project-logistic-department'),
     featured: false,
   },
