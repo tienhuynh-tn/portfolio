@@ -65,4 +65,16 @@ export const experienceItems: ExperienceItem[] = [
     ],
     tech: ['Java', 'Spring Boot', 'SQL', 'Azure'],
   },
+  {
+    id: 'becodeching-student-supporter',
+    role: 'Student Supporter',
+    company: 'BeCodeching - Chuyên Dạy Lập Trình Cho Sinh Viên Và Người Trái Ngành',
+    period: 'Nov 2021 — Apr 2022',
+    location: 'Ho Chi Minh City, Vietnam',
+    highlights: [
+      'Supported students through programming-learning activities and class coordination.',
+      'Assisted communication and guidance for students and career-switching learners.',
+    ],
+    tech: [],
+  },
 ]
