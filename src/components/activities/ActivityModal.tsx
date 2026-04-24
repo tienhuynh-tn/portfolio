@@ -226,21 +226,8 @@ function getValidExternalLink(links?: ActivityItem['links']) {
   })
 }
 
-function deriveActivityTags(activity: ActivityItem, introText: string, sectionText: string[]) {
-  const tags = new Set<string>(activity.tags)
-  const source = [activity.org, activity.summary, introText, sectionText.join(' ')]
-    .join(' ')
-    .toLowerCase()
-
-  if (source.includes('google cloud')) {
-    tags.add('Google Cloud')
-  }
-
-  if (/\b(event|meetup|workshop|devfest|summit|hackathon)\b/.test(source)) {
-    tags.add('Event')
-  }
-
-  return Array.from(tags)
+function deriveActivityTags(activity: ActivityItem) {
+  return Array.from(new Set(activity.tags))
 }
 
 type ParsedActivitySection = {
@@ -352,11 +339,7 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
   })).filter((section) => section.paragraphs.length > 0 || section.bullets.length > 0)
   const summaryProfileLink = introUrls[0] ?? ''
   const primaryMetaLine = renderMetaLine([place, dateRange], true)
-  const modalTags = deriveActivityTags(
-    activity,
-    cleanIntroText,
-    cleanSections.flatMap((section) => [...section.paragraphs, ...section.bullets]),
-  )
+  const modalTags = deriveActivityTags(activity)
   const hasBodySections = cleanSections.length > 0
 
   useEffect(() => {

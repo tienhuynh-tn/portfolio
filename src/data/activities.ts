@@ -25,6 +25,16 @@ export type ActivityTag =
   | 'Facilitator'
   | 'Health'
   | 'Donation'
+  | 'Non-profit'
+  | 'Event Organization'
+  | 'Social Impact'
+  | 'Teamwork'
+  | 'GDG Cloud HCM'
+  | 'DevFest'
+  | 'Vertex AI'
+  | 'Gemini'
+  | 'Codelab'
+  | 'Developer Community'
 
 export type ActivityLink = {
   label: 'Details' | 'Proof' | 'Post' | 'Codelab resource'
@@ -252,7 +262,7 @@ export const activities: ActivityItem[] = [
       'Organized and supported GDG Cloud HCM events, workshops, and community programs focused on Google Cloud.',
     description: buildActivityDescription({
       description:
-        'Core Team Member at GDG Cloud HCM: Driving impactful community events and workshops, connecting developers with the latest Google Cloud innovations and hands-on learning experiences. Google for Developers Profile: https://g.dev/tienhuynh-tn',
+        'Core Team Member at GDG Cloud HCM: Driving impactful community events and workshops, connecting developers with the latest Google Cloud innovations and hands-on learning experiences.',
       responsibilities: [
         'Event Planning & Execution: Organize meetups, workshops, and flagship events like Google Cloud Next Extended.',
         'Content Curation: Coordinate with speakers to define topics, create agendas, and ensure high-quality content delivery.',
@@ -266,17 +276,11 @@ export const activities: ActivityItem[] = [
       ],
       highlights: [
         '2025.07.26: Google Cloud Next Extended Ho Chi Minh 2025 Organizer (https://gdg.community.dev/e/mrgdh2/)',
-        '2025.09.27: #QuanQuanGCP Season 7 Code Along Session in Ho Chi Minh City 2025 - Organizer, Speaker, Facilitator',
-        '2025.11.28: DevFest Cloud Ho Chi Minh 2025 - Organizer',
+        '2025.09.27: #QuanQuanGCP Season 7 Code Along Session in Ho Chi Minh City 2025 - Organizer, Speaker, Facilitator https://gdg.community.dev/events/details/google-gdg-cloud-hcmc-presents-quanquangcp-season-7-code-along-session-in-ho-chi-minh-city/',
+        '2025.11.28: DevFest Cloud Ho Chi Minh 2025 - Organizer https://gdg.community.dev/events/details/google-gdg-cloud-hcmc-presents-devfest-cloud-hcm-2025/',
       ],
     }),
-    tags: ['Organizer', 'Volunteer', 'Community'],
-    links: [
-      {
-        label: 'Details',
-        url: 'https://g.dev/tienhuynh-tn',
-      },
-    ],
+    tags: ['Organizer', 'Community', 'Google Cloud', 'Event Organization', 'Volunteer'],
     ...getActivityMedia('gdg-cloud-core-team'),
     featured: true,
   },
@@ -291,17 +295,17 @@ export const activities: ActivityItem[] = [
       'Joined regional GDG knowledge-sharing sessions, community activities, and networking in Bangkok.',
     description: buildActivityDescription({
       description:
-        'Participated in Google Developer Groups Southeast Asia Summit 2025 in Bangkok, Thailand. Joined knowledge-sharing sessions, community activities, and networking opportunities with developers and organizers across Southeast Asia.',
+        'Participated in Google Developer Groups Southeast Asia Summit 2025 in Bangkok, Thailand, joining developers, community organizers, and speakers from across Southeast Asia for three days of learning, collaboration, and community exchange.',
       highlights: [
-        'Day 1 (12 Sep 2025): Joined the Google Office tour at Google Bangkok and team activities.',
+        'Day 1 (12 Sep 2025): Started with a Google Bangkok office tour and team-building activities with a randomly assigned group.',
         'Day 1 (12 Sep 2025): Team 2 won the top prize in the team challenge.',
-        'Day 2 (13 Sep 2025): Attended talks and sharing sessions covering tech, community stories, and personal experiences.',
-        'Day 2 (13 Sep 2025): Participated in the event party and social activities.',
-        'Day 3 (14 Sep 2025): Wrapped up the summit with farewell activities, gifts, and networking.',
-        'Built meaningful connections with organizers, speakers, and community members across the region.',
+        'Day 2 (13 Sep 2025): Joined intensive sharing sessions covering technology, community stories, and personal experiences from GDG leaders and members across the region.',
+        'Day 2 (13 Sep 2025): Continued networking through the summit party and community social activities.',
+        'Day 3 (14 Sep 2025): Closed the summit with farewells, small gifts, and meaningful connections with participants and organizers.',
+        'Appreciated the support and effort of the organizing team, including local hosts, regional community leaders, and the GDG Cloud HCM team.',
       ],
     }),
-    tags: ['Community', 'Volunteer'],
+    tags: ['Community', 'Developer Community', 'Google Cloud', 'Teamwork'],
     ...getActivityMedia('gdg-sea-summit-2025'),
     featured: true,
   },
@@ -357,9 +361,65 @@ export const activities: ActivityItem[] = [
     org: 'Big Steps Organization',
     role: 'Volunteer / Events',
     date: 'Nov 2018 - Dec 2020 · 2 yrs 2 mos',
-    summary: 'Contributed to event department operations for community programs.',
-    description: 'Served as a member of the Event Department at Big Steps Organization.',
-    tags: ['Volunteer', 'Community'],
+    summary:
+      'Contributed to organizing and supporting community-driven volunteer events across education, environment, and social impact initiatives.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'Big Steps Organization (BSO – Tinh nguyen tre) is a volunteer-driven community focused on developing and supporting social impact initiatives across multiple areas, including education, environmental activities, and community support programs for children, youth, the elderly, and underserved communities.',
+          ],
+        },
+        {
+          title: 'My Contribution',
+          paragraphs: [
+            'As a member of the Event Department, I contributed to organizing and supporting volunteer activities, coordinating event logistics, and participating in community-focused initiatives.',
+          ],
+        },
+        {
+          title: 'Highlights / Experience',
+          paragraphs: [
+            'This experience provided hands-on involvement in planning and executing volunteer events while working closely with a team. It involved collaboration, communication, and adaptability in dynamic environments focused on community impact.',
+          ],
+        },
+        {
+          title: 'Skills Developed',
+          paragraphs: [
+            'Through this role, I strengthened essential soft skills such as teamwork, time management, communication, and coordination, while also gaining exposure to real-world community project execution.',
+          ],
+        },
+        {
+          title: 'Impact',
+          paragraphs: [
+            'This activity allowed me to contribute to meaningful community initiatives while developing a stronger sense of responsibility, collaboration, and long-term commitment to social impact.',
+          ],
+        },
+        {
+          title: 'Milestones',
+          bullets: [
+            'Participated in organizing and supporting multiple volunteer events',
+            'Contributed to community initiatives in education and environmental activities',
+            'Collaborated with team members to execute event logistics',
+            'Developed teamwork, communication, and time management skills',
+          ],
+        },
+      ],
+    }),
+    tags: [
+      'Volunteer',
+      'Community',
+      'Non-profit',
+      'Event Organization',
+      'Social Impact',
+      'Teamwork',
+    ],
+    links: [
+      {
+        label: 'Details',
+        url: 'https://www.facebook.com/Bigstep2017',
+      },
+    ],
     ...getActivityMedia('big-steps-event-department'),
     featured: false,
   },
@@ -368,11 +428,24 @@ export const activities: ActivityItem[] = [
     title: 'Logistics Collaborator – DevFest Cloud HCM 2023',
     org: 'Google Developer Group - GDG Cloud HCM',
     role: 'Community / Tech',
-    date: 'Dec 2023 · 1 mo',
-    summary: 'Supported logistics operations for DevFest Cloud HCM 2023.',
-    description:
-      'Contributed as a Logistics Collaborator for DevFest Cloud HCM 2023 with GDG Cloud HCM.',
-    tags: ['Volunteer', 'Community'],
+    date: '16/12/2023 · 1 day',
+    summary:
+      'Supported logistics and on-site coordination for DevFest Cloud HCM 2023, ensuring smooth event operations and a seamless experience for attendees and speakers.',
+    description: '',
+    tags: [
+      'Logistics',
+      'Event Operations',
+      'Google Cloud',
+      'DevFest',
+      'GDG Cloud HCM',
+      'Community',
+    ],
+    links: [
+      {
+        label: 'Details',
+        url: 'https://gdg.community.dev/events/details/google-gdg-cloud-hcmc-presents-devfest-cloud-hcm-2023/',
+      },
+    ],
     ...getActivityMedia('devfest-cloud-hcm-2023'),
     featured: false,
   },
@@ -381,11 +454,17 @@ export const activities: ActivityItem[] = [
     title: 'Logistics Collaborator – Google I/O Extended Cloud HCM 2024',
     org: 'Google Developer Group - GDG Cloud HCM',
     role: 'Community / Tech',
-    date: 'Jul 2024 · 1 mo',
-    summary: 'Supported logistics operations for Google I/O Extended Cloud HCM 2024.',
-    description:
-      'Contributed as a Logistics Collaborator for Google I/O Extended Cloud HCM 2024 with GDG Cloud HCM.',
-    tags: ['Volunteer', 'Community'],
+    date: '27/07/2024 · 1 day',
+    summary:
+      'Supported logistics and on-site coordination for Google I/O Extended Cloud HCM 2024, helping ensure a smooth experience for attendees and the developer community.',
+    description: '',
+    tags: ['Logistics', 'Event Support', 'Google Cloud', 'GDG Cloud HCM', 'Community'],
+    links: [
+      {
+        label: 'Details',
+        url: 'https://gdg.community.dev/events/details/google-gdg-cloud-hcmc-presents-google-io-extended-cloud-hcm-2024/',
+      },
+    ],
     ...getActivityMedia('google-io-extended-cloud-hcm-2024'),
     featured: false,
   },
@@ -394,10 +473,86 @@ export const activities: ActivityItem[] = [
     title: 'Facilitator – Build with AI 2025',
     org: 'Google Developer Group - GDG Cloud HCM',
     role: 'Community / Tech',
-    date: 'May 2025 · 1 mo',
-    summary: 'Facilitated activities and participant support for Build with AI 2025.',
-    description: 'Served as a facilitator for Build with AI 2025 with GDG Cloud HCM.',
-    tags: ['Mentor', 'Volunteer', 'Community'],
+    date: '10/05/2025 · 1 day',
+    summary:
+      'Supported attendee check-in and event preparation while assisting participants during the Vertex AI Gemini multi-agent codelab session.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'Build with AI 2025 was a community tech event organized by GDG Cloud HCM, bringing developers together to explore hands-on AI tools, cloud platforms, and practical learning experiences.',
+          ],
+        },
+        {
+          title: 'My Contribution',
+          paragraphs: [
+            'I contributed as both a Check-in Collaborator and Codelab Facilitator. I supported attendee check-in, helped prepare event logistics, and assisted participants throughout the hands-on workshop session.',
+          ],
+        },
+        {
+          title: 'Facilitator Responsibilities',
+          paragraphs: [
+            'As a Codelab Facilitator, I supported participants during the hands-on lab.',
+            'Codelab: "Vertex AI Gemini Research Multi-Agent Demo - Research Agent for EV Industry" https://github.com/GoogleCloudPlatform/generative-ai/blob/main/gemini/agents/research-multi-agents/intro_research_multi_agents_gemini_2_0.ipynb',
+          ],
+          bullets: [
+            'Helped participants claim Google Cloud Credits',
+            'Assisted with troubleshooting during the codelab',
+            'Answered questions related to AI tools and workflows',
+          ],
+        },
+        {
+          title: 'Highlights / Experience',
+          paragraphs: [
+            'This role involved direct on-site support during an offline event in Ho Chi Minh City, including participant coordination, workshop assistance, and collaboration with the organizing team. It provided hands-on experience supporting developers in a real AI-focused learning environment.',
+          ],
+        },
+        {
+          title: 'Requirements / Context',
+          paragraphs: ['The facilitator role required:'],
+          bullets: [
+            'Basic knowledge of AI / Machine Learning concepts',
+            'Familiarity with Google Cloud and tools such as Gemini and Vertex AI',
+            'Strong communication and teamwork skills',
+            'Participation in pre-event guidance and preparation sessions',
+          ],
+        },
+        {
+          title: 'Impact',
+          paragraphs: ['This experience strengthened my:'],
+          bullets: [
+            'Technical communication skills',
+            'Real-time problem-solving ability',
+            'Community engagement and collaboration while contributing to a smoother and more effective learning experience for participants.',
+          ],
+        },
+        {
+          title: 'Milestones',
+          bullets: [
+            'Supported attendee check-in and on-site event preparation',
+            'Assisted participants in claiming Google Cloud Credits',
+            'Helped answer questions and support hands-on workshop execution',
+            'Contributed to a developer community AI event organized by GDG Cloud HCM',
+          ],
+        },
+      ],
+    }),
+    tags: [
+      'Facilitator',
+      'AI',
+      'Vertex AI',
+      'Gemini',
+      'Google Cloud',
+      'Codelab',
+      'Developer Community',
+    ],
+    links: [
+      {
+        label: 'Details',
+        url: 'https://gdg.community.dev/events/details/google-gdg-cloud-hcmc-presents-build-with-ai-2025-ai-in-action/',
+      },
+    ],
     ...getActivityMedia('build-with-ai-2025'),
     featured: false,
   },

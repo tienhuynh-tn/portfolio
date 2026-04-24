@@ -9,6 +9,34 @@ import gdgCloudCoreTeam7 from '../assets/activities/gdg-cloud-core-team/7.jpeg'
 import gdgCloudCoreTeam8 from '../assets/activities/gdg-cloud-core-team/8.jpeg'
 import gdgCloudCoreTeam9 from '../assets/activities/gdg-cloud-core-team/9.jpg'
 import gdgCloudCoreTeam10 from '../assets/activities/gdg-cloud-core-team/10.jpg'
+import gdgCloudCoreTeam11 from '../assets/activities/gdg-cloud-core-team/11.jpg'
+import gdgCloudCoreTeam12 from '../assets/activities/gdg-cloud-core-team/12.jpg'
+import gdgCloudCoreTeam13 from '../assets/activities/gdg-cloud-core-team/13.jpg'
+import gdgCloudCoreTeam14 from '../assets/activities/gdg-cloud-core-team/14.jpg'
+import gdgCloudCoreTeam15 from '../assets/activities/gdg-cloud-core-team/15.jpg'
+import gdgCloudCoreTeam16 from '../assets/activities/gdg-cloud-core-team/16.jpg'
+import gdgCloudCoreTeam17 from '../assets/activities/gdg-cloud-core-team/17.jpg'
+import gdgCloudCoreTeam18 from '../assets/activities/gdg-cloud-core-team/18.jpg'
+import gdgCloudCoreTeam19 from '../assets/activities/gdg-cloud-core-team/19.jpg'
+import gdgCloudCoreTeam20 from '../assets/activities/gdg-cloud-core-team/20.jpg'
+import gdgCloudCoreTeam21 from '../assets/activities/gdg-cloud-core-team/21.jpg'
+import gdgCloudCoreTeam22 from '../assets/activities/gdg-cloud-core-team/22.jpg'
+import gdgCloudCoreTeam23 from '../assets/activities/gdg-cloud-core-team/23.jpg'
+import devfestCloud2023Cover from '../assets/activities/gdg-cloud-hcm-volunteer/2023-dev-fest-cloud/cover.jpg'
+import devfestCloud20231 from '../assets/activities/gdg-cloud-hcm-volunteer/2023-dev-fest-cloud/1.jpg'
+import devfestCloud20232 from '../assets/activities/gdg-cloud-hcm-volunteer/2023-dev-fest-cloud/2.jpg'
+import devfestCloud20233 from '../assets/activities/gdg-cloud-hcm-volunteer/2023-dev-fest-cloud/3.jpg'
+import devfestCloud20234 from '../assets/activities/gdg-cloud-hcm-volunteer/2023-dev-fest-cloud/4.jpg'
+import devfestCloud20235 from '../assets/activities/gdg-cloud-hcm-volunteer/2023-dev-fest-cloud/5.jpg'
+import devfestCloud20236 from '../assets/activities/gdg-cloud-hcm-volunteer/2023-dev-fest-cloud/6.jpg'
+import devfestCloud20237 from '../assets/activities/gdg-cloud-hcm-volunteer/2023-dev-fest-cloud/7.jpg'
+import devfestCloud20238 from '../assets/activities/gdg-cloud-hcm-volunteer/2023-dev-fest-cloud/8.jpg'
+import googleIoExtended2024Cover from '../assets/activities/gdg-cloud-hcm-volunteer/2024-google-io-extended/cover.jpg'
+import googleIoExtended20241 from '../assets/activities/gdg-cloud-hcm-volunteer/2024-google-io-extended/1.jpg'
+import buildWithAi2025Cover from '../assets/activities/gdg-cloud-hcm-volunteer/2025-build-with-ai/cover.jpg'
+import buildWithAi20251 from '../assets/activities/gdg-cloud-hcm-volunteer/2025-build-with-ai/1.jpg'
+import buildWithAi20252 from '../assets/activities/gdg-cloud-hcm-volunteer/2025-build-with-ai/2.png'
+import buildWithAi20253 from '../assets/activities/gdg-cloud-hcm-volunteer/2025-build-with-ai/3.jpg'
 import buildWithAi2026Cover from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/cover.jpg'
 import buildWithAi20261 from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/1.jpg'
 import buildWithAi20262 from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/2.jpg'
@@ -105,6 +133,46 @@ const activityMediaBySlug: Record<string, ActivityMedia> = {
       gdgCloudCoreTeam8,
       gdgCloudCoreTeam9,
       gdgCloudCoreTeam10,
+      gdgCloudCoreTeam11,
+      gdgCloudCoreTeam12,
+      gdgCloudCoreTeam13,
+      gdgCloudCoreTeam14,
+      gdgCloudCoreTeam15,
+      gdgCloudCoreTeam16,
+      gdgCloudCoreTeam17,
+      gdgCloudCoreTeam18,
+      gdgCloudCoreTeam19,
+      gdgCloudCoreTeam20,
+      gdgCloudCoreTeam21,
+      gdgCloudCoreTeam22,
+      gdgCloudCoreTeam23,
+    ],
+  },
+  'devfest-cloud-hcm-2023': {
+    image: devfestCloud2023Cover,
+    images: [
+      devfestCloud2023Cover,
+      devfestCloud20231,
+      devfestCloud20232,
+      devfestCloud20233,
+      devfestCloud20234,
+      devfestCloud20235,
+      devfestCloud20236,
+      devfestCloud20237,
+      devfestCloud20238,
+    ],
+  },
+  'google-io-extended-cloud-hcm-2024': {
+    image: googleIoExtended2024Cover,
+    images: [googleIoExtended2024Cover, googleIoExtended20241],
+  },
+  'build-with-ai-2025': {
+    image: buildWithAi2025Cover,
+    images: [
+      buildWithAi2025Cover,
+      buildWithAi20251,
+      buildWithAi20252,
+      buildWithAi20253,
     ],
   },
   'build-with-ai-2026': {
