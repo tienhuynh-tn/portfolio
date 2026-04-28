@@ -33,11 +33,14 @@ function CertificationsPage() {
         </div>
 
         <div className="certificationBadgeGridCenter">
-          <ul className="certificationBadgeGrid" aria-label="All certifications">
+          <ul
+            className="certificationBadgeGrid max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-6"
+            aria-label="All certifications"
+          >
             {allCertifications.map((certification, index) => (
               <li
                 key={certification.id}
-                className="certificationBadgeGridItem reveal"
+                className="certificationBadgeGridItem reveal w-full max-w-sm md:w-[320px]"
                 style={{ ['--reveal-delay' as string]: `${index * 70}ms` }}
               >
                 <CertificationBadgeTile

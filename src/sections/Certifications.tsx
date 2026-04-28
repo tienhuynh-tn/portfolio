@@ -27,11 +27,14 @@ function Certifications() {
           </div>
 
           <div className="certificationBadgeGridCenter">
-            <ul className="certificationBadgeGrid" aria-label="Certifications">
-              {featuredCertifications.map((certification, index) => (
+            <ul
+              className="certificationBadgeGrid mx-auto flex max-w-5xl flex-col items-center justify-center gap-6 md:flex-row md:flex-wrap md:items-stretch"
+              aria-label="Certifications"
+            >
+              {featuredCertifications.slice(0, 3).map((certification, index) => (
                 <li
                   key={certification.id}
-                  className="certificationBadgeGridItem reveal"
+                  className="certificationBadgeGridItem reveal w-[270px] max-w-full shrink-0"
                   style={{ ['--reveal-delay' as string]: `${index * 70}ms` }}
                 >
                   <CertificationBadgeTile

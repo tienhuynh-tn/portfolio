@@ -2,6 +2,7 @@ import { ArrowSquareOut, X } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { type CertificationItem } from '../../data/certifications'
+import TagBadge from '../TagBadge'
 import ImageLightbox from '../shared/ImageLightbox'
 
 type CertificationModalProps = {
@@ -24,9 +25,15 @@ function CertificationModal({
 }: CertificationModalProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
-  const [certBadgeOk, setCertBadgeOk] = useState(Boolean(certification.certBadgeSrc))
   const [certDetailImageOk, setCertDetailImageOk] = useState(Boolean(certification.certDetailImageSrc))
+  const [issuerLogoOk, setIssuerLogoOk] = useState(Boolean(certification.issuerLogoSrc))
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+  const certificationTags = Array.from(new Set(certification.tags ?? []))
+  const isPdfPreview = certification.certDetailImageSrc?.toLowerCase().includes('.pdf') ?? false
+  const pdfPreviewSrc =
+    isPdfPreview && certification.certDetailImageSrc
+      ? `${certification.certDetailImageSrc}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`
+      : ''
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -86,12 +93,12 @@ function CertificationModal({
   }, [isPreviewOpen, onClose])
 
   useEffect(() => {
-    setCertBadgeOk(Boolean(certification.certBadgeSrc))
     setCertDetailImageOk(Boolean(certification.certDetailImageSrc))
+    setIssuerLogoOk(Boolean(certification.issuerLogoSrc))
     setIsPreviewOpen(false)
   }, [
-    certification.certBadgeSrc,
     certification.certDetailImageSrc,
+    certification.issuerLogoSrc,
     certification.id,
   ])
 
@@ -99,7 +106,7 @@ function CertificationModal({
     <div className="modalOverlay" role="presentation" onClick={onClose}>
       <article
         ref={dialogRef}
-        className="modalContainer certificationModalContainer"
+        className="modalContainer certificationModalContainer max-h-[90vh]"
         role="dialog"
         aria-modal="true"
         aria-labelledby={`certification-modal-title-${certification.id}`}
@@ -118,24 +125,21 @@ function CertificationModal({
         <div className="modalScroll">
           <div className="modalContent certificationModalContent">
             <div className="certificationModalShell">
-              <div className="certificationModalMediaStack">
-                {certification.certBadgeSrc && certBadgeOk ? (
-                  <div className="certificationModalBadgeWrap">
-                    <div className="certificationModalBadge">
-                      <img
-                        src={certification.certBadgeSrc}
-                        alt={`${certification.name} badge`}
-                        className="certificationModalBadgeImage"
-                        loading="lazy"
-                        onError={() => setCertBadgeOk(false)}
-                      />
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-
               <div className="modalBody certificationModalBody">
                 <header className="modalHeader certificationModalHeader">
+                  {certification.issuerLogoSrc && issuerLogoOk ? (
+                    <div className="certificationModalIssuerWrap">
+                      <div className="certificationModalIssuerCircle">
+                        <img
+                          src={certification.issuerLogoSrc}
+                          alt={`${certification.issuer} logo`}
+                          className="certificationModalIssuerLogo"
+                          loading="lazy"
+                          onError={() => setIssuerLogoOk(false)}
+                        />
+                      </div>
+                    </div>
+                  ) : null}
                   <h2
                     id={`certification-modal-title-${certification.id}`}
                     className="itemTitle certificationModalTitle"
@@ -145,31 +149,56 @@ function CertificationModal({
                   <p className="itemMeta certificationModalIssuer">
                     {certification.issuer} · {`Issued ${certification.issued}`}
                   </p>
-                  {certification.summary ? (
-                    <p className="cardDesc certificationModalSummary">
-                      {certification.summary}
-                    </p>
+                  {certificationTags.length > 0 ? (
+                    <ul
+                      className="skillsBadges detailModalTags"
+                      aria-label={`${certification.name} tags`}
+                    >
+                      {certificationTags.map((tag) => (
+                        <TagBadge key={tag} label={tag} />
+                      ))}
+                    </ul>
                   ) : null}
                 </header>
 
                 <section className="certificationPreviewSection">
                   {certification.certDetailImageSrc && certDetailImageOk ? (
-                    <button
-                      type="button"
-                      className="certificationPreviewButton"
-                      onClick={() => setIsPreviewOpen(true)}
-                      aria-label={`Zoom certificate preview for ${certification.name}`}
-                    >
-                      <span className="certificationPreviewFrame">
-                        <img
-                          src={certification.certDetailImageSrc}
-                          alt={`${certification.name} certificate document`}
-                          className="certificationPreviewImage"
-                          loading="lazy"
-                          onError={() => setCertDetailImageOk(false)}
+                    isPdfPreview ? (
+                      <span className="certificationPreviewFrame certificationPreviewFramePdf">
+                        <iframe
+                          src={pdfPreviewSrc}
+                          title={`${certification.name} certificate PDF`}
+                          className="certificationPreviewPdf"
                         />
+                        <noscript>
+                          <a
+                            href={certification.certDetailImageSrc}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="certificationModalInlineAction certificationModalInlineActionPrimary"
+                          >
+                            Open certificate PDF
+                          </a>
+                        </noscript>
                       </span>
-                    </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="certificationPreviewButton"
+                        onClick={() => setIsPreviewOpen(true)}
+                        aria-label={`Zoom certificate preview for ${certification.name}`}
+                      >
+                        <span className="certificationPreviewFrame">
+                          <img
+                            src={certification.certDetailImageSrc}
+                            alt={`${certification.name} certificate document`}
+                            className="certificationPreviewImage"
+                            loading="lazy"
+                            onError={() => setCertDetailImageOk(false)}
+                          />
+                        </span>
+                      </button>
+                    )
                   ) : (
                     <p className="certificationPreviewUnavailable">
                       Certificate image unavailable
@@ -177,25 +206,33 @@ function CertificationModal({
                   )}
                 </section>
 
-                <section className="certificationModalFooter">
-                  <a
-                    href={certification.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="certificationModalInlineAction certificationModalInlineActionPrimary"
-                    aria-label={`Open credential for ${certification.name}`}
-                  >
-                    <span>Open credential</span>
-                    <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
-                  </a>
-                </section>
+                {certification.summary ? (
+                  <p className="cardDesc certificationModalSummary">
+                    {certification.summary}
+                  </p>
+                ) : null}
+
+                {certification.url ? (
+                  <section className="certificationModalFooter">
+                    <a
+                      href={certification.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="certificationModalInlineAction certificationModalInlineActionPrimary"
+                      aria-label={`Open credential for ${certification.name}`}
+                    >
+                      <span>Open credential</span>
+                      <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
+                    </a>
+                  </section>
+                ) : null}
               </div>
             </div>
           </div>
         </div>
       </article>
 
-      {isPreviewOpen && certification.certDetailImageSrc && certDetailImageOk ? (
+      {isPreviewOpen && certification.certDetailImageSrc && certDetailImageOk && !isPdfPreview ? (
         <ImageLightbox
           src={certification.certDetailImageSrc}
           alt={`${certification.name} certificate preview`}

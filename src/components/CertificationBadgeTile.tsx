@@ -1,5 +1,8 @@
 import { useEffect, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
-import { type CertificationItem } from '../data/certifications'
+import {
+  getCertificationIssuerText,
+  type CertificationItem,
+} from '../data/certifications'
 
 type CertificationBadgeTileProps = {
   certification: CertificationItem
@@ -10,11 +13,11 @@ function CertificationBadgeTile({
   certification,
   onSelect,
 }: CertificationBadgeTileProps) {
-  const [certImageOk, setCertImageOk] = useState(Boolean(certification.certBadgeSrc))
+  const [issuerLogoOk, setIssuerLogoOk] = useState(Boolean(certification.issuerLogoSrc))
 
   useEffect(() => {
-    setCertImageOk(Boolean(certification.certBadgeSrc))
-  }, [certification.certBadgeSrc, certification.id])
+    setIssuerLogoOk(Boolean(certification.issuerLogoSrc))
+  }, [certification.issuerLogoSrc, certification.id])
 
   const handleActivate = () => {
     onSelect(certification)
@@ -37,19 +40,25 @@ function CertificationBadgeTile({
       onKeyDown={handleKeyDown}
     >
       <div className="certificationBadgeTileInner">
-        {certification.certBadgeSrc && certImageOk ? (
-          <div className="certificationBadgeCertImageWrap">
-            <img
-              src={certification.certBadgeSrc}
-              alt={`${certification.name} certification badge`}
-              width={60}
-              height={60}
-              className="certificationBadgeCertImage"
-              loading="lazy"
-              onError={() => setCertImageOk(false)}
-            />
+        <div className="certificationBadgeCertImageWrap">
+          <div className="certificationBadgeMark">
+            {certification.issuerLogoSrc && issuerLogoOk ? (
+              <img
+                src={certification.issuerLogoSrc}
+                alt={`${certification.issuer} logo`}
+                width={40}
+                height={40}
+                className="certificationIssuerLogo"
+                loading="lazy"
+                onError={() => setIssuerLogoOk(false)}
+              />
+            ) : (
+              <span className="certificationBadgeMonogram">
+                {getCertificationIssuerText(certification)}
+              </span>
+            )}
           </div>
-        ) : null}
+        </div>
 
         <div className="certificationBadgeBody certTileContent">
           <h3 className="certificationBadgeTitle certTitle">{certification.name}</h3>
