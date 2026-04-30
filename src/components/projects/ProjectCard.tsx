@@ -12,6 +12,7 @@ type ProjectCardProps = {
 function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const fallbackImage = webImg
   const [imageSrc, setImageSrc] = useState(project.image?.src ?? fallbackImage)
+  const previewTech = project.tech.slice(0, 3)
 
   useEffect(() => {
     setImageSrc(project.image?.src ?? fallbackImage)
@@ -58,7 +59,7 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
           <p className="cardDesc projectCardTagline">{project.tagline}</p>
 
           <TechChips
-            tech={project.tech}
+            tech={previewTech}
             label={`${project.title} technology stack`}
             className="projectCardTech"
           />

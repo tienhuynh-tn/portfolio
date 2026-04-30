@@ -18,7 +18,7 @@ export type CertificationItem = {
 }
 
 const GOOGLE_LOGO =
-  'https://storage.googleapis.com/pe-portal-consumer-prod-wagtail-static/images/GoogleG_FullColor_White_RGB_1.width-1440.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=wagtail%40pe-portal-consumer-prod.iam.gserviceaccount.com%2F20260428%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260428T081645Z&X-Goog-Expires=86400&X-Goog-SignedHeaders=host&X-Goog-Signature=9af6543ae2fffbd142c9a4bdf66f509c2bfd487e37bd2c65215a8ae62cec7beb7a078ea613ee786b0a917af9a28313bfe826dad77bc630161fb6a1b6bae4af368fcb8f6dec556d8d3067afbb5161c6ef9b7a09939688f49b8a502cae247ca96d79b973d59e08096ab7ef45406632e5290fd3148c8533f163ac54b301b8cfb290885cda10765791259ef2655accfb97c2a0ebfd8ba11df7755d77077415c98b543b41b54b7733c0fc7c0f18f46d14dddb6b0a86a6e1d2a32d276f92309e1880df6f5196332dadac3e1a4cef2762505b19288aef5c1b4df6664e5825ea2948e6869bab1be59a10ddf0ecb53b5d5729b5930c31e43c11715ce6734bbff8ac9f814e'
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/250px-Google_Favicon_2025.svg.png'
 const UDACITY_LOGO = 'https://upload.wikimedia.org/wikipedia/en/3/3b/Udacity_logo.png'
 const UDEMY_LOGO =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Udemy_logo.svg/1280px-Udemy_logo.svg.png'
@@ -72,8 +72,8 @@ export const allCertifications: CertificationItem[] = [
     id: 'building-microservices-spring-boot-spring-cloud',
     name: 'Building Microservices with Spring Boot & Spring Cloud',
     issuer: 'Udemy',
-    issued: '09/08/2024',
-    url: null,
+    issued: 'September 8, 2024',
+    url: 'https://www.udemy.com/certificate/UC-cbb3f5b2-225c-40c9-b69d-1f28c9c2d938/',
     badgeText: 'SB',
     issuerLogoSrc: UDEMY_LOGO,
     certBadgeSrc: microservicesWithSpringCertificate,
@@ -81,7 +81,7 @@ export const allCertifications: CertificationItem[] = [
     summary:
       'Completed a Udemy course focused on building microservices using Spring Boot and Spring Cloud.',
     fullDescription:
-      'This certificate verifies completion of the course "[NEW] Building Microservices with Spring Boot & Spring Cloud" on 09/08/2024. The course covered microservices development with Spring Boot and Spring Cloud, as validated by Udemy.',
+      'This certificate verifies completion of the course "[NEW] Building Microservices with Spring Boot & Spring Cloud" on September 8, 2024. The course covered microservices development with Spring Boot and Spring Cloud, as validated by Udemy.',
     tags: [
       'Java',
       'Spring Boot',
