@@ -1,73 +1,87 @@
-# React + TypeScript + Vite
+# Tien Huynh Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio website for showcasing software engineering experience, projects, certifications, activities, and contact information.
 
-Currently, two official plugins are available:
+Built with React, TypeScript, Vite, React Router, Tailwind CSS, and Phosphor Icons.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Live site: [https://tienhuynh-tn.github.io/portfolio/](https://tienhuynh-tn.github.io/portfolio/)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Responsive single-page portfolio with route-backed detail pages
+- Sections for about, skills, projects, experience, education, certifications, activities, and contact
+- Project, activity, and certification modals
+- Theme toggle and scroll-to-top behavior
+- Static resume and certificate assets served from `public`
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Install dependencies:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Start the local dev server:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+Run ESLint:
+
+```bash
+npm run lint
+```
+
+## Project Structure
+
+```text
+src/
+  app/           Route composition and navigation metadata
+  assets/        Bundled project, activity, and certificate media
+  components/    Reusable UI components
+  data/          Portfolio content data
+  hooks/         Shared React hooks
+  layouts/       App shell layout
+  pages/         Route-level pages
+  sections/      Homepage sections
+  styles/        Global styling
+public/
+  certs/         Public certificate preview assets
+  issuers/       Public issuer logo assets
+  resume.pdf     Downloadable resume
+```
+
+## Content Updates
+
+Most portfolio content lives in `src/data`:
+
+- `projects.ts` for project cards, filters, and project modals
+- `certifications.ts` for certification badges and certificate details
+- `activities.ts` and `activityMedia.ts` for activity cards, galleries, and modal data
+- `education.ts` and `experience.ts` for timeline sections
+
+Static files that need stable public URLs should go in `public`. Media imported by React components should go in `src/assets`.
+
+## Deployment
+
+The Vite base path is configured as `/portfolio/` in `vite.config.ts`. Keep this in sync with the deployment path.
+
+## Validation Notes
+
+`npm run build` should pass before deployment.
+
+`npm run lint` currently reports existing React Hooks rule violations around synchronous `setState` inside effects. Those are separate code-quality fixes and are not related to the README or unused-file cleanup.
