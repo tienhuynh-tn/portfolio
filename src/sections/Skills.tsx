@@ -56,10 +56,10 @@ const SKILL_CATEGORIES = [
   },
   {
     title: 'AI',
-    skills: ['AI Integrations', 'Prompt Engineering'],
+    skills: ['AI Integrations', 'Prompt Engineering', 'Codex', 'Antigravity'],
   },
   {
-    title: 'Frontend',
+    title: 'Frontend & Mobile',
     skills: ['JavaScript', 'React', 'Sass', 'Bootstrap', 'Flutter'],
   },
 ]
@@ -99,6 +99,8 @@ const SKILL_ICONS: Record<string, typeof BracketsCurly> = {
   Redis: Database,
   'AI Integrations': BracketsCurly,
   'Prompt Engineering': BracketsCurly,
+  Codex: BracketsCurly,
+  Antigravity: BracketsCurly,
   JavaScript: BracketsCurly,
   React: BracketsCurly,
   Sass: BracketsCurly,
