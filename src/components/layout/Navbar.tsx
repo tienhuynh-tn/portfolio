@@ -30,10 +30,35 @@ const HASH_ACTIVE_IDS = new Set<NavItemId>([
   'contact',
 ])
 
+function getRouteActiveId(pathname: string, hash: string): NavItemId {
+  if (pathname.startsWith('/certifications') || pathname.startsWith('/credentials')) {
+    return 'certifications'
+  }
+
+  if (pathname.startsWith('/projects')) {
+    return 'projects'
+  }
+
+  if (pathname.startsWith('/activities')) {
+    return 'activities'
+  }
+
+  if (pathname === '/') {
+    const hashId = hash.replace('#', '') as NavItemId
+    if (HASH_ACTIVE_IDS.has(hashId)) {
+      return hashId
+    }
+  }
+
+  return 'home'
+}
+
 function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
-  const [activeId, setActiveId] = useState<NavItemId>('home')
+  const [activeId, setActiveId] = useState<NavItemId>(() =>
+    getRouteActiveId(location.pathname, location.hash),
+  )
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isNavbarVisible, setIsNavbarVisible] = useState(true)
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -179,36 +204,6 @@ function Navbar() {
   }, [location.pathname, sectionOrder])
 
   useEffect(() => {
-    if (
-      location.pathname.startsWith('/certifications') ||
-      location.pathname.startsWith('/credentials')
-    ) {
-      setActiveId('certifications')
-      return
-    }
-
-    if (location.pathname.startsWith('/projects')) {
-      setActiveId('projects')
-      return
-    }
-
-    if (location.pathname.startsWith('/activities')) {
-      setActiveId('activities')
-      return
-    }
-
-    if (location.pathname === '/') {
-      const hashId = location.hash.replace('#', '') as NavItemId
-      if (HASH_ACTIVE_IDS.has(hashId)) {
-        setActiveId(hashId)
-        return
-      }
-    }
-
-    setActiveId('home')
-  }, [location.hash, location.pathname])
-
-  useEffect(() => {
     const media = window.matchMedia('(max-width: 1199px)')
     const updateCollapsed = (event?: MediaQueryListEvent) => {
       setIsCollapsed(event ? event.matches : media.matches)
@@ -317,7 +312,11 @@ function Navbar() {
     navigate('/')
   }
 
-  const activeItem = NAV_ITEMS.find((item) => item.id === activeId) ?? NAV_ITEMS[0]
+  const visibleActiveId =
+    location.pathname === '/'
+      ? activeId
+      : getRouteActiveId(location.pathname, location.hash)
+  const activeItem = NAV_ITEMS.find((item) => item.id === visibleActiveId) ?? NAV_ITEMS[0]
   const ActiveIcon = activeItem.Icon
 
   return (
@@ -343,7 +342,7 @@ function Navbar() {
               aria-label="Primary"
             >
               {NAV_ITEMS.map((item) => {
-                const isActive = activeId === item.id
+                const isActive = visibleActiveId === item.id
                 const Icon = item.Icon
 
                 return (
@@ -423,7 +422,7 @@ function Navbar() {
         <div className="container navbarMobileMenuWrap" ref={mobileMenuRef}>
           <nav id="navbar-mobile-menu" className="navbarMobileMenu" aria-label="Mobile">
             {NAV_ITEMS.map((item) => {
-              const isActive = activeId === item.id
+              const isActive = visibleActiveId === item.id
               const Icon = item.Icon
 
               return (

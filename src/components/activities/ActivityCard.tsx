@@ -28,6 +28,9 @@ const PREVIEW_TAG_PRIORITY: Record<string, number> = {
   'Human Resources': 6,
   Backend: 7,
   Competition: 8,
+  Hackathon: 8,
+  'AI for Education': 9,
+  EdTech: 10,
   Event: 9,
   Marathon: 10,
   Environment: 11,
@@ -48,6 +51,14 @@ const PREVIEW_TAG_PRIORITY: Record<string, number> = {
   Teamwork: 25,
   'Event Organization': 26,
   'Developer Community': 29,
+  'Vietnam Impact': 30,
+  'Next.js': 31,
+  Nx: 32,
+  Supabase: 33,
+  'CSV Analysis': 34,
+  'Bilingual App': 35,
+  'Teacher Support': 36,
+  'Lumi AI': 37,
   'Sports Event': 23,
   'Event Operations': 23,
   'Youth Project': 30,
@@ -96,18 +107,9 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
     [activity.image, activity.images, failedImages],
   )
   const hasMultipleImages = images.length > 1
+  const effectiveCurrentIndex = images.length ? Math.min(currentIndex, images.length - 1) : 0
   const previewDate = getPreviewDate(activity.date)
   const previewTags = getPreviewTags(activity.tags)
-
-  useEffect(() => {
-    setFailedImages([])
-    setCurrentIndex(0)
-  }, [activity.id])
-
-  useEffect(() => {
-    if (currentIndex < images.length) return
-    setCurrentIndex(0)
-  }, [currentIndex, images.length])
 
   useEffect(() => {
     const node = cardRef.current
@@ -150,11 +152,11 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
   }
 
   const showPreviousImage = () => {
-    setCurrentIndex((index) => (index - 1 + images.length) % images.length)
+    setCurrentIndex(() => (effectiveCurrentIndex - 1 + images.length) % images.length)
   }
 
   const showNextImage = () => {
-    setCurrentIndex((index) => (index + 1) % images.length)
+    setCurrentIndex(() => (effectiveCurrentIndex + 1) % images.length)
   }
 
   return (
@@ -178,7 +180,7 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
         {images.length ? (
           <div
             className="activityCardMediaTrack"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            style={{ transform: `translateX(-${effectiveCurrentIndex * 100}%)` }}
           >
             {images.map((image, index) => (
               <div key={`${activity.id}-${image}-${index}`} className="activityCardMediaSlide">

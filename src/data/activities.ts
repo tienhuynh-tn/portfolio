@@ -35,9 +35,29 @@ export type ActivityTag =
   | 'Gemini'
   | 'Codelab'
   | 'Developer Community'
+  | 'Hackathon'
+  | 'AI for Education'
+  | 'EdTech'
+  | 'Vietnam Impact'
+  | 'Next.js'
+  | 'Nx'
+  | 'Supabase'
+  | 'CSV Analysis'
+  | 'Bilingual App'
+  | 'Teacher Support'
+  | 'Lumi AI'
 
 export type ActivityLink = {
-  label: 'Details' | 'Proof' | 'Post' | 'Codelab resource'
+  label:
+    | 'Details'
+    | 'Proof'
+    | 'Post'
+    | 'Codelab resource'
+    | 'Live demo'
+    | 'Website'
+    | 'GitHub'
+    | 'Pitch deck'
+    | 'Judge result'
   url: string
 }
 
@@ -251,6 +271,90 @@ export function compareActivitiesByDateAsc(a: ActivityItem, b: ActivityItem) {
 }
 
 export const activities: ActivityItem[] = [
+  {
+    id: 'weekend-build-with-codex-hcmc-viteach',
+    title: 'Weekend Build With Codex - HCMC – ViTeach',
+    org: 'Codex Hackathon Track 3 Vietnam Impact',
+    role: 'Product Owner / Researcher / Team Leader',
+    date: '09/05/2026 · 1 day',
+    location: 'Ho Chi Minh City, Vietnam',
+    summary:
+      'Led a 4-member team building ViTeach, a bilingual EdTech MVP that analyzes LMS score CSVs and helps teachers identify class risk, trends, and interventions.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'ViTeach is a hackathon MVP for Track 3 Vietnam Impact. Teachers can upload an existing LMS score CSV, then Lumi analyzes class risk, score trends, and suggested interventions. The app is fully bilingual in English and Vietnamese.',
+            'The workspace was generated with Nx using a Next.js app in apps/web.',
+          ],
+        },
+        {
+          title: 'My Role',
+          bullets: [
+            'Served as Product Owner, Researcher, and Team Leader',
+            'Led a 4-member team through product framing, research, prioritization, and demo readiness',
+            'Focused the MVP around practical teacher workflows and classroom intervention support',
+          ],
+        },
+        {
+          title: 'Main Features',
+          bullets: [
+            'Multilingual Dashboard: Full English/Vietnamese support across the UI',
+            'Supabase Auth: Teacher login and profile management',
+            'CSV Upload & Analysis: Import class data and get instant risk analysis',
+            'KPI Dashboard: View total students, risk distribution, and potential students at a glance',
+            'Floating Chat Widget: Ask Lumi, the AI assistant, for support plans and teaching suggestions',
+            'Risk Distribution: Donut chart showing high/medium/low risk breakdowns',
+            'Student Insights: Separate panels for students requiring attention and potential students ready for enrichment',
+            'Trend Analysis: Per-student score trend charts with risk reasons and Lumi-generated suggestions',
+            'Demo Data: 5 example CSV files pre-configured with Vietnam high school classes',
+          ],
+        },
+        {
+          title: 'Result',
+          bullets: ['Judge result: #5/9 total teams'],
+        },
+      ],
+    }),
+    tags: [
+      'Hackathon',
+      'AI for Education',
+      'EdTech',
+      'Vietnam Impact',
+      'Next.js',
+      'Nx',
+      'Supabase',
+      'CSV Analysis',
+      'Bilingual App',
+      'Teacher Support',
+      'Lumi AI',
+    ],
+    links: [
+      {
+        label: 'Live demo',
+        url: 'https://youtu.be/8sGdwr-E70U',
+      },
+      {
+        label: 'Website',
+        url: 'https://project-7yms1.vercel.app/',
+      },
+      {
+        label: 'GitHub',
+        url: 'https://github.com/ViTeachTeam/vi-teach',
+      },
+      {
+        label: 'Pitch deck',
+        url: 'https://canva.link/uwiekraef8yjz1b',
+      },
+      {
+        label: 'Judge result',
+        url: 'https://codex-hackathon-track3.pages.dev/',
+      },
+    ],
+    ...getActivityMedia('vi-teach'),
+    featured: true,
+  },
   {
     id: 'gdg-cloud-hcm-core-team-organizer',
     title: 'Core Team Member – Organizer',

@@ -1,4 +1,4 @@
-import { useEffect, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
+import { useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
 import {
   getCertificationIssuerText,
   type CertificationItem,
@@ -13,11 +13,9 @@ function CertificationBadgeTile({
   certification,
   onSelect,
 }: CertificationBadgeTileProps) {
-  const [issuerLogoOk, setIssuerLogoOk] = useState(Boolean(certification.issuerLogoSrc))
-
-  useEffect(() => {
-    setIssuerLogoOk(Boolean(certification.issuerLogoSrc))
-  }, [certification.issuerLogoSrc, certification.id])
+  const [failedIssuerLogoIds, setFailedIssuerLogoIds] = useState<string[]>([])
+  const issuerLogoOk =
+    Boolean(certification.issuerLogoSrc) && !failedIssuerLogoIds.includes(certification.id)
 
   const handleActivate = () => {
     onSelect(certification)
@@ -50,7 +48,13 @@ function CertificationBadgeTile({
                 height={40}
                 className="certificationIssuerLogo"
                 loading="lazy"
-                onError={() => setIssuerLogoOk(false)}
+                onError={() =>
+                  setFailedIssuerLogoIds((current) =>
+                    current.includes(certification.id)
+                      ? current
+                      : [...current, certification.id],
+                  )
+                }
               />
             ) : (
               <span className="certificationBadgeMonogram">

@@ -25,10 +25,15 @@ function CertificationModal({
 }: CertificationModalProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
-  const [certDetailImageOk, setCertDetailImageOk] = useState(Boolean(certification.certDetailImageSrc))
-  const [issuerLogoOk, setIssuerLogoOk] = useState(Boolean(certification.issuerLogoSrc))
+  const [failedCertDetailImageIds, setFailedCertDetailImageIds] = useState<string[]>([])
+  const [failedIssuerLogoIds, setFailedIssuerLogoIds] = useState<string[]>([])
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const certificationTags = Array.from(new Set(certification.tags ?? []))
+  const certDetailImageOk =
+    Boolean(certification.certDetailImageSrc) &&
+    !failedCertDetailImageIds.includes(certification.id)
+  const issuerLogoOk =
+    Boolean(certification.issuerLogoSrc) && !failedIssuerLogoIds.includes(certification.id)
   const isPdfPreview = certification.certDetailImageSrc?.toLowerCase().includes('.pdf') ?? false
   const pdfPreviewSrc =
     isPdfPreview && certification.certDetailImageSrc
@@ -92,16 +97,6 @@ function CertificationModal({
     }
   }, [isPreviewOpen, onClose])
 
-  useEffect(() => {
-    setCertDetailImageOk(Boolean(certification.certDetailImageSrc))
-    setIssuerLogoOk(Boolean(certification.issuerLogoSrc))
-    setIsPreviewOpen(false)
-  }, [
-    certification.certDetailImageSrc,
-    certification.issuerLogoSrc,
-    certification.id,
-  ])
-
   const modalContent = (
     <div className="modalOverlay" role="presentation" onClick={onClose}>
       <article
@@ -135,7 +130,13 @@ function CertificationModal({
                           alt={`${certification.issuer} logo`}
                           className="certificationModalIssuerLogo"
                           loading="lazy"
-                          onError={() => setIssuerLogoOk(false)}
+                          onError={() =>
+                            setFailedIssuerLogoIds((current) =>
+                              current.includes(certification.id)
+                                ? current
+                                : [...current, certification.id],
+                            )
+                          }
                         />
                       </div>
                     </div>
@@ -194,7 +195,13 @@ function CertificationModal({
                             alt={`${certification.name} certificate document`}
                             className="certificationPreviewImage"
                             loading="lazy"
-                            onError={() => setCertDetailImageOk(false)}
+                            onError={() =>
+                              setFailedCertDetailImageIds((current) =>
+                                current.includes(certification.id)
+                                  ? current
+                                  : [...current, certification.id],
+                              )
+                            }
                           />
                         </span>
                       </button>

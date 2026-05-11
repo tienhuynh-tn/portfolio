@@ -215,15 +215,15 @@ function renderTextWithLinks(text: string) {
   })
 }
 
-function getValidExternalLink(links?: ActivityItem['links']) {
-  return links?.find(({ url }) => {
+function getValidExternalLinks(links?: ActivityItem['links']) {
+  return links?.filter(({ url }) => {
     try {
       const parsedUrl = new URL(url)
       return parsedUrl.protocol === 'https:' || parsedUrl.protocol === 'http:'
     } catch {
       return false
     }
-  })
+  }) ?? []
 }
 
 function deriveActivityTags(activity: ActivityItem) {
@@ -323,7 +323,7 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
     },
     [activity.image, activity.images, failedImages],
   )
-  const primaryLink = getValidExternalLink(activity.links)
+  const actionLinks = getValidExternalLinks(activity.links)
   const { place } = splitActivityLocation(activity.location)
   const { dateRange } = splitActivityDate(activity.date)
   const { intro, sections } = parseActivityDescription(activity.description)
@@ -399,17 +399,6 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
     }
   }, [effectiveLightboxImage, onClose])
 
-  useEffect(() => {
-    setFailedImages([])
-    setLightboxImage(null)
-  }, [activity.id])
-
-  useEffect(() => {
-    if (lightboxImage && !images.includes(lightboxImage)) {
-      setLightboxImage(images[0] ?? null)
-    }
-  }, [images, lightboxImage])
-
   const modalContent = (
     <div className="modalOverlay" role="presentation" onClick={onClose}>
       <article
@@ -480,18 +469,25 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
                         ) : null}
                       </p>
 
-                      {primaryLink ? (
+                      {actionLinks.length ? (
                         <div className="detailModalHeaderActions">
-                          <a
-                            href={primaryLink.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="detailModalInlineAction"
-                            aria-label={`Open link for ${activity.title}`}
-                          >
-                            <span>Open link</span>
-                            <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
-                          </a>
+                          {actionLinks.map(({ label, url }, index) => (
+                            <a
+                              key={`${label}-${url}`}
+                              href={url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className={
+                                index === 0
+                                  ? 'detailModalInlineAction detailModalInlineActionPrimary'
+                                  : 'detailModalInlineAction'
+                              }
+                              aria-label={`${label} for ${activity.title}`}
+                            >
+                              <span>{label}</span>
+                              <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
+                            </a>
+                          ))}
                         </div>
                       ) : null}
                     </div>

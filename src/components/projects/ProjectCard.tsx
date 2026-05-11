@@ -1,4 +1,4 @@
-import { useEffect, useState, type MouseEvent } from 'react'
+import { useState, type MouseEvent } from 'react'
 import { ArrowSquareOut, GithubLogo } from '@phosphor-icons/react'
 import webImg from '../../assets/projects/web.svg'
 import type { Project } from '../../data/projects'
@@ -11,12 +11,12 @@ type ProjectCardProps = {
 
 function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const fallbackImage = webImg
-  const [imageSrc, setImageSrc] = useState(project.image?.src ?? fallbackImage)
+  const [failedProjectImageIds, setFailedProjectImageIds] = useState<string[]>([])
+  const imageSrc =
+    project.image?.src && !failedProjectImageIds.includes(project.id)
+      ? project.image.src
+      : fallbackImage
   const previewTech = project.tech.slice(0, 3)
-
-  useEffect(() => {
-    setImageSrc(project.image?.src ?? fallbackImage)
-  }, [project.id, project.image?.src])
 
   const actionLinks = [
     { label: 'Live project', href: project.links?.live, Icon: ArrowSquareOut },
@@ -45,7 +45,11 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
             alt={project.image?.alt ?? `${project.title} preview`}
             className="projectCardImage h-44 w-full rounded-2xl object-cover"
             loading="lazy"
-            onError={() => setImageSrc(fallbackImage)}
+            onError={() =>
+              setFailedProjectImageIds((current) =>
+                current.includes(project.id) ? current : [...current, project.id],
+              )
+            }
           />
         </div>
 
