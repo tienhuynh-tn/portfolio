@@ -458,20 +458,53 @@ export const activities: ActivityItem[] = [
     date: '14/10/2023 - 15/10/2023 · 2 days',
     location: 'Ho Chi Minh City, Vietnam',
     summary:
-      'Participated in a 36-hour hackathon to design and code a platform connecting small and medium enterprises.',
+      'Participated in a 36-hour hackathon to build Partner Up / SheCodes H2O, a web application for discovering and connecting with service agencies.',
     description: buildActivityDescription({
-      description:
-        'Participated in She Codes Hackathon 2023 and worked with the team to design and code a platform that connects small and medium enterprises. The event was an intensive 36-hour experience focused on collaboration, learning, and innovation under pressure.',
-      highlights: [
-        'Joined a 36-hour hackathon and collaborated closely with teammates, mentors, and participants.',
-        'Learned from designers, coders, engineers, and mentors from GFT Technologies, Katalon, and Netcompany.',
-        "Worked on the HCM topic 'Connect' by proposing a platform to connect small and medium enterprises.",
-        'Contributed to designing a solution that helps clients find agencies and helps agencies find new and suitable clients.',
-        'Received guidance and mentorship throughout the competition.',
-        'Valued the teamwork, collaboration, and shared effort that made the project possible.',
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'Partner Up / SheCodes H2O is a full-stack web application for discovering and connecting with service agencies. The project combines a React + Vite frontend, a Spring Boot backend, and a Microsoft SQL Server database schema.',
+            'The current product is oriented around a Vietnamese agency directory experience, helping users browse, search, and evaluate service companies more easily.',
+          ],
+        },
+        {
+          title: 'Product Experience',
+          bullets: [
+            'Browse featured companies on the home page',
+            'Search and filter agencies by province, category, service, and budget',
+            'View company detail information',
+            'Explore service data exposed by the backend API',
+          ],
+        },
+        {
+          title: 'Team',
+          bullets: [
+            'Vo Hoang Vy: UI/UX Designer',
+            'Huynh Le Thuy Tien: Back-End Developer',
+            'Le Mai Khanh: Front-End Developer',
+            'Dao Nhu Quynh: Front-End Designer',
+            'Vo Thi Thanh Mai: Business Analyst',
+          ],
+        },
+        {
+          title: 'Hackathon Experience',
+          bullets: [
+            'Joined a 36-hour hackathon and collaborated closely with teammates, mentors, and participants',
+            'Worked on the HCM topic "Connect" by proposing a platform to connect small and medium enterprises with suitable agencies',
+            'Received guidance and mentorship throughout the competition',
+            'Valued the teamwork, collaboration, and shared effort that made the project possible',
+          ],
+        },
       ],
     }),
     tags: ['Competition', 'Community'],
+    links: [
+      {
+        label: 'GitHub',
+        url: 'https://github.com/tienhuynh-tn/shecodes_H2O',
+      },
+    ],
     ...getActivityMedia('shecodes-hackathon-2023'),
     featured: true,
   },
