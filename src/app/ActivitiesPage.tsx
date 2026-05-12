@@ -17,7 +17,7 @@ import useRevealOnScroll from '../hooks/useRevealOnScroll'
 function ActivitiesPage() {
   const revealRef = useRevealOnScroll<HTMLDivElement>()
   const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(null)
-  const [activeTag, setActiveTag] = useState<ActivityTag | 'All'>('All')
+  const [activeTags, setActiveTags] = useState<ActivityTag[]>([])
   const [searchValue, setSearchValue] = useState('')
   const [sortValue, setSortValue] = useState<ActivitySortOption>('newest')
 
@@ -26,7 +26,8 @@ function ActivitiesPage() {
 
     return [...allActivities
       .filter((activity) => {
-        const matchesTag = activeTag === 'All' || activity.tags.includes(activeTag)
+        const matchesTag =
+          activeTags.length === 0 || activeTags.some((tag) => activity.tags.includes(tag))
         const matchesSearch =
           normalizedQuery.length === 0 ||
           activity.title.toLowerCase().includes(normalizedQuery) ||
@@ -46,7 +47,7 @@ function ActivitiesPage() {
           ? compareActivitiesByDateDesc(left, right)
           : compareActivitiesByDateAsc(left, right)
       })
-  }, [activeTag, searchValue, sortValue])
+  }, [activeTags, searchValue, sortValue])
 
   return (
     <Section id="all-activities" className="skillsSection">
@@ -69,11 +70,11 @@ function ActivitiesPage() {
 
         <ActivityFilters
           tags={allActivityTags}
-          activeTag={activeTag}
+          activeTags={activeTags}
           searchValue={searchValue}
           sortValue={sortValue}
           resultCount={visibleActivities.length}
-          onTagChange={setActiveTag}
+          onTagsChange={setActiveTags}
           onSearchChange={setSearchValue}
           onSortChange={setSortValue}
         />

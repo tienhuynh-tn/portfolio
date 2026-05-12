@@ -1,34 +1,41 @@
 import { FunnelSimple, MagnifyingGlass, X } from '@phosphor-icons/react'
-import { useEffect, useRef, useState } from 'react'
-import type { ProjectCategory } from '../../data/projects'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 export type ProjectSortOption = 'newest' | 'oldest' | 'az'
 
 type ProjectFiltersProps = {
-  categories: ProjectCategory[]
-  activeCategory: ProjectCategory | 'All'
+  tags: string[]
+  activeTags: string[]
   searchValue: string
   sortValue: ProjectSortOption
   resultCount: number
-  onCategoryChange: (category: ProjectCategory | 'All') => void
+  onTagsChange: (tags: string[]) => void
   onSearchChange: (value: string) => void
   onSortChange: (sort: ProjectSortOption) => void
 }
 
 function ProjectFilters({
-  categories,
-  activeCategory,
+  tags,
+  activeTags,
   searchValue,
   sortValue,
   resultCount,
-  onCategoryChange,
+  onTagsChange,
   onSearchChange,
   onSortChange,
 }: ProjectFiltersProps) {
   const [openPopover, setOpenPopover] = useState<'search' | 'filter' | null>(null)
+  const [tagSearchValue, setTagSearchValue] = useState('')
   const containerRef = useRef<HTMLElement | null>(null)
-  const hasActiveFilters = activeCategory !== 'All' || searchValue.trim().length > 0
+  const hasActiveFilters = activeTags.length > 0 || searchValue.trim().length > 0
   const resultLabel = `${resultCount} project${resultCount === 1 ? '' : 's'}`
+  const visibleTags = useMemo(() => {
+    const normalizedQuery = tagSearchValue.trim().toLowerCase()
+
+    if (!normalizedQuery) return tags
+
+    return tags.filter((tag) => tag.toLowerCase().includes(normalizedQuery))
+  }, [tagSearchValue, tags])
 
   useEffect(() => {
     if (!openPopover) return
@@ -47,8 +54,17 @@ function ProjectFilters({
   }, [openPopover])
 
   const resetFilters = () => {
-    onCategoryChange('All')
+    onTagsChange([])
     onSearchChange('')
+    setTagSearchValue('')
+  }
+
+  const toggleTag = (tag: string) => {
+    onTagsChange(
+      activeTags.includes(tag)
+        ? activeTags.filter((activeTag) => activeTag !== tag)
+        : [...activeTags, tag],
+    )
   }
 
   return (
@@ -79,7 +95,7 @@ function ProjectFilters({
 
           <button
             type="button"
-            className={`listingFilterIconButton ${activeCategory !== 'All' || openPopover === 'filter' ? 'is-active' : ''}`.trim()}
+            className={`listingFilterIconButton ${activeTags.length > 0 || openPopover === 'filter' ? 'is-active' : ''}`.trim()}
             onClick={() => setOpenPopover((current) => (current === 'filter' ? null : 'filter'))}
             aria-label="Filter projects"
             aria-expanded={openPopover === 'filter'}
@@ -127,23 +143,52 @@ function ProjectFilters({
       {openPopover === 'filter' ? (
         <div className="listingFilterPopover listingFilterPopoverFilter">
           <label className="listingFilterField">
-            <span className="activityFilterLabel">Category</span>
-            <span className="listingFilterControl listingFilterSelectControl">
-              <FunnelSimple size={16} weight="bold" aria-hidden="true" />
-              <select
-                value={activeCategory}
-                onChange={(event) => onCategoryChange(event.target.value as ProjectCategory | 'All')}
-                className="listingFilterSelect"
-              >
-                <option value="All">All categories</option>
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
+            <span className="activityFilterLabel">Tag</span>
+            <span className="listingFilterControl">
+              <MagnifyingGlass size={16} weight="bold" aria-hidden="true" />
+              <input
+                type="search"
+                value={tagSearchValue}
+                onChange={(event) => setTagSearchValue(event.target.value)}
+                className="listingFilterInput"
+                placeholder="Type to search tags"
+              />
             </span>
           </label>
+
+          <div
+            className="listingFilterOptionList"
+            role="listbox"
+            aria-label="Project tags"
+            aria-multiselectable="true"
+          >
+            <button
+              type="button"
+              className={`listingFilterOptionButton ${activeTags.length === 0 ? 'is-active' : ''}`.trim()}
+              onClick={() => onTagsChange([])}
+              role="option"
+              aria-selected={activeTags.length === 0}
+            >
+              <span>All tags</span>
+            </button>
+
+            {visibleTags.map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                className={`listingFilterOptionButton ${activeTags.includes(tag) ? 'is-active' : ''}`.trim()}
+                onClick={() => toggleTag(tag)}
+                role="option"
+              aria-selected={activeTags.includes(tag)}
+            >
+              <span>{tag}</span>
+            </button>
+          ))}
+
+            {!visibleTags.length ? (
+              <p className="listingFilterEmptyOption">No tags found.</p>
+            ) : null}
+          </div>
 
           {hasActiveFilters ? (
             <button type="button" className="listingFilterReset" onClick={resetFilters}>

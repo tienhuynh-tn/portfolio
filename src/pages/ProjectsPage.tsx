@@ -4,7 +4,7 @@ import Section from '../components/layout/Section'
 import ProjectModal from '../components/projects/ProjectModal'
 import ProjectCard from '../components/projects/ProjectCard'
 import ProjectFilters, { type ProjectSortOption } from '../components/projects/ProjectFilters'
-import { allProjects, PROJECT_CATEGORIES, type Project, type ProjectCategory } from '../data/projects'
+import { allProjects, type Project } from '../data/projects'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 
 const PROJECT_MONTH_INDEX: Record<string, number> = {
@@ -42,16 +42,21 @@ function getProjectSortTime(timeframe: string) {
 function ProjectsPage() {
   const revealRef = useRevealOnScroll<HTMLDivElement>()
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const [activeCategory, setActiveCategory] = useState<ProjectCategory | 'All'>('All')
+  const [activeTags, setActiveTags] = useState<string[]>([])
   const [searchValue, setSearchValue] = useState('')
   const [sortValue, setSortValue] = useState<ProjectSortOption>('newest')
+  const projectTags = useMemo(
+    () => Array.from(new Set(allProjects.flatMap((project) => project.tech))).sort(),
+    [],
+  )
 
   const filteredProjects = useMemo(() => {
     const normalizedQuery = searchValue.trim().toLowerCase()
 
     return [...allProjects
       .filter((project) => {
-        const matchesCategory = activeCategory === 'All' || project.category === activeCategory
+        const matchesTags =
+          activeTags.length === 0 || activeTags.some((tag) => project.tech.includes(tag))
         const matchesSearch =
           normalizedQuery.length === 0 ||
           project.title.toLowerCase().includes(normalizedQuery) ||
@@ -61,7 +66,7 @@ function ProjectsPage() {
           project.tagline.toLowerCase().includes(normalizedQuery) ||
           project.tech.some((item) => item.toLowerCase().includes(normalizedQuery))
 
-        return matchesCategory && matchesSearch
+        return matchesTags && matchesSearch
       })]
       .sort((left, right) => {
         if (sortValue === 'az') {
@@ -77,7 +82,7 @@ function ProjectsPage() {
 
         return sortValue === 'newest' ? rightTime - leftTime : leftTime - rightTime
       })
-  }, [activeCategory, searchValue, sortValue])
+  }, [activeTags, searchValue, sortValue])
 
   return (
     <Section id="all-projects" className="skillsSection">
@@ -93,18 +98,18 @@ function ProjectsPage() {
 
         <div className="skillsIntro reveal max-w-none">
           <p className="skillsSubtitle whitespace-normal lg:whitespace-nowrap">
-            Explore all projects by category or search by title and technology stack.
+            Explore all projects by tag or search by title and technology stack.
           </p>
           <span className="skillsDivider" aria-hidden="true" />
         </div>
 
         <ProjectFilters
-          categories={PROJECT_CATEGORIES}
-          activeCategory={activeCategory}
+          tags={projectTags}
+          activeTags={activeTags}
           searchValue={searchValue}
           sortValue={sortValue}
           resultCount={filteredProjects.length}
-          onCategoryChange={setActiveCategory}
+          onTagsChange={setActiveTags}
           onSearchChange={setSearchValue}
           onSortChange={setSortValue}
         />
@@ -125,7 +130,7 @@ function ProjectsPage() {
           <div className="activityEmptyState reveal">
             <h2 className="itemTitle">No matching projects found.</h2>
             <p className="cardDesc">
-              Try a different category or search term.
+              Try a different tag or search term.
             </p>
           </div>
         ) : null}
