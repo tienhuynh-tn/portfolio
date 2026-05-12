@@ -285,8 +285,35 @@ export const activities: ActivityItem[] = [
         {
           title: 'Overview',
           paragraphs: [
-            'ViTeach is a hackathon MVP for Track 3 Vietnam Impact. Teachers can upload an existing LMS score CSV, then Lumi analyzes class risk, score trends, and suggested interventions. The app is fully bilingual in English and Vietnamese.',
+            'ViTeach is a hackathon MVP for Track 3 Vietnam Impact, built for Vietnam education context where the government is accelerating AI adoption in education and large-scale student assessment programs continue to expand.',
+            '"Digital transformation is no longer an option, but an inevitable requirement" captures the urgency behind the project and the role of Educational Technology (EdTech) in national development.',
             'The workspace was generated with Nx using a Next.js app in apps/web.',
+          ],
+        },
+        {
+          title: 'Problem',
+          bullets: [
+            'Classes are often too large for teachers to personalize learning and manage student progress effectively',
+            'Teachers are overloaded with student evaluations and manual assessment workflows',
+            'Manual evaluation makes it harder to identify risk patterns quickly',
+            'Teachers lack practical tools to optimize lesson planning and student support at scale',
+          ],
+        },
+        {
+          title: 'Existing Solution & Gap',
+          bullets: [
+            'The MVP currently requires manual CSV upload',
+            'Personalized learning remains challenging when teachers do not have enough structured student learning data',
+            'The product is new and still needs time, usage, and validation to build trust',
+          ],
+        },
+        {
+          title: 'Our Solution',
+          bullets: [
+            'From a CSV of student scores, AI analyzes class performance instantly',
+            'Visualizes charts, statistics, and dashboards for faster classroom insight',
+            'Provides Lumi, an evaluation AI assistant for interpreting risks and trends',
+            'Suggests lesson planning ideas and personalized student support plans',
           ],
         },
         {
@@ -295,6 +322,16 @@ export const activities: ActivityItem[] = [
             'Served as Product Owner, Researcher, and Team Leader',
             'Led a 4-member team through product framing, research, prioritization, and demo readiness',
             'Focused the MVP around practical teacher workflows and classroom intervention support',
+          ],
+        },
+        {
+          title: 'Team',
+          bullets: [
+            'Team size: 4 members',
+            'Tien Huynh: Product Owner, Researcher, and Team Leader',
+            'Đặng Việt Tuân: Senior Developer',
+            'Nguyễn Nguyên: Software Developer',
+            'Trần Phước Lộc: Front-end Developer',
           ],
         },
         {
@@ -341,7 +378,7 @@ export const activities: ActivityItem[] = [
       },
       {
         label: 'GitHub',
-        url: 'https://github.com/ViTeachTeam/vi-teach',
+        url: 'https://github.com/tienhuynh-tn/vi-teach',
       },
       {
         label: 'Pitch deck',

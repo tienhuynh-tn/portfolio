@@ -2381,9 +2381,10 @@ p {
 }
 
 .activityModalLead {
-  max-width: 72ch;
+  max-width: none;
   width: 100%;
   text-align: left;
+  line-height: 1.48;
 }
 
 .activityModalSection {
@@ -2399,12 +2400,12 @@ p {
 .activityModalDescription {
   display: block;
   width: 100%;
-  max-width: 72ch;
+  max-width: none;
   min-width: 0;
 }
 
 .activityModalDescription > * + * {
-  margin-top: 26px;
+  margin-top: 20px;
 }
 
 .activityModalContentGroup {
@@ -2414,12 +2415,28 @@ p {
 }
 
 .activityModalContentGroup > * + * {
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .activityModalContentGroupFirst {
   padding-top: 0;
   border-top: 0;
+}
+
+.activityModalDescription .detailModalBodyText {
+  max-width: none;
+  line-height: 1.48;
+  text-align: left;
+  word-spacing: normal;
+}
+
+.activityModalDescription .projectModalList {
+  max-width: none;
+  margin-top: 8px;
+}
+
+.activityModalDescription .projectModalList > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.45rem;
 }
 
 .activityModalGalleryHeader {

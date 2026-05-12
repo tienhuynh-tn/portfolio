@@ -45,10 +45,11 @@ import buildWithAi20264 from '../assets/activities/gdg-cloud-hcm-volunteer/2026-
 import buildWithAi20265 from '../assets/activities/gdg-cloud-hcm-volunteer/2026-build-with-ai/5.jpg'
 
 import viTeachCover from '../assets/activities/vi-teach/cover.jpg'
-import viTeach1 from '../assets/activities/vi-teach/1.jpg'
+import viTeach1 from '../assets/activities/vi-teach/1.png'
 import viTeach2 from '../assets/activities/vi-teach/2.jpg'
 import viTeach3 from '../assets/activities/vi-teach/3.jpg'
 import viTeach4 from '../assets/activities/vi-teach/4.jpg'
+import viTeach5 from '../assets/activities/vi-teach/5.jpg'
 
 import gdgSeaSummitCover from '../assets/activities/gdg-sea-summit-2025/cover.jpg'
 import gdgSeaSummit1 from '../assets/activities/gdg-sea-summit-2025/1.jpg'
@@ -194,7 +195,7 @@ const activityMediaBySlug: Record<string, ActivityMedia> = {
   },
   'vi-teach': {
     image: viTeachCover,
-    images: [viTeachCover, viTeach1, viTeach2, viTeach3, viTeach4],
+    images: [viTeachCover, viTeach1, viTeach2, viTeach3, viTeach4, viTeach5],
   },
   'gdg-sea-summit-2025': {
     image: gdgSeaSummitCover,
