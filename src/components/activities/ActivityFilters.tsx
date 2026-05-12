@@ -1,34 +1,34 @@
 import { FunnelSimple, MagnifyingGlass, X } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
-import type { ProjectCategory } from '../../data/projects'
+import type { ActivityTag } from '../../data/activities'
 
-export type ProjectSortOption = 'newest' | 'oldest' | 'az'
+export type ActivitySortOption = 'newest' | 'oldest' | 'az'
 
-type ProjectFiltersProps = {
-  categories: ProjectCategory[]
-  activeCategory: ProjectCategory | 'All'
+type ActivityFiltersProps = {
+  tags: ActivityTag[]
+  activeTag: ActivityTag | 'All'
   searchValue: string
-  sortValue: ProjectSortOption
+  sortValue: ActivitySortOption
   resultCount: number
-  onCategoryChange: (category: ProjectCategory | 'All') => void
+  onTagChange: (tag: ActivityTag | 'All') => void
   onSearchChange: (value: string) => void
-  onSortChange: (sort: ProjectSortOption) => void
+  onSortChange: (sort: ActivitySortOption) => void
 }
 
-function ProjectFilters({
-  categories,
-  activeCategory,
+function ActivityFilters({
+  tags,
+  activeTag,
   searchValue,
   sortValue,
   resultCount,
-  onCategoryChange,
+  onTagChange,
   onSearchChange,
   onSortChange,
-}: ProjectFiltersProps) {
+}: ActivityFiltersProps) {
   const [openPopover, setOpenPopover] = useState<'search' | 'filter' | null>(null)
   const containerRef = useRef<HTMLElement | null>(null)
-  const hasActiveFilters = activeCategory !== 'All' || searchValue.trim().length > 0
-  const resultLabel = `${resultCount} project${resultCount === 1 ? '' : 's'}`
+  const hasActiveFilters = activeTag !== 'All' || searchValue.trim().length > 0
+  const resultLabel = `${resultCount} activit${resultCount === 1 ? 'y' : 'ies'}`
 
   useEffect(() => {
     if (!openPopover) return
@@ -47,7 +47,7 @@ function ProjectFilters({
   }, [openPopover])
 
   const resetFilters = () => {
-    onCategoryChange('All')
+    onTagChange('All')
     onSearchChange('')
   }
 
@@ -55,7 +55,7 @@ function ProjectFilters({
     <section
       ref={containerRef}
       className="listingFilter reveal"
-      aria-label="Project filters"
+      aria-label="Activity filters"
     >
       <div className="listingFilterTopRow">
         <p className="listingFilterCount" aria-live="polite">
@@ -65,10 +65,10 @@ function ProjectFilters({
 
         <div className="listingFilterActions">
           <label className="listingFilterSort">
-            <span className="sr-only">Sort projects</span>
+            <span className="sr-only">Sort activities</span>
             <select
               value={sortValue}
-              onChange={(event) => onSortChange(event.target.value as ProjectSortOption)}
+              onChange={(event) => onSortChange(event.target.value as ActivitySortOption)}
               className="listingFilterSortSelect"
             >
               <option value="newest">Newest</option>
@@ -79,9 +79,9 @@ function ProjectFilters({
 
           <button
             type="button"
-            className={`listingFilterIconButton ${activeCategory !== 'All' || openPopover === 'filter' ? 'is-active' : ''}`.trim()}
+            className={`listingFilterIconButton ${activeTag !== 'All' || openPopover === 'filter' ? 'is-active' : ''}`.trim()}
             onClick={() => setOpenPopover((current) => (current === 'filter' ? null : 'filter'))}
-            aria-label="Filter projects"
+            aria-label="Filter activities"
             aria-expanded={openPopover === 'filter'}
           >
             <FunnelSimple size={16} weight="bold" aria-hidden="true" />
@@ -91,7 +91,7 @@ function ProjectFilters({
             type="button"
             className={`listingFilterIconButton ${searchValue.trim() || openPopover === 'search' ? 'is-active' : ''}`.trim()}
             onClick={() => setOpenPopover((current) => (current === 'search' ? null : 'search'))}
-            aria-label="Search projects"
+            aria-label="Search activities"
             aria-expanded={openPopover === 'search'}
           >
             <MagnifyingGlass size={16} weight="bold" aria-hidden="true" />
@@ -110,7 +110,7 @@ function ProjectFilters({
                 value={searchValue}
                 onChange={(event) => onSearchChange(event.target.value)}
                 className="listingFilterInput"
-                placeholder="Search title, organization, role, or tech"
+                placeholder="Search title, role, organization, or tag"
               />
             </span>
           </label>
@@ -127,18 +127,18 @@ function ProjectFilters({
       {openPopover === 'filter' ? (
         <div className="listingFilterPopover listingFilterPopoverFilter">
           <label className="listingFilterField">
-            <span className="activityFilterLabel">Category</span>
+            <span className="activityFilterLabel">Tag</span>
             <span className="listingFilterControl listingFilterSelectControl">
               <FunnelSimple size={16} weight="bold" aria-hidden="true" />
               <select
-                value={activeCategory}
-                onChange={(event) => onCategoryChange(event.target.value as ProjectCategory | 'All')}
+                value={activeTag}
+                onChange={(event) => onTagChange(event.target.value as ActivityTag | 'All')}
                 className="listingFilterSelect"
               >
-                <option value="All">All categories</option>
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
+                <option value="All">All tags</option>
+                {tags.map((tag) => (
+                  <option key={tag} value={tag}>
+                    {tag}
                   </option>
                 ))}
               </select>
@@ -157,4 +157,4 @@ function ProjectFilters({
   )
 }
 
-export default ProjectFilters
+export default ActivityFilters

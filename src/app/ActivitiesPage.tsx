@@ -1,10 +1,15 @@
 import { useMemo, useState } from 'react'
 import ActivityCard from '../components/activities/ActivityCard'
+import ActivityFilters, { type ActivitySortOption } from '../components/activities/ActivityFilters'
 import ActivityModal from '../components/activities/ActivityModal'
 import BackLink from '../components/layout/BackLink'
 import Section from '../components/layout/Section'
 import {
   allActivities,
+  allActivityTags,
+  compareActivitiesByDateAsc,
+  compareActivitiesByDateDesc,
+  type ActivityTag,
   type ActivityItem,
 } from '../data/activities'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
@@ -12,8 +17,36 @@ import useRevealOnScroll from '../hooks/useRevealOnScroll'
 function ActivitiesPage() {
   const revealRef = useRevealOnScroll<HTMLDivElement>()
   const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(null)
+  const [activeTag, setActiveTag] = useState<ActivityTag | 'All'>('All')
+  const [searchValue, setSearchValue] = useState('')
+  const [sortValue, setSortValue] = useState<ActivitySortOption>('newest')
 
-  const visibleActivities = useMemo(() => allActivities, [])
+  const visibleActivities = useMemo(() => {
+    const normalizedQuery = searchValue.trim().toLowerCase()
+
+    return [...allActivities
+      .filter((activity) => {
+        const matchesTag = activeTag === 'All' || activity.tags.includes(activeTag)
+        const matchesSearch =
+          normalizedQuery.length === 0 ||
+          activity.title.toLowerCase().includes(normalizedQuery) ||
+          activity.org.toLowerCase().includes(normalizedQuery) ||
+          activity.role.toLowerCase().includes(normalizedQuery) ||
+          activity.summary.toLowerCase().includes(normalizedQuery) ||
+          activity.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery))
+
+        return matchesTag && matchesSearch
+      })]
+      .sort((left, right) => {
+        if (sortValue === 'az') {
+          return left.title.localeCompare(right.title)
+        }
+
+        return sortValue === 'newest'
+          ? compareActivitiesByDateDesc(left, right)
+          : compareActivitiesByDateAsc(left, right)
+      })
+  }, [activeTag, searchValue, sortValue])
 
   return (
     <Section id="all-activities" className="skillsSection">
@@ -34,6 +67,17 @@ function ActivitiesPage() {
           <span className="skillsDivider" aria-hidden="true" />
         </div>
 
+        <ActivityFilters
+          tags={allActivityTags}
+          activeTag={activeTag}
+          searchValue={searchValue}
+          sortValue={sortValue}
+          resultCount={visibleActivities.length}
+          onTagChange={setActiveTag}
+          onSearchChange={setSearchValue}
+          onSortChange={setSortValue}
+        />
+
         {visibleActivities.length ? (
           <ul className="activityCardsGrid activityCardsGridAll" aria-label="All activities">
             {visibleActivities.map((activity, index) => (
@@ -50,7 +94,7 @@ function ActivitiesPage() {
           <div className="activityEmptyState reveal">
             <h2 className="itemTitle">No activities available right now.</h2>
             <p className="cardDesc">
-              Check back later for more updates.
+              Try a different tag or search term.
             </p>
           </div>
         )}
