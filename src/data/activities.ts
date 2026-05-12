@@ -243,7 +243,10 @@ function parseActivityDatePoint(value: string) {
 }
 
 function getActivityDateRangeParts(date: string) {
-  const [startText, endText] = date.split(/\s+[–-]\s+/)
+  const dateRange = date
+    .split('·')
+    .map((part) => part.trim())[0] ?? ''
+  const [startText, endText] = dateRange.split(/\s+[–-]\s+/)
 
   return {
     start: parseActivityDatePoint(startText ?? ''),
@@ -268,6 +271,19 @@ export function compareActivitiesByDateDesc(a: ActivityItem, b: ActivityItem) {
 
 export function compareActivitiesByDateAsc(a: ActivityItem, b: ActivityItem) {
   return compareActivitiesByDateDesc(b, a)
+}
+
+const activityIdsPinnedToEnd = new Set(['blood-donation-volunteer'])
+
+function compareActivitiesForDisplay(a: ActivityItem, b: ActivityItem) {
+  const aPinnedToEnd = activityIdsPinnedToEnd.has(a.id)
+  const bPinnedToEnd = activityIdsPinnedToEnd.has(b.id)
+
+  if (aPinnedToEnd !== bPinnedToEnd) {
+    return aPinnedToEnd ? 1 : -1
+  }
+
+  return compareActivitiesByDateDesc(a, b)
 }
 
 export const activities: ActivityItem[] = [
@@ -1123,6 +1139,6 @@ export const allActivityTags = Array.from(
   new Set(activities.flatMap((activity) => activity.tags)),
 )
 
-export const featuredActivities = activities.filter((item) => item.featured).slice(0, 3)
+export const allActivities = [...activities].sort(compareActivitiesForDisplay)
 
-export const allActivities = [...activities]
+export const featuredActivities = allActivities.slice(0, 3)
