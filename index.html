@@ -2,13 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo-dark.png" />
+    <link rel="icon" type="image/png" href="%BASE_URL%logo-dark.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0a0a" />
     <title>Tien Huynh — Senior Java Backend Developer</title>
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      ;(function () {
+        var redirect = new URLSearchParams(window.location.search).get('redirect')
+
+        if (redirect) {
+          window.history.replaceState(null, '', redirect + window.location.hash)
+        }
+      })()
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
