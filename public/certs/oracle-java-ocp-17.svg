@@ -1,7 +1,0 @@
-<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="160" height="160" rx="32" fill="#F8FAFC"/>
-  <rect x="14" y="14" width="132" height="132" rx="28" fill="#FFF7ED" stroke="#FDBA74"/>
-  <circle cx="80" cy="68" r="28" fill="#FFEDD5"/>
-  <path d="M67 68h26M80 55v26" stroke="#C2410C" stroke-width="6" stroke-linecap="round"/>
-  <text x="80" y="124" text-anchor="middle" fill="#9A3412" font-family="Arial, sans-serif" font-size="20" font-weight="700">OCP 17</text>
-</svg>

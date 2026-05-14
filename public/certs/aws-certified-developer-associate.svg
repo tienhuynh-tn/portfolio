@@ -1,8 +1,0 @@
-<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="160" height="160" rx="32" fill="#F8FAFC"/>
-  <rect x="14" y="14" width="132" height="132" rx="28" fill="#EFF6FF" stroke="#93C5FD"/>
-  <circle cx="80" cy="68" r="28" fill="#DBEAFE"/>
-  <path d="M61 80c10-20 28-29 38-30-5 10-17 27-38 30Z" fill="#1D4ED8"/>
-  <path d="M55 92c20 7 38 6 50-1" stroke="#F59E0B" stroke-width="6" stroke-linecap="round"/>
-  <text x="80" y="124" text-anchor="middle" fill="#1E3A8A" font-family="Arial, sans-serif" font-size="18" font-weight="700">AWS DEV</text>
-</svg>

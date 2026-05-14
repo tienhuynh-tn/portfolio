@@ -1,6 +1,7 @@
 import googleAiCertificate from '../assets/certificates/google-ai.jpeg'
 import cloudDeveloperCertificate from '../assets/certificates/cloud-developer.pdf'
 import microservicesWithSpringCertificate from '../assets/certificates/microservices-with-spring.jpg'
+import vibeCodingEssentialsCertificate from '../assets/certificates/vibe-coding-essentials.pdf'
 
 export type CertificationItem = {
   id: string
@@ -10,7 +11,6 @@ export type CertificationItem = {
   url?: string | null
   badgeText: string
   issuerLogoSrc?: string
-  certBadgeSrc?: string
   certDetailImageSrc?: string
   summary?: string
   fullDescription?: string
@@ -19,11 +19,35 @@ export type CertificationItem = {
 
 const GOOGLE_LOGO =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/250px-Google_Favicon_2025.svg.png'
+const COURSERA_LOGO =
+  'https://images.ctfassets.net/00atxywtfxvd/2QeS5ysKMhZ3ZjiU2rGRJA/e15df94b265053ce8ded4f5e630241c8/cropped-android-chrome-512x512-1.png'
 const UDACITY_LOGO = 'https://upload.wikimedia.org/wikipedia/en/3/3b/Udacity_logo.png'
 const UDEMY_LOGO =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Udemy_logo.svg/1280px-Udemy_logo.svg.png'
 
 export const allCertifications: CertificationItem[] = [
+  {
+    id: 'vibe-coding-essentials-build-apps-with-ai',
+    name: 'Vibe Coding Essentials - Build Apps with AI',
+    issuer: 'Coursera / Scrimba',
+    issued: 'May 14, 2026',
+    url: 'https://coursera.org/verify/specialization/HIY5H9B1UEWA',
+    badgeText: 'AI',
+    issuerLogoSrc: COURSERA_LOGO,
+    certDetailImageSrc: vibeCodingEssentialsCertificate,
+    summary:
+      'Completed the Coursera specialization from Scrimba covering practical AI-assisted app building workflows.',
+    fullDescription:
+      'This 5-course specialization covered vibe coding with Cursor AI, GitHub Copilot, Claude Code, Model Context Protocol (MCP), and AI-assisted software development fundamentals.',
+    tags: [
+      'AI',
+      'Vibe Coding',
+      'Cursor AI',
+      'GitHub Copilot',
+      'Claude Code',
+      'MCP',
+    ],
+  },
   {
     id: 'google-ai-professional-certificate',
     name: 'Google AI Professional Certificate',
@@ -32,7 +56,6 @@ export const allCertifications: CertificationItem[] = [
     url: 'https://www.coursera.org/account/accomplishments/professional-cert/certificate/NMZFS6X6E4QZ',
     badgeText: 'AI',
     issuerLogoSrc: GOOGLE_LOGO,
-    certBadgeSrc: googleAiCertificate,
     certDetailImageSrc: googleAiCertificate,
     summary:
       'Completed the Google AI Professional Certificate, demonstrating practical AI skills across brainstorming, research, communication, content creation, data analysis, and coding.',
@@ -76,7 +99,6 @@ export const allCertifications: CertificationItem[] = [
     url: 'https://www.udemy.com/certificate/UC-cbb3f5b2-225c-40c9-b69d-1f28c9c2d938/',
     badgeText: 'SB',
     issuerLogoSrc: UDEMY_LOGO,
-    certBadgeSrc: microservicesWithSpringCertificate,
     certDetailImageSrc: microservicesWithSpringCertificate,
     summary:
       'Completed a Udemy course focused on building microservices using Spring Boot and Spring Cloud.',
@@ -109,6 +131,7 @@ export function getCertificationIssuerText(certification: CertificationItem) {
   if (normalizedIssuer === 'cloud native computing foundation') return 'CNCF'
   if (normalizedIssuer === 'github') return 'GH'
   if (normalizedIssuer === 'microsoft') return 'MS'
+  if (normalizedIssuer === 'coursera / scrimba') return 'CS'
 
   return certification.issuer
     .split(/\s+/)
