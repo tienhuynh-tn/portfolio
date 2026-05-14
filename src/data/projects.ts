@@ -50,6 +50,38 @@ export const PROJECT_CATEGORIES: ProjectCategory[] = [
   'University',
 ]
 
+const PROJECT_MONTH_INDEX: Record<string, number> = {
+  jan: 0,
+  feb: 1,
+  mar: 2,
+  apr: 3,
+  may: 4,
+  jun: 5,
+  jul: 6,
+  aug: 7,
+  sep: 8,
+  oct: 9,
+  nov: 10,
+  dec: 11,
+}
+
+function getProjectSortTime(timeframe: string) {
+  const [startText = '', endText = ''] = timeframe.split(/\s+[–-]\s+/)
+  const sortText = (endText || startText).trim()
+
+  if (sortText.toLowerCase() === 'present') {
+    return Number.MAX_SAFE_INTEGER
+  }
+
+  const [monthText = '', yearText = ''] = sortText.split(/\s+/)
+  const month = PROJECT_MONTH_INDEX[monthText.slice(0, 3).toLowerCase()] ?? 0
+  const year = Number.parseInt(yearText, 10)
+
+  if (Number.isNaN(year)) return 0
+
+  return Date.UTC(year, month, 1)
+}
+
 export const allProjects: Project[] = [
   {
     id: 'next-generation-fintech-aggregator-platform',
@@ -153,6 +185,58 @@ export const allProjects: Project[] = [
     metrics: [
       'Expanded event-driven coverage with Kafka and ActiveMQ notifications.',
       'Raised code quality visibility through SonarCloud and logging improvements.',
+    ],
+  },
+  {
+    id: 'signature-demo',
+    title: 'Signature Demo',
+    timeframe: 'Aug 2025',
+    org: 'Personal Project',
+    role: 'Backend Developer',
+    teamSize: 'Team of 3',
+    category: 'Platform',
+    tagline:
+      'Signature verification backend with customer uploads, SFTP sync, and maker-checker approval workflows.',
+    highlights: [
+      'Built Spring Boot APIs for signature upload, review, approval, rejection, and tracking flows.',
+      'Integrated SFTP sync for exchanging newly created signatures with file-based systems.',
+      'Modeled maker-checker approval orchestration with Camunda 8 and Zeebe.',
+      'Secured REST endpoints with Spring Security, validation, and OpenAPI documentation.',
+      'Persisted application, signature, and workflow state in Oracle Database.',
+      'Added optional AI-based signature similarity checks when the external service is available.',
+    ],
+    tech: [
+      'Java 17',
+      'Spring Boot',
+      'Spring Security',
+      'Spring Data JPA',
+      'REST API',
+      'Oracle DB',
+      'Camunda 8',
+      'Zeebe',
+      'SFTP',
+      'OpenAPI',
+      'Docker Compose',
+      'Maven',
+    ],
+    links: {
+      live: '',
+      source: 'https://github.com/tienhuynh-tn/signature-demo-be/',
+      caseStudy: '',
+    },
+    image: {
+      src: platformImg,
+      alt: 'Signature verification workflow illustration',
+    },
+    featured: true,
+    responsibilities: [
+      'Designed backend workflows for customer signature intake and staff approval operations.',
+      'Configured Oracle, SFTP, and Camunda services for the local demo stack.',
+      'Documented setup and API usage for running the backend locally.',
+    ],
+    metrics: [
+      'Covers the full flow from customer upload through manager decision.',
+      'Combines file sync, workflow orchestration, persistence, and API documentation in one backend demo.',
     ],
   },
   {
@@ -435,5 +519,8 @@ export const allProjects: Project[] = [
   },
 ]
 
-export const featuredProjects = allProjects.filter((project) => project.featured).slice(0, 3)
+export const featuredProjects = allProjects
+  .filter((project) => project.featured)
+  .sort((left, right) => getProjectSortTime(right.timeframe) - getProjectSortTime(left.timeframe))
+  .slice(0, 3)
 export const projects = allProjects

@@ -177,28 +177,30 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
                           {secondaryMetaLine}
                         </div>
 
-                        <p className="projectModalTagline detailModalLead">
-                          {project.tagline}
-                        </p>
-                      </div>
+                        <div className="detailModalIntroSection">
+                          <p className="projectModalTagline detailModalLead">
+                            {project.tagline}
+                          </p>
 
-                      {actionLinks.length ? (
-                        <div className="detailModalHeaderActions">
-                          {actionLinks.map(({ label, href, kind }) => (
-                            <a
-                              key={label}
-                              href={href}
-                              target="_blank"
-                              rel="noreferrer"
-                              className={kind === 'primary' ? 'detailModalInlineAction detailModalInlineActionPrimary' : 'detailModalInlineAction'}
-                              aria-label={`${label} for ${project.title}`}
-                            >
-                              <span>{label}</span>
-                              <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
-                            </a>
-                          ))}
+                          {actionLinks.length ? (
+                            <div className="detailModalHeaderActions">
+                              {actionLinks.map(({ label, href, kind }) => (
+                                <a
+                                  key={label}
+                                  href={href}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className={kind === 'primary' ? 'detailModalInlineAction detailModalInlineActionPrimary' : 'detailModalInlineAction'}
+                                  aria-label={`${label} for ${project.title}`}
+                                >
+                                  <span>{label}</span>
+                                  <ArrowSquareOut size={14} weight="regular" aria-hidden="true" />
+                                </a>
+                              ))}
+                            </div>
+                          ) : null}
                         </div>
-                      ) : null}
+                      </div>
                     </div>
                   </header>
 

@@ -1,5 +1,5 @@
 import { useState, type MouseEvent } from 'react'
-import { ArrowSquareOut, GithubLogo } from '@phosphor-icons/react'
+import { ArrowSquareOut } from '@phosphor-icons/react'
 import webImg from '../../assets/projects/web.svg'
 import type { Project } from '../../data/projects'
 import TechChips from './TechChips'
@@ -20,7 +20,6 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
 
   const actionLinks = [
     { label: 'Live project', href: project.links?.live, Icon: ArrowSquareOut },
-    { label: 'Source code', href: project.links?.source, Icon: GithubLogo },
   ].filter((link): link is { label: string; href: string; Icon: typeof ArrowSquareOut } => Boolean(link.href))
 
   const handleActionClick = (event: MouseEvent<HTMLAnchorElement>) => {
