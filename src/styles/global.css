@@ -2752,6 +2752,41 @@ p {
   margin-top: 0.45rem;
 }
 
+.activityDateMilestoneGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.activityDateMilestone {
+  min-height: 76px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  background: color-mix(in srgb, var(--surface) 94%, var(--bg));
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 22%, transparent);
+}
+
+.activityDateMilestoneLabel {
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.activityDateMilestoneDate {
+  color: var(--text-strong);
+  font-size: 0.96rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
 .activityModalGalleryHeader {
   display: flex;
   align-items: baseline;

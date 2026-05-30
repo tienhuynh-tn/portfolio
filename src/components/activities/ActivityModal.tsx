@@ -236,6 +236,11 @@ type ParsedActivitySection = {
   bullets: string[]
 }
 
+type ActivityDateMilestone = {
+  label: string
+  date: string
+}
+
 function parseActivityDescription(description: string) {
   const blocks = description
     .split(/\n\s*\n/)
@@ -300,6 +305,26 @@ function renderMetaLine(items: string[], secondary = false) {
       ))}
     </p>
   )
+}
+
+function parseActivityDateMilestones(items: string[]) {
+  return items
+    .map((item) => {
+      const [label = '', ...dateParts] = item.split(':')
+      const date = dateParts.join(':').trim()
+
+      if (!label.trim() || !date) return null
+
+      return {
+        label: label.trim(),
+        date: formatActivityDateRangeForDisplay(date),
+      }
+    })
+    .filter((item): item is ActivityDateMilestone => Boolean(item))
+}
+
+function shouldRenderDateMilestones(activity: ActivityItem, section: ParsedActivitySection) {
+  return activity.id === 'blood-donation-volunteer' && section.title === 'Highlights'
 }
 
 function ActivityModal({ activity, onClose }: ActivityModalProps) {
@@ -516,7 +541,22 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
                             {renderTextWithLinks(paragraph)}
                           </p>
                         ))}
-                        {section.bullets.length ? (
+                        {shouldRenderDateMilestones(activity, section) && section.bullets.length ? (
+                          <div
+                            className="activityDateMilestoneGrid"
+                            aria-label={`${activity.title} donation dates`}
+                          >
+                            {parseActivityDateMilestones(section.bullets).map(({ label, date }) => (
+                              <div
+                                key={`${activity.id}-${label}-${date}`}
+                                className="activityDateMilestone"
+                              >
+                                <span className="activityDateMilestoneLabel">{label}</span>
+                                <span className="activityDateMilestoneDate">{date}</span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : section.bullets.length ? (
                           <BulletList items={section.bullets} className="projectModalList" />
                         ) : null}
                       </div>
