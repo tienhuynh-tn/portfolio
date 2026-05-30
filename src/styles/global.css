@@ -3288,6 +3288,37 @@ p {
   object-fit: contain;
 }
 
+.imageLightboxNav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  box-shadow: var(--shadow-soft);
+}
+
+.imageLightboxNavPrev {
+  left: 12px;
+}
+
+.imageLightboxNavNext {
+  right: 12px;
+}
+
+.imageLightboxNav:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
 .certificationLightboxLink {
   margin-top: 12px;
   display: inline-flex;

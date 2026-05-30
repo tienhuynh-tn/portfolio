@@ -1,4 +1,4 @@
-import { X } from '@phosphor-icons/react'
+import { CaretLeft, CaretRight, X } from '@phosphor-icons/react'
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -6,9 +6,11 @@ type ImageLightboxProps = {
   src: string
   alt: string
   onClose: () => void
+  onPrevious?: () => void
+  onNext?: () => void
 }
 
-function ImageLightbox({ src, alt, onClose }: ImageLightboxProps) {
+function ImageLightbox({ src, alt, onClose, onPrevious, onNext }: ImageLightboxProps) {
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
     const previousHtmlOverflow = document.documentElement.style.overflow
@@ -20,6 +22,14 @@ function ImageLightbox({ src, alt, onClose }: ImageLightboxProps) {
       if (event.key === 'Escape') {
         onClose()
       }
+
+      if (event.key === 'ArrowLeft' && onPrevious) {
+        onPrevious()
+      }
+
+      if (event.key === 'ArrowRight' && onNext) {
+        onNext()
+      }
     }
 
     document.addEventListener('keydown', handleKeydown)
@@ -29,7 +39,7 @@ function ImageLightbox({ src, alt, onClose }: ImageLightboxProps) {
       document.documentElement.style.overflow = previousHtmlOverflow
       document.removeEventListener('keydown', handleKeydown)
     }
-  }, [onClose])
+  }, [onClose, onNext, onPrevious])
 
   if (typeof document === 'undefined') return null
 
@@ -61,6 +71,28 @@ function ImageLightbox({ src, alt, onClose }: ImageLightboxProps) {
         <div className="imageLightboxImageWrap">
           <img src={src} alt={alt} className="imageLightboxImage" />
         </div>
+
+        {onPrevious ? (
+          <button
+            type="button"
+            className="imageLightboxNav imageLightboxNavPrev"
+            onClick={onPrevious}
+            aria-label="Show previous image"
+          >
+            <CaretLeft size={22} weight="bold" aria-hidden="true" />
+          </button>
+        ) : null}
+
+        {onNext ? (
+          <button
+            type="button"
+            className="imageLightboxNav imageLightboxNavNext"
+            onClick={onNext}
+            aria-label="Show next image"
+          >
+            <CaretRight size={22} weight="bold" aria-hidden="true" />
+          </button>
+        ) : null}
       </div>
     </div>,
     document.body,

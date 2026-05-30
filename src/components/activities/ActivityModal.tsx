@@ -354,6 +354,7 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
   const { intro, sections } = parseActivityDescription(activity.description)
   const effectiveLightboxImage =
     lightboxImage && images.includes(lightboxImage) ? lightboxImage : null
+  const lightboxImageIndex = effectiveLightboxImage ? images.indexOf(effectiveLightboxImage) : -1
   const introUrls = extractUrls(intro[0] ?? '')
   const cleanIntroText = normalizeIntroText(intro[0] ?? '')
   const mergedSummary = mergeSummary(activity.summary, cleanIntroText)
@@ -612,6 +613,16 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
           src={effectiveLightboxImage}
           alt={`${activity.title} enlarged gallery image`}
           onClose={() => setLightboxImage(null)}
+          onPrevious={
+            lightboxImageIndex > 0
+              ? () => setLightboxImage(images[lightboxImageIndex - 1])
+              : undefined
+          }
+          onNext={
+            lightboxImageIndex >= 0 && lightboxImageIndex < images.length - 1
+              ? () => setLightboxImage(images[lightboxImageIndex + 1])
+              : undefined
+          }
         />
       ) : null}
     </div>
