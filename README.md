@@ -4,7 +4,7 @@ Personal portfolio website for showcasing software engineering experience, proje
 
 Built with React, TypeScript, Vite, React Router, Tailwind CSS, and Phosphor Icons.
 
-Live site: [https://tienhuynh-tn.github.io/portfolio/](https://tienhuynh-tn.github.io/portfolio/)
+Live site: [https://tienhuynhtn.dpdns.org/](https://tienhuynhtn.dpdns.org/)
 
 ## Features
 
@@ -78,7 +78,7 @@ Static files that need stable public URLs should go in `public`. Media imported 
 
 ## Deployment
 
-The Vite base path is configured as `/portfolio/` in `vite.config.ts`. Keep this in sync with the deployment path.
+The app is configured for root-path deployment at `https://tienhuynhtn.dpdns.org/`.
 
 ## Validation Notes
 
