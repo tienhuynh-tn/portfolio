@@ -79,6 +79,7 @@ Static files that need stable public URLs should go in `public`. Media imported 
 ## Deployment
 
 The app is configured for root-path deployment at `https://tienhuynhtn.dpdns.org/`.
+The build copies `dist/index.html` to `dist/404.html` so GitHub Pages can serve the React app for direct route visits such as `/activities`.
 
 ## Validation Notes
 
