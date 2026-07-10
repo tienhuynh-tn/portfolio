@@ -106,10 +106,27 @@ body {
 
 #root {
   min-height: 100vh;
+  position: relative;
+  isolation: isolate;
   overflow: visible;
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+}
+
+.particleConstellation {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.appFrame {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
 }
 
 .mdl-js,
