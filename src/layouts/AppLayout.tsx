@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import CatCursor from '../components/CatCursor'
 import ParticleConstellationBackground from '../components/ParticleConstellationBackground'
 import ScrollToTop from '../components/ScrollToTop'
 import Footer from '../components/layout/Footer'
@@ -9,6 +10,7 @@ function AppLayout() {
   return (
     <>
       <ParticleConstellationBackground />
+      <CatCursor />
       <div className="appFrame">
         <Navbar />
         <main className="min-h-screen">
