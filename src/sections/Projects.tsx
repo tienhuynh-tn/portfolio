@@ -17,8 +17,8 @@ function Projects() {
           Projects
         </h2>
 
-        <div className="skillsIntro reveal">
-          <p className="skillsSubtitle">
+        <div className="skillsIntro reveal max-w-none">
+          <p className="skillsSubtitle whitespace-normal lg:whitespace-nowrap">
             Featured backend, platform, and university projects from production delivery to capstone work.
           </p>
           <span className="skillsDivider" aria-hidden="true" />

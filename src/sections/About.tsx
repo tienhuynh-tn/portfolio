@@ -59,7 +59,7 @@ function About() {
                   <p className="text-base leading-6 text-slate-200 lg:text-sm">
                     <span className="text-cyan-300">System.out.println</span>
                     <span className="text-slate-100">(</span>
-                    <span className="text-emerald-300">"It’s never too late — never too late to start over, never too late to be happy."</span>
+                    <span className="text-emerald-300">"It’s never too late - never too late to start over, never too late to be happy."</span>
                     <span className="text-slate-100">);</span>
                   </p>
                 </div>
@@ -112,7 +112,7 @@ function About() {
                 <p className="text-base leading-6 text-slate-200 xl:text-sm">
                   <span className="text-cyan-300">System.out.println</span>
                   <span className="text-slate-100">(</span>
-                  <span className="text-emerald-300">"It’s never too late — never too late to start over, never too late to be happy."</span>
+                  <span className="text-emerald-300">"It’s never too late - never too late to start over, never too late to be happy."</span>
                   <span className="text-slate-100">);</span>
                 </p>
               </div>

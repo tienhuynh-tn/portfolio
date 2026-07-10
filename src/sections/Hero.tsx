@@ -98,7 +98,7 @@ function Hero() {
               ))}
             </h1>
             <h2 className="bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--text)] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
-              Senior Java Backend Developer
+              Software Developer
             </h2>
           </div>
 

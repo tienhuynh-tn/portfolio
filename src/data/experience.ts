@@ -15,9 +15,9 @@ export type ExperienceItem = {
 export const experienceItems: ExperienceItem[] = [
   {
     id: 'fpt-senior-java-backend',
-    role: 'Senior Java Backend Developer',
+    role: 'Software Developer',
     company: 'FPT Software',
-    period: 'Mar 2024 — Present',
+    period: 'Mar 2024 - Present',
     location: 'Ho Chi Minh City, Vietnam',
     highlights: [
       'Delivered high-throughput backend APIs for enterprise banking clients.',
@@ -33,7 +33,7 @@ export const experienceItems: ExperienceItem[] = [
     id: 'doctor-anywhere-associate-software-engineer',
     role: 'Associate Software Engineer (Contract)',
     company: 'Doctor Anywhere',
-    period: 'Jan 2024 — Feb 2024',
+    period: 'Jan 2024 - Feb 2024',
     location: 'Ho Chi Minh City, Vietnam',
     highlights: [
       'Built backend features and maintained microservices.',
@@ -45,7 +45,7 @@ export const experienceItems: ExperienceItem[] = [
     id: 'geocomply-full-stack-intern',
     role: 'Full-stack Engineering Intern',
     company: 'GeoComply',
-    period: 'May 2023 — Aug 2023',
+    period: 'May 2023 - Aug 2023',
     location: 'Ho Chi Minh City, Vietnam',
     highlights: [
       'Built internal tools and UI features supporting engineering workflows.',
@@ -57,7 +57,7 @@ export const experienceItems: ExperienceItem[] = [
     id: 'fpt-backend-intern',
     role: 'Back-end Engineering Intern (Apprenticeship)',
     company: 'FPT Software',
-    period: 'May 2022 — Aug 2022',
+    period: 'May 2022 - Aug 2022',
     location: 'Ho Chi Minh City, Vietnam',
     highlights: [
       'Developed REST APIs and optimized SQL queries.',
@@ -69,7 +69,7 @@ export const experienceItems: ExperienceItem[] = [
     id: 'becodeching-student-supporter',
     role: 'Student Supporter',
     company: 'BeCodeching - Chuyên Dạy Lập Trình Cho Sinh Viên Và Người Trái Ngành',
-    period: 'Nov 2021 — Apr 2022',
+    period: 'Nov 2021 - Apr 2022',
     location: 'Ho Chi Minh City, Vietnam',
     highlights: [
       'Supported students through programming-learning activities and class coordination.',

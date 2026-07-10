@@ -429,7 +429,7 @@ export const activities: ActivityItem[] = [
         'Community Engagement: Build and grow the local developer community through networking, social media campaigns, and interactive activities.',
         'Partnership & Sponsorship: Collaborate with sponsors, partners, and other tech communities for event support and collaboration.',
         'Logistics Management: Oversee venue arrangements, catering, technical setups, and on-site operations.',
-        'Marketing & Promotion: Manage event promotion via social platforms, email campaigns, and community groups.',
+        'Event Promotion: Manage event visibility via social platforms, email campaigns, and community groups.',
         'Volunteer Coordination: Recruit and train event volunteers and facilitators to ensure smooth operations.',
         'Feedback & Reporting: Collect attendee feedback, analyze event outcomes, and report results to the GDG global team.',
         'Innovation & Trends: Stay updated on Google Cloud technologies to introduce relevant sessions and codelabs.',

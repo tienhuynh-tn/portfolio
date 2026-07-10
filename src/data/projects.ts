@@ -490,7 +490,7 @@ export const allProjects: Project[] = [
   },
   {
     id: 'sleepy-3-friends-clock',
-    title: 'SEF Project — Sleepy 3 Friends Clock',
+    title: 'SEF Project - Sleepy 3 Friends Clock',
     timeframe: 'Sep 2021 – Oct 2021',
     org: 'FPT University',
     role: 'Embedded/IoT Student Project',
