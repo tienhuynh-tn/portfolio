@@ -1,0 +1,57 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="40" fill="#F8FAFC"/>
+  <rect x="72" y="72" width="1056" height="576" rx="36" fill="url(#bg)"/>
+  <rect x="130" y="136" width="248" height="170" rx="28" fill="#FFFFFF" fill-opacity="0.92"/>
+  <rect x="130" y="414" width="248" height="170" rx="28" fill="#FFFFFF" fill-opacity="0.92"/>
+  <rect x="476" y="146" width="248" height="150" rx="28" fill="#FFFFFF" fill-opacity="0.72"/>
+  <rect x="476" y="414" width="248" height="150" rx="28" fill="#FFFFFF" fill-opacity="0.72"/>
+  <rect x="824" y="220" width="246" height="280" rx="32" fill="#FFFFFF" fill-opacity="0.94"/>
+  <path d="M378 220H476" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round"/>
+  <path d="M378 500H476" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round"/>
+  <path d="M724 220H796C811.464 220 824 232.536 824 248V290" stroke="#E5B567" stroke-width="12" stroke-linecap="round"/>
+  <path d="M724 488H796C811.464 488 824 475.464 824 460V418" stroke="#E5B567" stroke-width="12" stroke-linecap="round"/>
+  <path d="M947 500V566" stroke="#49C29A" stroke-width="12" stroke-linecap="round"/>
+  <path d="M876 566H1018" stroke="#49C29A" stroke-width="12" stroke-linecap="round"/>
+  <rect x="178" y="180" width="152" height="18" rx="9" fill="#0F3A5E" fill-opacity="0.2"/>
+  <rect x="178" y="224" width="92" height="18" rx="9" fill="#0EA5E9" fill-opacity="0.45"/>
+  <path d="M176 270H328C344.569 270 358 283.431 358 300V326H146V300C146 283.431 159.431 270 176 270Z" fill="#E5B567"/>
+  <path d="M196 270L226 226H284L318 270" fill="#F8FAFC" fill-opacity="0.82"/>
+  <path d="M222 235H282L306 268H198L222 235Z" fill="#0B2239" fill-opacity="0.72"/>
+  <rect x="154" y="296" width="196" height="48" rx="18" fill="#E5B567"/>
+  <rect x="170" y="306" width="36" height="14" rx="7" fill="#F8FAFC" fill-opacity="0.86"/>
+  <rect x="298" y="306" width="36" height="14" rx="7" fill="#F8FAFC" fill-opacity="0.86"/>
+  <rect x="230" y="248" width="44" height="16" rx="8" fill="#0F172A"/>
+  <text x="252" y="260" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="800">TAXI</text>
+  <circle cx="202" cy="346" r="22" fill="#0F172A"/>
+  <circle cx="202" cy="346" r="9" fill="#CBD5E1"/>
+  <circle cx="304" cy="346" r="22" fill="#0F172A"/>
+  <circle cx="304" cy="346" r="9" fill="#CBD5E1"/>
+  <rect x="178" y="458" width="152" height="18" rx="9" fill="#0F3A5E" fill-opacity="0.2"/>
+  <rect x="178" y="502" width="118" height="18" rx="9" fill="#0EA5E9" fill-opacity="0.45"/>
+  <circle cx="600" cy="220" r="44" fill="#4FA3D1" fill-opacity="0.18"/>
+  <path d="M572 220H628" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round"/>
+  <path d="M600 192V248" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="600" cy="488" r="44" fill="#E5B567" fill-opacity="0.18"/>
+  <path d="M574 488H626" stroke="#E5B567" stroke-width="12" stroke-linecap="round"/>
+  <path d="M586 466L616 488L586 510" stroke="#E5B567" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="872" y="270" width="150" height="14" rx="7" fill="#0F3A5E" fill-opacity="0.24"/>
+  <rect x="872" y="318" width="150" height="14" rx="7" fill="#4FA3D1" fill-opacity="0.54"/>
+  <rect x="872" y="366" width="150" height="14" rx="7" fill="#E5B567" fill-opacity="0.62"/>
+  <rect x="872" y="414" width="112" height="14" rx="7" fill="#49C29A" fill-opacity="0.66"/>
+  <circle cx="862" cy="566" r="12" fill="#49C29A"/>
+  <circle cx="947" cy="566" r="12" fill="#49C29A"/>
+  <circle cx="1032" cy="566" r="12" fill="#49C29A"/>
+  <text x="254" y="170" text-anchor="middle" fill="#0F172A" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="700">Booking</text>
+  <text x="254" y="446" text-anchor="middle" fill="#0F172A" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="700">Driver App</text>
+  <text x="600" y="176" text-anchor="middle" fill="#0F172A" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">OpenAPI</text>
+  <text x="600" y="444" text-anchor="middle" fill="#0F172A" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Events</text>
+  <text x="947" y="252" text-anchor="middle" fill="#0F172A" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Microservices</text>
+  <text x="947" y="626" text-anchor="middle" fill="#0F3A5E" font-family="Inter, Arial, sans-serif" font-size="20">Kafka / ActiveMQ / AWS Glue</text>
+  <defs>
+    <linearGradient id="bg" x1="72" y1="72" x2="1128" y2="648" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E0F2FE"/>
+      <stop offset="0.52" stop-color="#DBEAFE"/>
+      <stop offset="1" stop-color="#DCFCE7"/>
+    </linearGradient>
+  </defs>
+</svg>

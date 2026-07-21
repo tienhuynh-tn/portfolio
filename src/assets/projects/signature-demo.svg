@@ -1,0 +1,44 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="40" fill="#07111D"/>
+  <rect x="72" y="72" width="1056" height="576" rx="36" fill="url(#bg)"/>
+  <rect x="128" y="140" width="284" height="410" rx="32" fill="#081A2A"/>
+  <rect x="166" y="184" width="208" height="274" rx="20" fill="#F8FAFC"/>
+  <path d="M198 368C220 330 252 414 278 374C299 342 322 354 344 322" stroke="#123C87" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="198" y="230" width="144" height="14" rx="7" fill="#1C3879" fill-opacity="0.22"/>
+  <rect x="198" y="268" width="112" height="12" rx="6" fill="#1C3879" fill-opacity="0.16"/>
+  <rect x="184" y="488" width="172" height="26" rx="13" fill="#4FA3D1" fill-opacity="0.65"/>
+  <path d="M412 346H508" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round"/>
+  <path d="M692 346H788" stroke="#E5B567" stroke-width="12" stroke-linecap="round"/>
+  <rect x="508" y="238" width="184" height="216" rx="32" fill="#FFFFFF" fill-opacity="0.11"/>
+  <circle cx="600" cy="306" r="42" fill="#4FA3D1" fill-opacity="0.2"/>
+  <path d="M576 306H624" stroke="#4FA3D1" stroke-width="11" stroke-linecap="round"/>
+  <path d="M600 282V330" stroke="#4FA3D1" stroke-width="11" stroke-linecap="round"/>
+  <rect x="548" y="376" width="104" height="12" rx="6" fill="#F8FAFC" fill-opacity="0.68"/>
+  <rect x="548" y="404" width="78" height="10" rx="5" fill="#4FA3D1" fill-opacity="0.58"/>
+  <rect x="788" y="172" width="282" height="148" rx="28" fill="#081A2A"/>
+  <rect x="788" y="374" width="282" height="148" rx="28" fill="#081A2A"/>
+  <circle cx="842" cy="246" r="28" fill="#E5B567" fill-opacity="0.22"/>
+  <path d="M829 246L840 257L858 233" stroke="#E5B567" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="842" cy="448" r="28" fill="#49C29A" fill-opacity="0.22"/>
+  <path d="M829 448L840 459L858 435" stroke="#49C29A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="888" y="216" width="122" height="14" rx="7" fill="#F8FAFC" fill-opacity="0.74"/>
+  <rect x="888" y="254" width="94" height="12" rx="6" fill="#E5B567" fill-opacity="0.62"/>
+  <rect x="888" y="418" width="122" height="14" rx="7" fill="#F8FAFC" fill-opacity="0.74"/>
+  <rect x="888" y="456" width="94" height="12" rx="6" fill="#49C29A" fill-opacity="0.62"/>
+  <path d="M929 320V374" stroke="#E5B567" stroke-width="12" stroke-linecap="round"/>
+  <path d="M600 454V536H929V522" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="508" y="536" width="184" height="64" rx="22" fill="#FFFFFF" fill-opacity="0.12"/>
+  <rect x="544" y="562" width="112" height="12" rx="6" fill="#F8FAFC" fill-opacity="0.7"/>
+  <text x="270" y="164" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Upload Signature</text>
+  <text x="600" y="266" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="700">Review API</text>
+  <text x="929" y="204" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Maker</text>
+  <text x="929" y="406" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Checker</text>
+  <text x="600" y="584" text-anchor="middle" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="18">Oracle / SFTP / Camunda</text>
+  <defs>
+    <linearGradient id="bg" x1="72" y1="72" x2="1128" y2="648" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B2239"/>
+      <stop offset="0.5" stop-color="#102F4B"/>
+      <stop offset="1" stop-color="#0F3A5E"/>
+    </linearGradient>
+  </defs>
+</svg>

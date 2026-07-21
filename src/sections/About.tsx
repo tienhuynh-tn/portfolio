@@ -70,7 +70,7 @@ function About() {
           <div className="order-2 flex flex-col gap-5 xl:col-span-1 xl:col-start-2 xl:row-start-1">
             <div className="space-y-5">
               <p className="text-sm leading-relaxed text-[color:var(--text-strong)] sm:text-base md:text-lg">
-                <span className="text-base font-semibold text-[color:var(--primary)] sm:text-lg md:text-xl">Java Backend Developer</span> with{' '}
+                <span className="text-base font-semibold text-[color:var(--primary)] sm:text-lg md:text-xl">Software Developer</span> with{' '}
                 <span className="text-base font-semibold text-[color:var(--primary)] sm:text-lg md:text-xl">3+ years of experience</span> building and maintaining backend
                 services that prioritize clarity, stability, and scalability.
               </p>

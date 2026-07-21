@@ -15,7 +15,7 @@ export type ExperienceItem = {
 export const experienceItems: ExperienceItem[] = [
   {
     id: 'fpt-senior-java-backend',
-    role: 'Software Developer',
+    role: 'Senior Software Developer',
     company: 'FPT Software',
     period: 'Mar 2024 - Present',
     location: 'Ho Chi Minh City, Vietnam',

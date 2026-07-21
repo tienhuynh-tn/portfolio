@@ -1,0 +1,47 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="40" fill="#07111D"/>
+  <rect x="72" y="72" width="1056" height="576" rx="36" fill="url(#bg)"/>
+  <path d="M600 150V214" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round"/>
+  <path d="M600 214H350V278" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M600 214H850V278" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M350 374V426H498" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M850 374V426H702" stroke="#4FA3D1" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M600 454V506" stroke="#E5B567" stroke-width="12" stroke-linecap="round"/>
+  <path d="M600 566V610" stroke="#E5B567" stroke-width="12" stroke-linecap="round"/>
+  <rect x="454" y="110" width="292" height="80" rx="24" fill="#081A2A"/>
+  <rect x="210" y="280" width="280" height="116" rx="26" fill="#081A2A"/>
+  <rect x="710" y="280" width="280" height="116" rx="26" fill="#081A2A"/>
+  <rect x="210" y="426" width="280" height="82" rx="22" fill="#FFFFFF" fill-opacity="0.1"/>
+  <rect x="710" y="426" width="280" height="82" rx="22" fill="#FFFFFF" fill-opacity="0.1"/>
+  <rect x="455" y="506" width="290" height="86" rx="24" fill="#081A2A"/>
+  <rect x="470" y="610" width="260" height="64" rx="22" fill="#FFFFFF" fill-opacity="0.12"/>
+  <circle cx="350" cy="338" r="32" fill="#4FA3D1" fill-opacity="0.22"/>
+  <circle cx="850" cy="338" r="32" fill="#E5B567" fill-opacity="0.22"/>
+  <path d="M338 338H362" stroke="#4FA3D1" stroke-width="8" stroke-linecap="round"/>
+  <path d="M850 326V350" stroke="#E5B567" stroke-width="8" stroke-linecap="round"/>
+  <path d="M838 338H862" stroke="#E5B567" stroke-width="8" stroke-linecap="round"/>
+  <rect x="246" y="458" width="160" height="10" rx="5" fill="#E2E8F0" fill-opacity="0.5"/>
+  <rect x="246" y="480" width="204" height="10" rx="5" fill="#4FA3D1" fill-opacity="0.45"/>
+  <rect x="746" y="458" width="160" height="10" rx="5" fill="#E2E8F0" fill-opacity="0.5"/>
+  <rect x="746" y="480" width="204" height="10" rx="5" fill="#E5B567" fill-opacity="0.45"/>
+  <rect x="516" y="548" width="168" height="12" rx="6" fill="#E2E8F0" fill-opacity="0.55"/>
+  <rect x="516" y="570" width="130" height="8" rx="4" fill="#4FA3D1" fill-opacity="0.45"/>
+  <path d="M568 638L590 660L634 622" stroke="#49C29A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600" y="158" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Test Input</text>
+  <text x="350" y="324" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700">Legacy TIBCO</text>
+  <text x="350" y="354" text-anchor="middle" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="20">Service</text>
+  <text x="850" y="324" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700">Java</text>
+  <text x="850" y="354" text-anchor="middle" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="20">Service</text>
+  <text x="350" y="448" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700">Log / Result A</text>
+  <text x="850" y="448" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700">Log / Result B</text>
+  <text x="600" y="536" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Function Replication</text>
+  <text x="600" y="564" text-anchor="middle" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="19">Testing Tool</text>
+  <text x="600" y="638" text-anchor="middle" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700">Validation Report</text>
+  <defs>
+    <linearGradient id="bg" x1="72" y1="72" x2="1128" y2="648" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B2239"/>
+      <stop offset="0.55" stop-color="#102F4B"/>
+      <stop offset="1" stop-color="#0F3A5E"/>
+    </linearGradient>
+  </defs>
+</svg>

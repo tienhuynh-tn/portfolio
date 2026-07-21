@@ -7,7 +7,7 @@ import {
 import { useEffect, useRef, useState } from 'react'
 import Section from '../components/layout/Section'
 
-const RESUME_PATH = `${import.meta.env.BASE_URL}resume.pdf`
+const RESUME_PATH = `${import.meta.env.BASE_URL}tienhuynh-tn-resume.pdf`
 const GITHUB_URL = 'https://github.com/tienhuynh-tn'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/tienhuynh-tn/'
 

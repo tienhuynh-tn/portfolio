@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
-type CursorMode = 'default' | 'active' | 'text'
+type CursorMode = 'default' | 'active' | 'text' | 'disabled'
 
 type PawPrint = {
   x: number
@@ -30,35 +31,73 @@ const TEXT_SELECTOR = [
   '[contenteditable=""]',
 ].join(',')
 
+const DISABLED_SELECTOR = [
+  ':disabled',
+  '[aria-disabled="true"]',
+  '.disabled',
+  '.cursor-not-allowed',
+].join(',')
+
 function CatFace() {
   return (
-    <svg className="catCursorIcon catCursorFace" viewBox="0 0 36 36" aria-hidden="true">
+    <svg className="catCursorIcon catCursorFace" viewBox="0 0 52 44" aria-hidden="true">
+      <circle className="catCursorOrb" cx="8" cy="8" r="7" />
+      <circle className="catCursorOrbDot" cx="8" cy="8" r="2" />
       <path
         className="catCursorFill"
-        d="M7.5 15.8 8.2 6l7.2 5.3a14.6 14.6 0 0 1 5.2 0L27.8 6l.7 9.8A11 11 0 0 1 30 21.4C30 28 24.6 32 18 32S6 28 6 21.4c0-2 .5-3.9 1.5-5.6Z"
+        d="M9.4 20.1C8.3 15.2 8.9 8.1 12 5.2c2.1-2 7.7 2.6 12.1 7.1 1.2-.2 2.5-.3 3.9-.3 1.3 0 2.6.1 3.8.3 4.5-4.5 10.1-9.1 12.2-7.1 3.1 3 3.7 10 2.6 14.9 1.9 2.5 2.9 5.6 2.9 9.1 0 9.1-8.3 13.3-21.5 13.3S6.5 38.3 6.5 29.2c0-3.5 1-6.6 2.9-9.1Z"
+      />
+      <path
+        className="catCursorInnerEar"
+        d="M13.4 18.1c-.5-3.3-.1-7 .8-8.2 1-.3 4.4 2.4 7 5.1-2.9.5-5.5 1.5-7.8 3.1ZM34.8 15c2.6-2.7 6-5.4 7-5.1.9 1.2 1.3 4.9.8 8.2-2.3-1.6-4.9-2.6-7.8-3.1Z"
       />
       <path
         className="catCursorStroke"
-        d="M7.5 15.8 8.2 6l7.2 5.3a14.6 14.6 0 0 1 5.2 0L27.8 6l.7 9.8A11 11 0 0 1 30 21.4C30 28 24.6 32 18 32S6 28 6 21.4c0-2 .5-3.9 1.5-5.6Z"
+        d="M9.4 20.1C8.3 15.2 8.9 8.1 12 5.2c2.1-2 7.7 2.6 12.1 7.1 1.2-.2 2.5-.3 3.9-.3 1.3 0 2.6.1 3.8.3 4.5-4.5 10.1-9.1 12.2-7.1 3.1 3 3.7 10 2.6 14.9 1.9 2.5 2.9 5.6 2.9 9.1 0 9.1-8.3 13.3-21.5 13.3S6.5 38.3 6.5 29.2c0-3.5 1-6.6 2.9-9.1Z"
       />
-      <path className="catCursorAccent" d="M14.2 20.2h.1M21.7 20.2h.1" />
-      <path className="catCursorStroke" d="M15.1 25.4c1.9 1.4 3.9 1.4 5.8 0M18 22.8l-1.2 1.1h2.4L18 22.8Z" />
-      <path className="catCursorWhisker" d="M11.5 23.1H5.8M12 25.5 7 27M24.5 23.1h5.7M24 25.5l5 1.5" />
-    </svg>
-  )
-}
-
-function CatPaw() {
-  return (
-    <svg className="catCursorIcon catCursorPaw" viewBox="0 0 36 36" aria-hidden="true">
-      <path className="catCursorFill" d="M11.1 21.8c1.9-3.5 4.2-4.9 6.9-4.9s5 1.4 6.9 4.9c2 3.6-.4 7.7-4.5 7.7h-4.8c-4.1 0-6.5-4.1-4.5-7.7Z" />
-      <path className="catCursorAccent" d="M9.4 15.7c1.2 1.8.9 4-.6 5s-3.7.2-4.8-1.6-.9-4 .6-5 3.7-.2 4.8 1.6ZM15.5 9.9c.5 2.2-.4 4.2-2.2 4.6s-3.5-1.1-4-3.3.4-4.2 2.2-4.6 3.5 1.1 4 3.3ZM26.6 11.2c-.5 2.2-2.2 3.7-4 3.3s-2.7-2.4-2.2-4.6 2.2-3.7 4-3.3 2.7 2.4 2.2 4.6ZM31.9 19.1c-1.1 1.8-3.3 2.6-4.8 1.6s-1.8-3.2-.6-5 3.3-2.6 4.8-1.6 1.8 3.2.6 5Z" />
-      <path className="catCursorStroke" d="M11.1 21.8c1.9-3.5 4.2-4.9 6.9-4.9s5 1.4 6.9 4.9c2 3.6-.4 7.7-4.5 7.7h-4.8c-4.1 0-6.5-4.1-4.5-7.7Z" />
+      <circle className="catCursorBlush catCursorBlushLeft" cx="17.2" cy="29.3" r="3.6" />
+      <circle className="catCursorBlush catCursorBlushRight" cx="38.8" cy="29.3" r="3.6" />
+      <g className="catCursorEyesDefault">
+        <circle className="catCursorEye" cx="19.5" cy="26.3" r="3.1" />
+        <circle className="catCursorEye" cx="36.5" cy="26.3" r="3.1" />
+        <circle className="catCursorEyeSpark" cx="20.5" cy="25.1" r="1" />
+        <circle className="catCursorEyeSpark" cx="37.5" cy="25.1" r="1" />
+      </g>
+      <g className="catCursorEyesHappy">
+        <path className="catCursorExpression" d="M16.6 26.4c1.8 2.3 4.2 2.3 6 0M33.4 26.4c1.8 2.3 4.2 2.3 6 0" />
+      </g>
+      <g className="catCursorEyesWink">
+        <circle className="catCursorEye" cx="19.5" cy="26.3" r="3.1" />
+        <circle className="catCursorEyeSpark" cx="20.5" cy="25.1" r="1" />
+        <path className="catCursorExpression" d="M33.5 26.2c1.9 1.4 4 1.4 6 0" />
+      </g>
+      <circle className="catCursorNose" cx="28" cy="29" r="1.4" />
+      <path className="catCursorMouth catCursorMouthDefault" d="M28 30.2c-.9 3-4.7 3-5.7.4M28 30.2c.9 3 4.7 3 5.7.4" />
+      <path className="catCursorMouth catCursorMouthSad" d="M23.6 33.8c2.7-2.4 6.1-2.4 8.8 0" />
+      <path className="catCursorWhisker" d="M12.8 28.1H5.8M13.2 31.2 6.8 33M43.2 28.1h7M42.8 31.2l6.4 1.8" />
+      <g className="catCursorHoverMarks">
+        <path d="M46.5 17.8l3.4-3.2" />
+        <path d="M48.7 22.2l4.2-.8" />
+        <path d="M45.7 13l1.1-4" />
+      </g>
+      <g className="catCursorClickMarks">
+        <path d="M45.7 17.1l4.2-3.8" />
+        <path d="M48.4 23l5.2-1" />
+        <path d="M45.1 12.4l1.5-5" />
+      </g>
+      <g className="catCursorTextMark">
+        <path d="M11.2 8.2h9.8M16.1 8.2v16.8M11.2 25h9.8" />
+      </g>
+      <g className="catCursorDisabledMark">
+        <circle cx="11" cy="9.5" r="4.5" />
+        <path d="M7.8 6.3l6.4 6.4" />
+      </g>
     </svg>
   )
 }
 
 function CatCursor() {
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null)
   const rootRef = useRef<HTMLDivElement | null>(null)
   const positionRef = useRef({ x: 0, y: 0 })
   const renderedRef = useRef({ x: 0, y: 0 })
@@ -69,6 +108,10 @@ function CatCursor() {
   const modeRef = useRef<CursorMode>('default')
   const pawPrintsRef = useRef<PawPrint[]>([])
   const lastTrailRef = useRef(0)
+
+  useEffect(() => {
+    setPortalTarget(document.body)
+  }, [])
 
   useEffect(() => {
     const root = rootRef.current
@@ -92,17 +135,22 @@ function CatCursor() {
 
       modeRef.current = mode
       root.dataset.mode = mode
-      setCustomCursorEnabled(visibleRef.current && mode !== 'text')
+      setCustomCursorEnabled(visibleRef.current)
     }
 
     const isTextTarget = (target: EventTarget | null) =>
       target instanceof Element && Boolean(target.closest(TEXT_SELECTOR))
 
+    const isDisabledTarget = (target: EventTarget | null) =>
+      target instanceof Element && Boolean(target.closest(DISABLED_SELECTOR))
+
     const isInteractiveTarget = (target: EventTarget | null) =>
       target instanceof Element && Boolean(target.closest(INTERACTIVE_SELECTOR))
 
     const updateModeFromTarget = (target: EventTarget | null) => {
-      if (isTextTarget(target)) {
+      if (isDisabledTarget(target)) {
+        setMode('disabled')
+      } else if (isTextTarget(target)) {
         setMode('text')
       } else if (isInteractiveTarget(target)) {
         setMode('active')
@@ -117,7 +165,7 @@ function CatCursor() {
         return
       }
 
-      const follow = reducedMotionRef.current ? 1 : 0.58
+      const follow = reducedMotionRef.current ? 1 : 0.4
       renderedRef.current.x += (positionRef.current.x - renderedRef.current.x) * follow
       renderedRef.current.y += (positionRef.current.y - renderedRef.current.y) * follow
       root.style.transform = `translate3d(${renderedRef.current.x}px, ${renderedRef.current.y}px, 0)`
@@ -144,7 +192,7 @@ function CatCursor() {
     }
 
     const addPawPrint = (x: number, y: number) => {
-      if (reducedMotionRef.current || modeRef.current === 'text' || performance.now() - lastTrailRef.current < 90) {
+      if (reducedMotionRef.current || modeRef.current === 'text' || performance.now() - lastTrailRef.current < 110) {
         return
       }
 
@@ -180,7 +228,7 @@ function CatCursor() {
       visibleRef.current = true
       root.dataset.visible = 'true'
       updateModeFromTarget(event.target)
-      setCustomCursorEnabled(modeRef.current !== 'text')
+      setCustomCursorEnabled(true)
       addPawPrint(event.clientX, event.clientY)
       ensureAnimation()
     }
@@ -264,14 +312,19 @@ function CatCursor() {
         print.element.remove()
       }
     }
-  }, [])
+  }, [portalTarget])
 
-  return (
+  const cursorElement = (
     <div ref={rootRef} className="catCursor" aria-hidden="true">
       <CatFace />
-      <CatPaw />
     </div>
   )
+
+  if (!portalTarget) {
+    return null
+  }
+
+  return createPortal(cursorElement, portalTarget)
 }
 
 export default CatCursor

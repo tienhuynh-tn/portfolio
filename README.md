@@ -4,7 +4,7 @@ Personal portfolio website for showcasing software engineering experience, proje
 
 Built with React, TypeScript, Vite, React Router, Tailwind CSS, and Phosphor Icons.
 
-Live site: [https://tienhuynhtn.dpdns.org/](https://tienhuynhtn.dpdns.org/)
+Live site: [https://tienhuynh-tn.com/](https://tienhuynh-tn.com/)
 
 ## Features
 
@@ -62,7 +62,8 @@ src/
 public/
   certs/         Public certificate preview assets
   issuers/       Public issuer logo assets
-  resume.pdf     Downloadable resume
+  tienhuynh-tn-resume.pdf
+                 Downloadable resume
 ```
 
 ## Content Updates
@@ -78,7 +79,7 @@ Static files that need stable public URLs should go in `public`. Media imported 
 
 ## Deployment
 
-The app is configured for root-path deployment at `https://tienhuynhtn.dpdns.org/`.
+The app is configured for root-path deployment at `https://tienhuynh-tn.com/`.
 The build copies `dist/index.html` to `dist/404.html` so GitHub Pages can serve the React app for direct route visits such as `/activities`.
 
 ## Validation Notes
