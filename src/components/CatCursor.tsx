@@ -41,8 +41,6 @@ const DISABLED_SELECTOR = [
 function CatFace() {
   return (
     <svg className="catCursorIcon catCursorFace" viewBox="0 0 52 44" aria-hidden="true">
-      <circle className="catCursorOrb" cx="8" cy="8" r="7" />
-      <circle className="catCursorOrbDot" cx="8" cy="8" r="2" />
       <path
         className="catCursorFill"
         d="M9.4 20.1C8.3 15.2 8.9 8.1 12 5.2c2.1-2 7.7 2.6 12.1 7.1 1.2-.2 2.5-.3 3.9-.3 1.3 0 2.6.1 3.8.3 4.5-4.5 10.1-9.1 12.2-7.1 3.1 3 3.7 10 2.6 14.9 1.9 2.5 2.9 5.6 2.9 9.1 0 9.1-8.3 13.3-21.5 13.3S6.5 38.3 6.5 29.2c0-3.5 1-6.6 2.9-9.1Z"

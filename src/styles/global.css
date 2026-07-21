@@ -242,14 +242,6 @@ body {
   filter: blur(1.2px);
 }
 
-.catCursorOrb {
-  fill: rgba(125, 211, 252, 0.48);
-}
-
-.catCursorOrbDot {
-  fill: var(--cat-cursor-accent);
-}
-
 .catCursorHoverMarks,
 .catCursorClickMarks {
   fill: var(--cat-cursor-accent);
