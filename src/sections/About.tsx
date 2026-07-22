@@ -76,8 +76,7 @@ function About() {
               </p>
 
               <p className="text-sm leading-relaxed text-[color:var(--text-strong)] sm:text-base md:text-lg">
-                Comfortable designing APIs, working with{' '}
-                <span className="font-semibold text-[color:var(--primary)]">relational and NoSQL databases</span>, and integrating backend systems
+                Comfortable designing APIs, working with relational and NoSQL databases, and integrating backend systems
                 in production environments. I focus on how services evolve over time - making sure they’re easy to maintain, adapt,
                 and scale as business needs change.
               </p>
