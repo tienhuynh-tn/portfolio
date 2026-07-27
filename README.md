@@ -23,6 +23,8 @@ Install dependencies:
 npm install
 ```
 
+Use `npm ci` instead for a clean, lockfile-based install in CI or a fresh clone.
+
 Start the local dev server:
 
 ```bash
@@ -34,6 +36,8 @@ Build for production:
 ```bash
 npm run build
 ```
+
+The production build runs TypeScript project checks, builds with Vite, and copies `dist/index.html` to `dist/404.html` for GitHub Pages route fallback support.
 
 Preview the production build:
 
@@ -58,7 +62,12 @@ src/
     activities/     Imported activity media
     certificates/   Imported certificate detail media
     projects/       Imported project illustrations
-  components/    Reusable UI components
+  components/    Reusable UI components and feature-specific component groups
+    activities/
+    certifications/
+    layout/
+    projects/
+    shared/
   data/          Portfolio content data
   hooks/         Shared React hooks
   layouts/       App shell layout
@@ -109,6 +118,6 @@ GitHub Pages deployment is handled by `.github/workflows/deploy.yml` on pushes t
 
 `npm run build` should pass before deployment.
 
-`npm run lint` currently reports existing React Hooks rule violations around synchronous `setState` inside effects. Those are separate code-quality fixes and are not related to the README or unused-file cleanup.
+`npm run lint` currently reports an existing React Hooks rule violation around synchronous `setState` inside an effect in `CatCursor.tsx`. That is a separate code-quality fix and is not related to README or unused-file cleanup.
 
 No test script is currently defined in `package.json`.
