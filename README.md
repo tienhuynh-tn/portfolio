@@ -8,11 +8,12 @@ Live site: [https://tienhuynh-tn.com/](https://tienhuynh-tn.com/)
 
 ## Features
 
-- Responsive single-page portfolio with route-backed detail pages
+- Responsive portfolio with homepage sections, route-backed listing pages, and detail modals
 - Sections for about, skills, projects, experience, education, certifications, activities, and contact
 - Project, activity, and certification modals
 - Theme toggle and scroll-to-top behavior
-- Static resume and certificate assets served from `public`
+- Custom cat cursor and interactive particle background
+- Static resume, logo, and issuer assets served from `public`
 
 ## Getting Started
 
@@ -49,9 +50,14 @@ npm run lint
 ## Project Structure
 
 ```text
+AGENTS.md      Repository instructions for Codex and other coding agents
+.kb/           Lightweight project knowledge base for agent workflows
 src/
   app/           Route composition and navigation metadata
-  assets/        Bundled project, activity, and certificate media
+  assets/
+    activities/     Imported activity media
+    certificates/   Imported certificate detail media
+    projects/       Imported project illustrations
   components/    Reusable UI components
   data/          Portfolio content data
   hooks/         Shared React hooks
@@ -60,8 +66,9 @@ src/
   sections/      Homepage sections
   styles/        Global styling
 public/
-  certs/         Public certificate preview assets
   issuers/       Public issuer logo assets
+  logo-dark.png
+  logo-light.png
   tienhuynh-tn-resume.pdf
                  Downloadable resume
 ```
@@ -75,15 +82,33 @@ Most portfolio content lives in `src/data`:
 - `activities.ts` and `activityMedia.ts` for activity cards, galleries, and modal data
 - `education.ts` and `experience.ts` for timeline sections
 
+Visible homepage copy also appears in section components such as `Hero.tsx`, `About.tsx`, and `Skills.tsx`. Browser metadata lives in `index.html`.
+
 Static files that need stable public URLs should go in `public`. Media imported by React components should go in `src/assets`.
+
+## Repository Guidance
+
+Codex and other coding agents should start with `AGENTS.md`, then use `.kb/README.md` to find the relevant project context, workflow, pattern, or checklist. Source code is the final authority when documentation and implementation conflict.
 
 ## Deployment
 
 The app is configured for root-path deployment at `https://tienhuynh-tn.com/`.
-The build copies `dist/index.html` to `dist/404.html` so GitHub Pages can serve the React app for direct route visits such as `/activities`.
+Vite uses `base: '/'`, and the build copies `dist/index.html` to `dist/404.html` so GitHub Pages can serve the React app for direct route visits.
+
+Route-backed pages:
+
+- `/`
+- `/projects`
+- `/certifications`
+- `/credentials` redirects to `/certifications`
+- `/activities`
+
+GitHub Pages deployment is handled by `.github/workflows/deploy.yml` on pushes to `main` or manual workflow dispatch. No CNAME file is present in this repository.
 
 ## Validation Notes
 
 `npm run build` should pass before deployment.
 
 `npm run lint` currently reports existing React Hooks rule violations around synchronous `setState` inside effects. Those are separate code-quality fixes and are not related to the README or unused-file cleanup.
+
+No test script is currently defined in `package.json`.
