@@ -1,7 +1,7 @@
 import { useState, type MouseEvent } from 'react'
 import { ArrowSquareOut } from '@phosphor-icons/react'
 import webImg from '../../assets/projects/web.svg'
-import type { Project } from '../../data/projects'
+import { getProjectCategoryLabel, type Project } from '../../data/projects'
 import TechChips from './TechChips'
 
 type ProjectCardProps = {
@@ -17,6 +17,7 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
       ? project.image.src
       : fallbackImage
   const previewTech = project.tech.slice(0, 3)
+  const categoryLabel = getProjectCategoryLabel(project)
 
   const actionLinks = [
     { label: 'Live project', href: project.links?.live, Icon: ArrowSquareOut },
@@ -54,7 +55,7 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
 
         <div className="projectCardBody relative z-0">
           <div className="projectCardMetaRow">
-            <span className="projectCardCategory">{project.category}</span>
+            <span className="projectCardCategory">{categoryLabel}</span>
             <span className="itemDates">{project.timeframe}</span>
           </div>
 

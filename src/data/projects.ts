@@ -16,6 +16,8 @@ export type ProjectCategory =
   | 'Web'
   | 'IoT'
   | 'Logistics'
+  | 'Lifestyle'
+  | 'Loyalty'
   | 'University'
 
 export type Project = {
@@ -26,6 +28,7 @@ export type Project = {
   role: string
   teamSize: string
   category: ProjectCategory
+  categories?: ProjectCategory[]
   tagline: string
   highlights: string[]
   tech: string[]
@@ -51,6 +54,8 @@ export const PROJECT_CATEGORIES: ProjectCategory[] = [
   'Web',
   'IoT',
   'Logistics',
+  'Lifestyle',
+  'Loyalty',
   'University',
 ]
 
@@ -86,7 +91,43 @@ function getProjectSortTime(timeframe: string) {
   return Date.UTC(year, month, 1)
 }
 
+export function getProjectCategories(project: Pick<Project, 'category' | 'categories'>) {
+  return project.categories?.length ? project.categories : [project.category]
+}
+
+export function getProjectCategoryLabel(project: Pick<Project, 'category' | 'categories'>) {
+  return getProjectCategories(project).join(' / ')
+}
+
 export const allProjects: Project[] = [
+  {
+    id: 'cs-lifestyle-rewards-application',
+    title: 'CS',
+    timeframe: 'Jul 2026 – Present',
+    org: 'FPT Software',
+    role: 'Java Backend Engineer',
+    teamSize: 'Team of 15',
+    category: 'Loyalty',
+    categories: ['Loyalty', 'Lifestyle'],
+    tagline:
+      'Lifestyle rewards application for a card-less multi-reward programme across more than 2,000 stores in 16 participating CL Malls.',
+    highlights: [
+      'Supports a card-less rewards experience for consumers shopping across a large Singapore mall network.',
+      'Helps consumers scan and upload receipts to accumulate platform money.',
+      'Provides access to transaction history, balances, rewards, privileges, and profile management.',
+    ],
+    tech: ['Java 21'],
+    links: {
+      live: '',
+      source: '',
+      caseStudy: '',
+    },
+    image: {
+      src: mobileImg,
+      alt: 'Lifestyle rewards mobile application illustration',
+    },
+    featured: true,
+  },
   {
     id: 'psa-tibco-to-java-modernization',
     title: 'PSA',

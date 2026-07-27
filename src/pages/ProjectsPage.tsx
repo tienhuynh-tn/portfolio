@@ -4,7 +4,7 @@ import Section from '../components/layout/Section'
 import ProjectModal from '../components/projects/ProjectModal'
 import ProjectCard from '../components/projects/ProjectCard'
 import ProjectFilters, { type ProjectSortOption } from '../components/projects/ProjectFilters'
-import { allProjects, type Project } from '../data/projects'
+import { allProjects, getProjectCategories, type Project } from '../data/projects'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 
 const PROJECT_MONTH_INDEX: Record<string, number> = {
@@ -62,7 +62,9 @@ function ProjectsPage() {
           project.title.toLowerCase().includes(normalizedQuery) ||
           project.org.toLowerCase().includes(normalizedQuery) ||
           project.role.toLowerCase().includes(normalizedQuery) ||
-          project.category.toLowerCase().includes(normalizedQuery) ||
+          getProjectCategories(project).some((category) =>
+            category.toLowerCase().includes(normalizedQuery),
+          ) ||
           project.tagline.toLowerCase().includes(normalizedQuery) ||
           project.tech.some((item) => item.toLowerCase().includes(normalizedQuery))
 

@@ -1,7 +1,7 @@
 import { ArrowSquareOut, X } from '@phosphor-icons/react'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import type { Project } from '../../data/projects'
+import { getProjectCategoryLabel, type Project } from '../../data/projects'
 import BulletList from './BulletList'
 import TechChips from './TechChips'
 
@@ -115,7 +115,8 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
       kind: 'primary' | 'secondary'
     } => Boolean(link.href),
   )
-  const primaryMetaLine = renderMetaLine([project.role, project.category, project.teamSize])
+  const categoryLabel = getProjectCategoryLabel(project)
+  const primaryMetaLine = renderMetaLine([project.role, categoryLabel, project.teamSize])
   const secondaryMetaLine = renderMetaLine([project.timeframe], true)
 
   const modalContent = (
@@ -151,7 +152,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
                   />
                 ) : (
                   <div className="projectModalImagePlaceholder h-56 sm:h-64 md:h-72 rounded-2xl">
-                    <span className="projectCardPlaceholderEyebrow">{project.category}</span>
+                    <span className="projectCardPlaceholderEyebrow">{categoryLabel}</span>
                     <strong>{project.title}</strong>
                     <span>Preview coming soon</span>
                   </div>
