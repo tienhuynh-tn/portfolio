@@ -16,7 +16,11 @@ export type ProjectCategory =
   | 'Web'
   | 'IoT'
   | 'Logistics'
+  | 'Transportation'
+  | 'Public Sector and Urban Services'
   | 'Lifestyle'
+  | 'Entertainment'
+  | 'Healthcare'
   | 'Loyalty'
   | 'University'
 
@@ -54,7 +58,11 @@ export const PROJECT_CATEGORIES: ProjectCategory[] = [
   'Web',
   'IoT',
   'Logistics',
+  'Transportation',
+  'Public Sector and Urban Services',
   'Lifestyle',
+  'Entertainment',
+  'Healthcare',
   'Loyalty',
   'University',
 ]
@@ -226,7 +234,7 @@ export const allProjects: Project[] = [
     org: 'FPT Software',
     role: 'Backend Engineer',
     teamSize: 'Cross-functional',
-    category: 'Platform',
+    category: 'Transportation',
     tagline:
       'Microservices modernization for booking channels and driver apps with event-driven architecture and scalable cloud foundations.',
     highlights: [
@@ -331,7 +339,7 @@ export const allProjects: Project[] = [
     org: 'FPT University',
     role: 'Backend Developer / Database Designer',
     teamSize: 'Team of 5',
-    category: 'University',
+    category: 'Public Sector and Urban Services',
     tagline:
       'Map-based app helping people find nearby public toilets with host management and operational insights.',
     highlights: [
@@ -380,7 +388,7 @@ export const allProjects: Project[] = [
     org: 'FPT University',
     role: 'Backend Developer / Database Designer',
     teamSize: 'Team of 4',
-    category: 'Mobile',
+    category: 'Lifestyle',
     tagline:
       'Personalized clean-menu recommender using BMI + preferences with ingredient planning.',
     highlights: [
@@ -424,7 +432,7 @@ export const allProjects: Project[] = [
     org: 'FPT University',
     role: 'Backend Developer / Database Designer',
     teamSize: 'Team of 4',
-    category: 'Web',
+    category: 'Entertainment',
     tagline:
       'Web app aggregating viral music with secure storage and API-driven architecture.',
     highlights: [
@@ -462,7 +470,7 @@ export const allProjects: Project[] = [
     org: 'FPT University',
     role: 'Backend Developer / Database Designer',
     teamSize: 'Team of 4',
-    category: 'Web',
+    category: 'Healthcare',
     tagline:
       'Platform connecting blood donors with donation centers for streamlined coordination.',
     highlights: [
@@ -496,12 +504,12 @@ export const allProjects: Project[] = [
   },
   {
     id: 'co-tam-website-and-android-mobile-app',
-    title: 'Cô Tấm Website + Android Mobile App',
+    title: 'Cô Tấm',
     timeframe: 'Sep 2022 – Nov 2022',
     org: 'FPT University',
     role: 'Backend Developer / Database Designer',
     teamSize: 'Team of 5',
-    category: 'Mobile',
+    category: 'Lifestyle',
     tagline:
       'Domestic help booking platform with admin web portal and customer/worker mobile apps.',
     highlights: [
