@@ -55,7 +55,11 @@ npm run lint
 
 ```text
 AGENTS.md      Repository instructions for Codex and other coding agents
+.github/       GitHub Actions workflow for GitHub Pages deployment
 .kb/           Lightweight project knowledge base for agent workflows
+index.html     Vite HTML entrypoint and browser metadata
+package.json   Project scripts and dependencies
+vite.config.ts Vite configuration
 src/
   app/           Route composition and navigation metadata
   assets/
@@ -81,6 +85,8 @@ public/
   tienhuynh-tn-resume.pdf
                  Downloadable resume
 ```
+
+Generated and local dependency folders such as `dist` and `node_modules` may exist locally, but they are ignored and should not be treated as application source.
 
 ## Content Updates
 
@@ -112,7 +118,9 @@ Route-backed pages:
 - `/credentials` redirects to `/certifications`
 - `/activities`
 
-GitHub Pages deployment is handled by `.github/workflows/deploy.yml` on pushes to `main` or manual workflow dispatch. No CNAME file is present in this repository.
+GitHub Pages deployment is handled by `.github/workflows/deploy.yml` on pushes to `main` or manual workflow dispatch. The workflow uses Node 20, installs with `npm ci`, runs `npm run build`, uploads `dist`, and deploys with `actions/deploy-pages`.
+
+No CNAME file is present in this repository.
 
 ## Validation Notes
 
