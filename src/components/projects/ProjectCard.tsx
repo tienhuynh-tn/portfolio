@@ -1,5 +1,4 @@
-import { useState, type MouseEvent } from 'react'
-import { ArrowSquareOut } from '@phosphor-icons/react'
+import { useState } from 'react'
 import webImg from '../../assets/projects/web.svg'
 import { getProjectCategoryLabel, type Project } from '../../data/projects'
 import TechChips from './TechChips'
@@ -18,14 +17,6 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
       : fallbackImage
   const previewTech = project.tech.slice(0, 3)
   const categoryLabel = getProjectCategoryLabel(project)
-
-  const actionLinks = [
-    { label: 'Live project', href: project.links?.live, Icon: ArrowSquareOut },
-  ].filter((link): link is { label: string; href: string; Icon: typeof ArrowSquareOut } => Boolean(link.href))
-
-  const handleActionClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.stopPropagation()
-  }
 
   return (
     <article className="skillsGroup projectCard">
@@ -69,25 +60,6 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
           />
         </div>
 
-        {actionLinks.length ? (
-          <div className="projectCardActions relative z-20">
-            {actionLinks.map(({ label, href, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                className="projectCardAction"
-                target="_blank"
-                rel="noreferrer"
-                aria-label={label}
-                title={label}
-                onClick={handleActionClick}
-              >
-                <Icon size={18} weight="regular" aria-hidden="true" />
-                <span className="sr-only">{label}</span>
-              </a>
-            ))}
-          </div>
-        ) : null}
       </div>
     </article>
   )

@@ -1,5 +1,6 @@
 import fintechImg from '../assets/projects/fintech.svg'
 import healthImg from '../assets/projects/health.svg'
+import homeCadiImg from '../assets/projects/home-cadi.png'
 import iotImg from '../assets/projects/iot.svg'
 import mapImg from '../assets/projects/map.svg'
 import mobileImg from '../assets/projects/mobile.svg'
@@ -90,7 +91,8 @@ function getProjectSortTime(timeframe: string) {
     return Number.MAX_SAFE_INTEGER
   }
 
-  const [monthText = '', yearText = ''] = sortText.split(/\s+/)
+  const [monthText = ''] = sortText.split(/\s+/)
+  const yearText = sortText.match(/\b\d{4}\b/)?.[0] ?? ''
   const month = PROJECT_MONTH_INDEX[monthText.slice(0, 3).toLowerCase()] ?? 0
   const year = Number.parseInt(yearText, 10)
 
@@ -135,6 +137,39 @@ export const allProjects: Project[] = [
       alt: 'Lifestyle rewards mobile application illustration',
     },
     featured: true,
+  },
+  {
+    id: 'home-cadi',
+    title: 'Home Cadi',
+    timeframe: 'Aug 6, 2026 – Sep 17, 2026',
+    org: 'Personal Project',
+    role: 'Full-stack Web Developer',
+    teamSize: '',
+    category: 'Web',
+    tagline:
+      "Mobile-first Vietnamese wedding invitation built from the couple's slide and Canva design ideas, with RSVP, wishes, music, and story sections.",
+    highlights: [
+      'Translated bride and groom slide and Canva references into a polished phone-first invitation experience.',
+      'Built animated story, invitation, travel, RSVP, and public wishes sections with browser-served media and audio.',
+      'Integrated Supabase RSVP submission, public wishes, admin access support, row-level security policies, and client-side validation.',
+      'Configured GitHub Pages deployment with the correct Vite base path for the live invitation.',
+    ],
+    tech: ['Vite', 'JavaScript', 'HTML', 'CSS', 'Supabase', 'GitHub Pages', 'Netlify', 'Canva', 'Codex'],
+    links: {
+      live: 'https://home-cadi.netlify.app/',
+      source: 'https://github.com/tienhuynh-tn/home-cadi',
+      caseStudy: '',
+    },
+    image: {
+      src: homeCadiImg,
+      alt: 'Mobile wedding invitation preview for Home Cadi',
+    },
+    featured: true,
+    responsibilities: [
+      'Implemented the invitation UI, responsive phone-first layout, and animated story sections from couple-provided visual references.',
+      'Built RSVP submission and public wishes flows with Supabase-backed storage and validation.',
+      'Maintained production deployment behavior for GitHub Pages and environment-based asset paths.',
+    ],
   },
   {
     id: 'psa-tibco-to-java-modernization',

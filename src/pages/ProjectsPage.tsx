@@ -30,7 +30,8 @@ function getProjectSortTime(timeframe: string) {
     return Number.MAX_SAFE_INTEGER
   }
 
-  const [monthText = '', yearText = ''] = sortText.split(/\s+/)
+  const [monthText = ''] = sortText.split(/\s+/)
+  const yearText = sortText.match(/\b\d{4}\b/)?.[0] ?? ''
   const month = PROJECT_MONTH_INDEX[monthText.slice(0, 3).toLowerCase()] ?? 0
   const year = Number.parseInt(yearText, 10)
 
