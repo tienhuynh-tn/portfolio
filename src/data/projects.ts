@@ -372,8 +372,8 @@ export const allProjects: Project[] = [
     title: 'Social Toilet Map',
     timeframe: 'Feb 2023 – Aug 2023',
     org: 'FPT University',
-    role: 'Backend Developer / Database Designer',
-    teamSize: 'Team of 5',
+    role: 'Team Leader | Back-end Developer | Database Designer | DevOps',
+    teamSize: 'Team of 4',
     category: 'Public Sector and Urban Services',
     tagline:
       'Map-based app helping people find nearby public toilets with host management and operational insights.',
@@ -398,7 +398,7 @@ export const allProjects: Project[] = [
     ],
     links: {
       live: '',
-      source: '',
+      source: 'https://github.com/HAPPY-3-FRIENDS/social-toilet-map',
       caseStudy: '',
     },
     image: {
@@ -448,7 +448,7 @@ export const allProjects: Project[] = [
     ],
     links: {
       live: '',
-      source: '',
+      source: 'https://github.com/tienhuynh-tn/eat-clean-menu-back-end',
       caseStudy: '',
     },
     image: {
@@ -466,7 +466,7 @@ export const allProjects: Project[] = [
     timeframe: 'Jan 2023 – Mar 2023',
     org: 'FPT University',
     role: 'Backend Developer / Database Designer',
-    teamSize: 'Team of 4',
+    teamSize: 'Team of 3',
     category: 'Entertainment',
     tagline:
       'Web app aggregating viral music with secure storage and API-driven architecture.',
@@ -490,7 +490,7 @@ export const allProjects: Project[] = [
     ],
     links: {
       live: '',
-      source: '',
+      source: 'https://github.com/HAPPY-3-FRIENDS/viral-music-back-end',
       caseStudy: '',
     },
     image: {
@@ -504,7 +504,7 @@ export const allProjects: Project[] = [
     timeframe: 'Sep 2022 – Nov 2022',
     org: 'FPT University',
     role: 'Backend Developer / Database Designer',
-    teamSize: 'Team of 4',
+    teamSize: 'Team of 3',
     category: 'Healthcare',
     tagline:
       'Platform connecting blood donors with donation centers for streamlined coordination.',
@@ -529,7 +529,7 @@ export const allProjects: Project[] = [
     ],
     links: {
       live: '',
-      source: '',
+      source: 'https://github.com/HAPPY-3-FRIENDS/blood-donor',
       caseStudy: '',
     },
     image: {
@@ -542,7 +542,7 @@ export const allProjects: Project[] = [
     title: 'Cô Tấm',
     timeframe: 'Sep 2022 – Nov 2022',
     org: 'FPT University',
-    role: 'Backend Developer / Database Designer',
+    role: 'Backend Developer / Android Mobile Developer / Database Designer',
     teamSize: 'Team of 5',
     category: 'Lifestyle',
     tagline:
@@ -570,7 +570,7 @@ export const allProjects: Project[] = [
     ],
     links: {
       live: '',
-      source: '',
+      source: 'https://github.com/fptu-team-404-not-found/co-tam-backend',
       caseStudy: '',
     },
     image: {
@@ -608,7 +608,7 @@ export const allProjects: Project[] = [
     ],
     links: {
       live: '',
-      source: '',
+      source: 'https://github.com/fptu-team-404-not-found/publish-graduation-capstone',
       caseStudy: '',
     },
     image: {
@@ -637,7 +637,7 @@ export const allProjects: Project[] = [
     tech: ['C', 'Arduino', 'Embedded Systems', 'IoT', 'Hardware Prototype'],
     links: {
       live: '',
-      source: '',
+      source: 'https://github.com/HAPPY-3-FRIENDS/sleepy-3-friends-clock',
       caseStudy: '',
     },
     image: {
