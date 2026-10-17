@@ -2,6 +2,8 @@ import googleAiCertificate from '../assets/certificates/google-ai.jpeg'
 import cloudDeveloperCertificate from '../assets/certificates/cloud-developer.pdf'
 import microservicesWithSpringCertificate from '../assets/certificates/microservices-with-spring.jpg'
 import vibeCodingEssentialsCertificate from '../assets/certificates/vibe-coding-essentials.pdf'
+import azureAiCloudDeveloperCertificate from '../assets/certificates/AI-200.pdf'
+import sqlAiDeveloperCertificate from '../assets/certificates/DP-800.pdf'
 
 export type CertificationItem = {
   id: string
@@ -24,8 +26,35 @@ const COURSERA_LOGO =
 const UDACITY_LOGO = 'https://upload.wikimedia.org/wikipedia/en/3/3b/Udacity_logo.png'
 const UDEMY_LOGO =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Udemy_logo.svg/1280px-Udemy_logo.svg.png'
+const MICROSOFT_LOGO = `${import.meta.env.BASE_URL}issuers/microsoft.svg`
 
 export const allCertifications: CertificationItem[] = [
+  {
+    id: 'microsoft-sql-ai-developer-associate',
+    name: 'Microsoft Certified: SQL AI Developer Associate',
+    issuer: 'Microsoft',
+    issued: 'October 17, 2026',
+    url: 'https://learn.microsoft.com/en-us/users/tienhuynh-tn/credentials/certification/developing-ai-enabled-database-solutions',
+    badgeText: 'DP-800',
+    issuerLogoSrc: MICROSOFT_LOGO,
+    certDetailImageSrc: sqlAiDeveloperCertificate,
+    summary:
+      'Earned the Microsoft Certified: SQL AI Developer Associate certification on October 17, 2026.',
+    tags: ['Microsoft', 'SQL', 'AI', 'DP-800'],
+  },
+  {
+    id: 'microsoft-azure-ai-cloud-developer-associate',
+    name: 'Microsoft Certified: Azure AI Cloud Developer Associate',
+    issuer: 'Microsoft',
+    issued: 'October 16, 2026',
+    url: 'https://learn.microsoft.com/en-us/users/tienhuynh-tn/credentials/certification/azure-ai-cloud-developer-associate',
+    badgeText: 'AI-200',
+    issuerLogoSrc: MICROSOFT_LOGO,
+    certDetailImageSrc: azureAiCloudDeveloperCertificate,
+    summary:
+      'Earned the Microsoft Certified: Azure AI Cloud Developer Associate certification on October 16, 2026.',
+    tags: ['Microsoft', 'Azure', 'AI', 'AI-200'],
+  },
   {
     id: 'vibe-coding-essentials-build-apps-with-ai',
     name: 'Vibe Coding Essentials - Build Apps with AI',

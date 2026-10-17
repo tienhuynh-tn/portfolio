@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 type CursorMode = 'default' | 'active' | 'text' | 'disabled'
@@ -95,7 +95,7 @@ function CatFace() {
 }
 
 function CatCursor() {
-  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null)
+  const portalTarget = typeof document === 'undefined' ? null : document.body
   const rootRef = useRef<HTMLDivElement | null>(null)
   const positionRef = useRef({ x: 0, y: 0 })
   const renderedRef = useRef({ x: 0, y: 0 })
@@ -106,10 +106,6 @@ function CatCursor() {
   const modeRef = useRef<CursorMode>('default')
   const pawPrintsRef = useRef<PawPrint[]>([])
   const lastTrailRef = useRef(0)
-
-  useEffect(() => {
-    setPortalTarget(document.body)
-  }, [])
 
   useEffect(() => {
     const root = rootRef.current
