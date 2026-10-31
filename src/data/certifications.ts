@@ -4,6 +4,7 @@ import microservicesWithSpringCertificate from '../assets/certificates/microserv
 import vibeCodingEssentialsCertificate from '../assets/certificates/vibe-coding-essentials.pdf'
 import azureAiCloudDeveloperCertificate from '../assets/certificates/AI-200.pdf'
 import sqlAiDeveloperCertificate from '../assets/certificates/DP-800.pdf'
+import awsDeveloperAssociateCertificate from '../assets/certificates/aws-certified-developer-associate.pdf'
 
 export type CertificationItem = {
   id: string
@@ -27,8 +28,22 @@ const UDACITY_LOGO = 'https://upload.wikimedia.org/wikipedia/en/3/3b/Udacity_log
 const UDEMY_LOGO =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Udemy_logo.svg/1280px-Udemy_logo.svg.png'
 const MICROSOFT_LOGO = `${import.meta.env.BASE_URL}issuers/microsoft.svg`
+const AWS_LOGO = `${import.meta.env.BASE_URL}issuers/aws-official.png`
 
 export const allCertifications: CertificationItem[] = [
+  {
+    id: 'aws-certified-developer-associate',
+    name: 'AWS Certified Developer - Associate',
+    issuer: 'AWS',
+    issued: 'October 28, 2026',
+    url: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/caa59872ed1e4585b5d588de88116e31',
+    badgeText: 'AWS',
+    issuerLogoSrc: AWS_LOGO,
+    certDetailImageSrc: awsDeveloperAssociateCertificate,
+    summary:
+      'Earned the AWS Certified Developer - Associate certification on October 28, 2026.',
+    tags: ['AWS', 'Cloud Development', 'Associate'],
+  },
   {
     id: 'microsoft-sql-ai-developer-associate',
     name: 'Microsoft Certified: SQL AI Developer Associate',
