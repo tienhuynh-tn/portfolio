@@ -1,6 +1,5 @@
 import fintechImg from '../assets/projects/fintech.svg'
 import healthImg from '../assets/projects/health.svg'
-import homeCadiImg from '../assets/projects/home-cadi.png'
 import iotImg from '../assets/projects/iot.svg'
 import mapImg from '../assets/projects/map.svg'
 import mobileImg from '../assets/projects/mobile.svg'
@@ -161,8 +160,8 @@ export const allProjects: Project[] = [
       caseStudy: '',
     },
     image: {
-      src: homeCadiImg,
-      alt: 'Mobile wedding invitation preview for Home Cadi',
+      src: webImg,
+      alt: 'Web project illustration',
     },
     featured: true,
     responsibilities: [
