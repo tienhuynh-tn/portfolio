@@ -1,3 +1,30 @@
+import comechCover from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/cover.jpg"
+import comech1 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/IMG_7824.jpg"
+import comech2 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/IMG_7837.jpg"
+import comech3 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/IMG_7854.jpg"
+import comech4 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/IMG_7857.jpg"
+import comech5 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/IMG_7880.jpg"
+import comech6 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/IMG_7949.jpg"
+import comech7 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/IMG_7955.jpg"
+import comech8 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/IMG_7962.jpg"
+import comech9 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (15).jpg"
+import comech10 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (164).jpg"
+import comech11 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (174).jpg"
+import comech12 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (215).jpg"
+import comech13 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (236).jpg"
+import comech14 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (287).jpg"
+import comech15 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (296).jpg"
+import comech16 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (334).jpg"
+import comech17 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (343).jpg"
+import comech18 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (399).jpg"
+import comech19 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (405).jpg"
+import comech20 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (468).jpg"
+import comech21 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (477).jpg"
+import comech22 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (480).jpg"
+import comech23 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (481).jpg"
+import comech24 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (86).jpg"
+import comech25 from "../assets/activities/sea-openai-codex-hackathon-vietnam-2026/REGIONAL CODEX HACKATHON VIETNAM (9).jpg"
+
 import gdgCloudCoreTeamCover from '../assets/activities/gdg-cloud-core-team/cover.jpg'
 import gdgCloudCoreTeam1 from '../assets/activities/gdg-cloud-core-team/1.jpeg'
 import gdgCloudCoreTeam2 from '../assets/activities/gdg-cloud-core-team/2.jpeg'
@@ -126,6 +153,37 @@ const emptyActivityMedia: ActivityMedia = {
 }
 
 const activityMediaBySlug: Record<string, ActivityMedia> = {
+  'sea-openai-codex-hackathon-vietnam-2026': {
+    image: comechCover,
+    images: [
+      comechCover,
+      comech1,
+      comech2,
+      comech3,
+      comech4,
+      comech5,
+      comech6,
+      comech7,
+      comech8,
+      comech9,
+      comech10,
+      comech11,
+      comech12,
+      comech13,
+      comech14,
+      comech15,
+      comech16,
+      comech17,
+      comech18,
+      comech19,
+      comech20,
+      comech21,
+      comech22,
+      comech23,
+      comech24,
+      comech25,
+    ],
+  },
   'gdg-cloud-core-team': {
     image: gdgCloudCoreTeamCover,
     images: [

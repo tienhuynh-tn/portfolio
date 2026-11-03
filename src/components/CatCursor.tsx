@@ -97,8 +97,6 @@ function CatFace() {
 function CatCursor() {
   const portalTarget = typeof document === 'undefined' ? null : document.body
   const rootRef = useRef<HTMLDivElement | null>(null)
-  const positionRef = useRef({ x: 0, y: 0 })
-  const renderedRef = useRef({ x: 0, y: 0 })
   const frameRef = useRef<number | null>(null)
   const activeRef = useRef(false)
   const reducedMotionRef = useRef(false)
@@ -129,7 +127,6 @@ function CatCursor() {
 
       modeRef.current = mode
       root.dataset.mode = mode
-      setCustomCursorEnabled(visibleRef.current)
     }
 
     const isTextTarget = (target: EventTarget | null) =>
@@ -159,11 +156,6 @@ function CatCursor() {
         return
       }
 
-      const follow = reducedMotionRef.current ? 1 : 0.4
-      renderedRef.current.x += (positionRef.current.x - renderedRef.current.x) * follow
-      renderedRef.current.y += (positionRef.current.y - renderedRef.current.y) * follow
-      root.style.transform = `translate3d(${renderedRef.current.x}px, ${renderedRef.current.y}px, 0)`
-
       for (let index = pawPrints.length - 1; index >= 0; index -= 1) {
         const print = pawPrints[index]
         print.age += reducedMotionRef.current ? 1 : 0.045
@@ -176,7 +168,7 @@ function CatCursor() {
         }
       }
 
-      frameRef.current = window.requestAnimationFrame(animate)
+      frameRef.current = pawPrints.length ? window.requestAnimationFrame(animate) : null
     }
 
     const ensureAnimation = () => {
@@ -210,21 +202,20 @@ function CatCursor() {
         return
       }
 
-      positionRef.current.x = event.clientX
-      positionRef.current.y = event.clientY
+      // Track the pointer directly so expensive image paints do not add easing lag.
+      root.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`
 
       if (!visibleRef.current) {
-        renderedRef.current.x = event.clientX
-        renderedRef.current.y = event.clientY
-        root.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`
+        visibleRef.current = true
+        root.dataset.visible = 'true'
+        updateModeFromTarget(event.target)
+        setCustomCursorEnabled(true)
       }
 
-      visibleRef.current = true
-      root.dataset.visible = 'true'
-      updateModeFromTarget(event.target)
-      setCustomCursorEnabled(true)
       addPawPrint(event.clientX, event.clientY)
-      ensureAnimation()
+      if (pawPrints.length) {
+        ensureAnimation()
+      }
     }
 
     const handlePointerDown = (event: PointerEvent) => {

@@ -1557,6 +1557,12 @@ p {
   animation: modalFadeIn 150ms var(--ease-out);
 }
 
+/* Avoid continuously blurring the animated background behind activity details. */
+.modalOverlay:has(> .activityModalContainer) {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .modalContainer {
   position: relative;
   width: min(900px, calc(100vw - 32px));

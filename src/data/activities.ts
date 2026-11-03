@@ -288,6 +288,91 @@ function compareActivitiesForDisplay(a: ActivityItem, b: ActivityItem) {
 
 export const activities: ActivityItem[] = [
   {
+    id: 'sea-openai-codex-hackathon-vietnam-2026',
+    title: 'Sea x OpenAI Codex Hackathon - Vietnam 2026',
+    org: 'Sea x OpenAI',
+    role: 'Team member',
+    date: '31/10/2026',
+    summary:
+      'Participated in a 4-member team building CoMech, a voice agent for Vietnamese motorbike repair shops, contributing to product discussions and project direction.',
+    description: buildActivityDescription({
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'CoMech is a voice agent that sits between the mechanic and the customer. The mechanic talks while working, and CoMech handles the writing and customer calls, creating repair records as the work happens.',
+          ],
+        },
+        {
+          title: 'Problem',
+          paragraphs: [
+            'Small motorbike repair shops in Vietnam run on paper and memory. Mechanics have to stop working to write down jobs or call customers about extra work.',
+            'Records are scattered across logbooks, whiteboards, and Zalo chats, making it difficult to look back at past repairs, revenue, or stock. Extra work is approved by phone without a saved record, leaving both shops and customers without proof of what was agreed at pickup.',
+            'The team based its problem framing on interviews with 3 shops in District 9 and Google Maps reviews.',
+          ],
+        },
+        {
+          title: 'Solution',
+          bullets: [
+            'Check-in: The customer scans a QR code to open a ticket.',
+            'Log by voice: The mechanic speaks in workshop slang, such as “bố thắng” for brake pads, and CoMech reads the jobs back before saving.',
+            'Extra work: The AI calls the customer, explains the work and the price, and records the answer.',
+            'Pickup: CoMech calls the customer with an itemised bill that matches exactly what was approved.',
+            'Every step is saved, giving the shop repair history and revenue records it can use.',
+            'People stay in control: Prices come from the shop’s price list, the mechanic confirms every job, and the customer approves every extra.',
+          ],
+        },
+        {
+          title: 'Build Direction',
+          paragraphs: [
+            'CoMech primarily aligns with AI-Native Products & Operations, with Deep Domain AI as a supporting direction. It redesigns how a small repair shop records work and gets customer approval, keeping approved items linked to the final bill and reducing separate paperwork.',
+            'Its domain focus comes from how Vietnamese workshops operate: local slang, informal bike references, shop-specific prices, and approval before extra charges. CoMech asks when details are unclear, reads jobs back before saving, and leaves extra work pending until the customer clearly approves it.',
+          ],
+        },
+        {
+          title: 'How We Used Codex',
+          paragraphs: [
+            'The team used Codex as its main engineering agent throughout the development lifecycle, from understanding shop interviews to implementing and verifying the product.',
+          ],
+          bullets: [
+            'Product research: Codex helped analyze and summarize interview findings, identify pain points and insights, and turn them into a structured Product Requirements Document.',
+            'Research and architecture: Codex helped research voice-agent technologies, explore the GPT-Live-1 API and real-time audio integration, and build the connection between GPT-Live-1, Twilio, and the backend.',
+            'End-to-end implementation: Codex built the FastAPI backend, parsing and pricing rule layer, React frontend, call integration, and automated tests. It also researched API documentation, supported deployment, and debugged issues using logs and screenshots.',
+            'Team collaboration: The team used Codex to coordinate development, review changes, identify problems, create and track GitHub issues, implement fixes, and verify them through automated testing.',
+            'Independent audit: A Codex subagent audited pricing and approval rules in read-only mode to help identify potential issues and improve reliability.',
+            'Human ownership: The team remained responsible for product direction, shop interviews, business-rule validation, UX decisions, product testing, and approving changes.',
+          ],
+        },
+        {
+          title: 'My Role',
+          bullets: [
+            'Participated as a team member in product discussions and helped shape the project’s direction.',
+          ],
+        },
+        {
+          title: 'Team',
+          bullets: ['Team: CoMech', 'Team size: 4 members'],
+        },
+        {
+          title: 'Result',
+          bullets: [
+            'Top 5 at the Sea x OpenAI Regional Codex Hackathon - Vietnam.',
+            'As part of this achievement, each team member will receive 1 year of ChatGPT Pro.',
+          ],
+        },
+      ],
+    }),
+    tags: ['Hackathon', 'Competition', 'AI', 'Teamwork'],
+    links: [
+      {
+        label: 'Live demo',
+        url: 'https://youtu.be/Si092ztNv4M',
+      },
+    ],
+    ...getActivityMedia('sea-openai-codex-hackathon-vietnam-2026'),
+    featured: true,
+  },
+  {
     id: 'weekend-build-with-codex-hcmc-viteach',
     title: 'Weekend Build With Codex - HCMC – ViTeach',
     org: 'Codex Hackathon Track 3 Vietnam Impact',
