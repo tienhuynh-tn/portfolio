@@ -1009,6 +1009,7 @@ export const activities: ActivityItem[] = [
         '8th: 08/06/2024',
         '9th: 29/10/2025',
         '10th: 27/05/2026',
+        '11th: 29/10/2026',
       ],
     }),
     tags: ['Volunteer', 'Community', 'Health', 'Donation', 'Social Impact'],
