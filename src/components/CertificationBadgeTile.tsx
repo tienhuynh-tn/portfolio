@@ -1,4 +1,5 @@
 import { useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
+import SmartImage from './shared/SmartImage'
 import {
   getCertificationIssuerText,
   type CertificationItem,
@@ -41,13 +42,14 @@ function CertificationBadgeTile({
         <div className="certificationBadgeCertImageWrap">
           <div className="certificationBadgeMark">
             {certification.issuerLogoSrc && issuerLogoOk ? (
-              <img
+              <SmartImage
                 src={certification.issuerLogoSrc}
                 alt={`${certification.issuer} logo`}
                 width={40}
                 height={40}
                 className="certificationIssuerLogo"
                 loading="lazy"
+                sizes="40px"
                 onError={() =>
                   setFailedIssuerLogoIds((current) =>
                     current.includes(certification.id)

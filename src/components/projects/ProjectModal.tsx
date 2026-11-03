@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import { getProjectCategoryLabel, type Project } from '../../data/projects'
 import BulletList from './BulletList'
 import TechChips from './TechChips'
+import SmartImage from '../shared/SmartImage'
 
 type ProjectModalProps = {
   project: Project
@@ -144,11 +145,12 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div className="modalContent projectModalContent">
               <div className="projectModalMedia rounded-2xl">
                 {project.image?.src ? (
-                  <img
+                  <SmartImage
                     src={project.image.src}
                     alt={project.image.alt}
                     className="projectModalImage h-56 sm:h-64 md:h-72 rounded-2xl object-cover"
-                    loading="lazy"
+                    loading="eager"
+                    sizes="(min-width: 900px) 850px, 92vw"
                   />
                 ) : (
                   <div className="projectModalImagePlaceholder h-56 sm:h-64 md:h-72 rounded-2xl">

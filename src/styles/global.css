@@ -1,3 +1,15 @@
+.smartImage {
+  display: contents;
+}
+
+.smartImageElement {
+  height: auto;
+}
+
+.smartImageElement[data-image-state='loading'] {
+  background-color: color-mix(in srgb, var(--primary) 8%, var(--surface));
+}
+
 :root {
   color-scheme: light;
 

@@ -7,6 +7,7 @@ import {
 } from '../../data/activities'
 import BulletList from '../projects/BulletList'
 import ImageLightbox from '../shared/ImageLightbox'
+import SmartImage from '../shared/SmartImage'
 
 type ActivityModalProps = {
   activity: ActivityItem
@@ -330,7 +331,6 @@ function shouldRenderDateMilestones(activity: ActivityItem, section: ParsedActiv
 function ActivityModal({ activity, onClose }: ActivityModalProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
-  const [failedImages, setFailedImages] = useState<string[]>([])
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
 
   const images = useMemo(
@@ -342,11 +342,9 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
             ? [activity.image]
             : []
 
-      return galleryImages.filter(
-        (image) => image.trim().length > 0 && !failedImages.includes(image),
-      )
+      return galleryImages.filter((image) => image.trim().length > 0)
     },
-    [activity.image, activity.images, failedImages],
+    [activity.image, activity.images],
   )
   const actionLinks = getValidExternalLinks(activity.links)
   const { place } = splitActivityLocation(activity.location)
@@ -587,16 +585,12 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
                         onClick={() => setLightboxImage(image)}
                         aria-label={`Open gallery image ${index + 1} for ${activity.title}`}
                       >
-                        <img
+                        <SmartImage
                           src={image}
                           alt={`${activity.title} gallery image ${index + 1}`}
                           className="activityModalGalleryImage"
                           loading="lazy"
-                          onError={() =>
-                            setFailedImages((current) =>
-                              current.includes(image) ? current : [...current, image],
-                            )
-                          }
+                          sizes="(min-width: 760px) 400px, 92vw"
                         />
                       </button>
                     ))}

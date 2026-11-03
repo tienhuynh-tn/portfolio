@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import { type CertificationItem } from '../../data/certifications'
 import TagBadge from '../TagBadge'
 import ImageLightbox from '../shared/ImageLightbox'
+import SmartImage from '../shared/SmartImage'
 
 type CertificationModalProps = {
   certification: CertificationItem
@@ -125,11 +126,12 @@ function CertificationModal({
                   {certification.issuerLogoSrc && issuerLogoOk ? (
                     <div className="certificationModalIssuerWrap">
                       <div className="certificationModalIssuerCircle">
-                        <img
+                        <SmartImage
                           src={certification.issuerLogoSrc}
                           alt={`${certification.issuer} logo`}
                           className="certificationModalIssuerLogo"
                           loading="lazy"
+                          sizes="80px"
                           onError={() =>
                             setFailedIssuerLogoIds((current) =>
                               current.includes(certification.id)
@@ -190,11 +192,12 @@ function CertificationModal({
                         aria-label={`Zoom certificate preview for ${certification.name}`}
                       >
                         <span className="certificationPreviewFrame">
-                          <img
+                          <SmartImage
                             src={certification.certDetailImageSrc}
                             alt={`${certification.name} certificate document`}
                             className="certificationPreviewImage"
-                            loading="lazy"
+                            loading="eager"
+                            sizes="(min-width: 900px) 850px, 92vw"
                             onError={() =>
                               setFailedCertDetailImageIds((current) =>
                                 current.includes(certification.id)

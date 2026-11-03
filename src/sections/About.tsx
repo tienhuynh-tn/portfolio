@@ -6,6 +6,8 @@ import {
 } from '@phosphor-icons/react'
 import Section from '../components/layout/Section'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
+import SmartImage from '../components/shared/SmartImage'
+import portrait from '../assets/portrait/tien-huynh.jpg'
 
 const TAGS = [
   { label: '3+ Years Experience', Icon: Pulse },
@@ -30,11 +32,12 @@ function About() {
               <div className="group relative transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.01]">
                 <div className="rounded-3xl bg-gradient-to-br from-[color:var(--primary)] via-cyan-400/75 to-fuchsia-500/70 p-[3px] shadow-lg shadow-[color:var(--primary)]/15">
                   <div className="rounded-[22px] bg-white/95 p-2 dark:bg-slate-950/88">
-                    <img
-                      src="https://github.com/tienhuynh-tn.png"
+                    <SmartImage
+                      src={portrait}
                       alt="Tien Huynh portrait"
                       className="aspect-square w-full rounded-[18px] object-cover"
                       loading="lazy"
+                      sizes="(min-width: 1024px) 320px, 300px"
                     />
                   </div>
                 </div>

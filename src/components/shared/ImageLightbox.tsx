@@ -1,6 +1,7 @@
 import { CaretLeft, CaretRight, X } from '@phosphor-icons/react'
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import SmartImage from './SmartImage'
 
 type ImageLightboxProps = {
   src: string
@@ -69,7 +70,7 @@ function ImageLightbox({ src, alt, onClose, onPrevious, onNext }: ImageLightboxP
         </button>
 
         <div className="imageLightboxImageWrap">
-          <img src={src} alt={alt} className="imageLightboxImage" />
+          <SmartImage src={src} alt={alt} className="imageLightboxImage" original />
         </div>
 
         {onPrevious ? (

@@ -1,4 +1,5 @@
 import { CaretLeft, CaretRight } from '@phosphor-icons/react'
+import SmartImage from '../shared/SmartImage'
 import {
   useEffect,
   useMemo,
@@ -184,11 +185,12 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
           >
             {images.map((image, index) => (
               <div key={`${activity.id}-${image}-${index}`} className="activityCardMediaSlide">
-                <img
+                <SmartImage
                   src={image}
                   alt={`${activity.title} preview ${index + 1}`}
                   className="activityCardImage"
                   loading="lazy"
+                  sizes="(min-width: 768px) 320px, calc(100vw - 48px)"
                   onError={() => handleImageError(image)}
                 />
               </div>

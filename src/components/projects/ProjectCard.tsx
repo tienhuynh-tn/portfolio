@@ -2,6 +2,7 @@ import { useState } from 'react'
 import webImg from '../../assets/projects/web.svg'
 import { getProjectCategoryLabel, type Project } from '../../data/projects'
 import TechChips from './TechChips'
+import SmartImage from '../shared/SmartImage'
 
 type ProjectCardProps = {
   project: Project
@@ -31,11 +32,12 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
         </button>
 
         <div className="projectCardMedia relative z-0" aria-hidden="true">
-          <img
+          <SmartImage
             src={imageSrc}
             alt={project.image?.alt ?? `${project.title} preview`}
             className="projectCardImage h-44 w-full rounded-2xl object-cover"
             loading="lazy"
+            sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
             onError={() =>
               setFailedProjectImageIds((current) =>
                 current.includes(project.id) ? current : [...current, project.id],

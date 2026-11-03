@@ -1,4 +1,8 @@
 import googleAiCertificate from '../assets/certificates/google-ai.jpeg'
+import googleLogo from '../assets/issuers/google.png'
+import courseraLogo from '../assets/issuers/coursera.png'
+import udacityLogo from '../assets/issuers/udacity.png'
+import udemyLogo from '../assets/issuers/udemy.png'
 import cloudDeveloperCertificate from '../assets/certificates/cloud-developer.pdf'
 import microservicesWithSpringCertificate from '../assets/certificates/microservices-with-spring.jpg'
 import vibeCodingEssentialsCertificate from '../assets/certificates/vibe-coding-essentials.pdf'
@@ -20,13 +24,10 @@ export type CertificationItem = {
   tags?: string[]
 }
 
-const GOOGLE_LOGO =
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/250px-Google_Favicon_2025.svg.png'
-const COURSERA_LOGO =
-  'https://images.ctfassets.net/00atxywtfxvd/2QeS5ysKMhZ3ZjiU2rGRJA/e15df94b265053ce8ded4f5e630241c8/cropped-android-chrome-512x512-1.png'
-const UDACITY_LOGO = 'https://upload.wikimedia.org/wikipedia/en/3/3b/Udacity_logo.png'
-const UDEMY_LOGO =
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Udemy_logo.svg/1280px-Udemy_logo.svg.png'
+const GOOGLE_LOGO = googleLogo
+const COURSERA_LOGO = courseraLogo
+const UDACITY_LOGO = udacityLogo
+const UDEMY_LOGO = udemyLogo
 const MICROSOFT_LOGO = `${import.meta.env.BASE_URL}issuers/microsoft.svg`
 const AWS_LOGO = `${import.meta.env.BASE_URL}issuers/aws-official.png`
 
