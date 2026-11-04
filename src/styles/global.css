@@ -3204,6 +3204,10 @@ p {
   height: 100%;
 }
 
+.certificationBadgeGrid:not(.certificationBadgeGridAll) .certificationBadgeGridItem {
+  height: auto;
+}
+
 .certificationBadgeTile {
   position: relative;
   display: block;
@@ -3258,6 +3262,10 @@ p {
   background: color-mix(in srgb, var(--surface) 92%, #f1f5f9);
   box-shadow: 0 10px 22px color-mix(in srgb, var(--text) 8%, transparent);
   overflow: hidden;
+}
+
+.certificationBadgeMark source {
+  display: none;
 }
 
 .certificationBadgeImage,
