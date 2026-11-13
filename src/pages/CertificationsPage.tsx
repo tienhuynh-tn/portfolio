@@ -108,6 +108,7 @@ function CertificationsPage() {
                   <CertificationBadgeTile
                     certification={certification}
                     onSelect={setSelectedCertification}
+                    listingIndex={index}
                   />
                 </li>
               ))}

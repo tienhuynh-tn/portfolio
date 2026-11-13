@@ -590,7 +590,7 @@ function ActivityModal({ activity, onClose }: ActivityModalProps) {
                           alt={`${activity.title} gallery image ${index + 1}`}
                           className="activityModalGalleryImage"
                           loading="lazy"
-                          sizes="(min-width: 760px) 400px, 92vw"
+                          sizes="auto, (min-width: 912px) 266px, (min-width: 762px) calc((94vw - 58px) / 3), (min-width: 516px) calc((100vw - 78px) / 2), calc(100vw - 66px)"
                         />
                       </button>
                     ))}

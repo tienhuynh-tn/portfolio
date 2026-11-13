@@ -87,7 +87,7 @@ function ActivitiesPage() {
                 className="certificationGridItem activityGridItem reveal"
                 style={{ ['--reveal-delay' as string]: `${index * 50}ms` }}
               >
-                <ActivityCard activity={activity} onSelect={setSelectedActivity} />
+                <ActivityCard activity={activity} onSelect={setSelectedActivity} listingIndex={index} />
               </li>
             ))}
           </ul>

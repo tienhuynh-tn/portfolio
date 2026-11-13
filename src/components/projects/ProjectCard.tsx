@@ -4,12 +4,27 @@ import { getProjectCategoryLabel, type Project } from '../../data/projects'
 import TechChips from './TechChips'
 import SmartImage from '../shared/SmartImage'
 
+// Match Tailwind's container widths, the grid's 601/901px column breakpoints,
+// and the card's padding/borders. Lazy images use their actual rendered width.
+const PROJECT_IMAGE_SIZES = [
+  'auto',
+  '(min-width: 1536px) calc((1536px - 136px) / 3 - 45px)',
+  '(min-width: 1280px) calc((1280px - 136px) / 3 - 2 * clamp(16px, 1.4vw, 20px) - 5px)',
+  '(min-width: 1024px) calc((1024px - 2 * clamp(16px, 4vw, 48px) - 40px) / 3 - 2 * clamp(16px, 1.4vw, 20px) - 5px)',
+  '(min-width: 901px) calc((768px - 8vw - 40px) / 3 - 37px)',
+  '(min-width: 768px) calc((768px - 8vw - 20px) / 2 - 37px)',
+  '(min-width: 640px) calc((640px - 8vw - 20px) / 2 - 37px)',
+  '(min-width: 601px) calc((100vw - 8vw - 20px) / 2 - 37px)',
+  'calc(100vw - 2 * clamp(16px, 4vw, 48px) - 37px)',
+].join(', ')
+
 type ProjectCardProps = {
   project: Project
   onSelect: (project: Project) => void
+  listingIndex?: number
 }
 
-function ProjectCard({ project, onSelect }: ProjectCardProps) {
+function ProjectCard({ project, onSelect, listingIndex }: ProjectCardProps) {
   const fallbackImage = webImg
   const [failedProjectImageIds, setFailedProjectImageIds] = useState<string[]>([])
   const imageSrc =
@@ -37,7 +52,9 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
             alt={project.image?.alt ?? `${project.title} preview`}
             className="projectCardImage h-44 w-full rounded-2xl object-cover"
             loading="lazy"
-            sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+            priority={listingIndex === 0}
+            eagerWhen={listingIndex === 1 ? '(min-width: 601px)' : listingIndex === 2 ? '(min-width: 901px)' : undefined}
+            sizes={PROJECT_IMAGE_SIZES}
             onError={() =>
               setFailedProjectImageIds((current) =>
                 current.includes(project.id) ? current : [...current, project.id],

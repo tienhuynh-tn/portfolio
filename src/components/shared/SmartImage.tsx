@@ -1,4 +1,7 @@
-import { useEffect, useRef, useState, type ImgHTMLAttributes, type SyntheticEvent } from 'react'
+import {
+  useCallback, useEffect, useRef, useState, useSyncExternalStore,
+  type ImgHTMLAttributes, type SyntheticEvent,
+} from 'react'
 import imageManifest from 'virtual:image-manifest'
 
 type SmartImageProps = ImgHTMLAttributes<HTMLImageElement> & {
@@ -10,13 +13,26 @@ type SmartImageProps = ImgHTMLAttributes<HTMLImageElement> & {
   preload?: boolean
   /** Bypass resized versions, for the full-resolution lightbox. */
   original?: boolean
+  /** Eager-load additional first-row items only at their layout breakpoint. */
+  eagerWhen?: string
 }
 
 function ImageRequest({
   src, alt, sizes = '100vw', priority = false, preload = false, original = false,
   loading = 'lazy', decoding = 'async', fetchPriority, width, height,
-  className = '', onLoad, onError, style, ...props
+  className = '', onLoad, onError, style, eagerWhen, ...props
 }: SmartImageProps) {
+  const subscribe = useCallback((notify: () => void) => {
+    if (!eagerWhen) return () => {}
+    const query = window.matchMedia(eagerWhen)
+    query.addEventListener('change', notify)
+    return () => query.removeEventListener('change', notify)
+  }, [eagerWhen])
+  const eagerInViewport = useSyncExternalStore(
+    subscribe,
+    () => Boolean(eagerWhen && window.matchMedia(eagerWhen).matches),
+    () => false,
+  )
   const metadata = imageManifest[src]
   const [state, setState] = useState<'loading' | 'loaded' | 'error'>('loading')
   const [attempt, setAttempt] = useState(0)
@@ -95,9 +111,9 @@ function ImageRequest({
         height={height ?? metadata?.height}
         className={`smartImageElement ${className}`}
         style={style}
-        loading={priority || original ? 'eager' : loading}
+        loading={priority || original || eagerInViewport ? 'eager' : loading}
         decoding={decoding}
-        fetchPriority={priority ? 'high' : fetchPriority ?? (original ? 'auto' : 'low')}
+        fetchPriority={priority ? 'high' : fetchPriority ?? 'auto'}
         data-image-state={state}
         onLoad={(event) => {
           if (timerRef.current !== null) {

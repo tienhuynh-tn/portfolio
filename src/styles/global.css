@@ -3587,6 +3587,27 @@ p {
   object-fit: contain;
 }
 
+.imageLightboxImageWrap {
+  position: relative;
+}
+
+.imageLightboxStatus {
+  position: absolute;
+  inset-inline: 44px;
+  top: 50%;
+  margin: 0;
+  padding: 12px;
+  transform: translateY(-50%);
+  text-align: center;
+  color: var(--text);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+}
+
+.imageLightboxImage[data-image-state='error'] {
+  visibility: hidden;
+}
+
 .imageLightboxNav {
   position: absolute;
   top: 50%;

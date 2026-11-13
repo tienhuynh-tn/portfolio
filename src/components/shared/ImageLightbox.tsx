@@ -1,5 +1,5 @@
 import { CaretLeft, CaretRight, X } from '@phosphor-icons/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import SmartImage from './SmartImage'
 
@@ -9,6 +9,28 @@ type ImageLightboxProps = {
   onClose: () => void
   onPrevious?: () => void
   onNext?: () => void
+}
+
+function OriginalImage({ src, alt }: { src: string; alt: string }) {
+  const [state, setState] = useState<'loading' | 'loaded' | 'error'>('loading')
+  return (
+    <div className="imageLightboxImageWrap" aria-busy={state === 'loading'}>
+      <SmartImage
+        src={src}
+        alt={alt}
+        className="imageLightboxImage"
+        original
+        priority
+        onLoad={() => setState('loaded')}
+        onError={() => setState('error')}
+      />
+      {state !== 'loaded' ? (
+        <p className="imageLightboxStatus" role="status">
+          {state === 'loading' ? 'Loading full-resolution photo…' : 'This photo could not load. Please try opening it again.'}
+        </p>
+      ) : null}
+    </div>
+  )
 }
 
 function ImageLightbox({ src, alt, onClose, onPrevious, onNext }: ImageLightboxProps) {
@@ -69,9 +91,7 @@ function ImageLightbox({ src, alt, onClose, onPrevious, onNext }: ImageLightboxP
           <X size={18} weight="bold" aria-hidden="true" />
         </button>
 
-        <div className="imageLightboxImageWrap">
-          <SmartImage src={src} alt={alt} className="imageLightboxImage" original />
-        </div>
+        <OriginalImage key={src} src={src} alt={alt} />
 
         {onPrevious ? (
           <button

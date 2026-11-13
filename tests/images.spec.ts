@@ -113,6 +113,7 @@ test('mobile/desktop image bounds, themes, projects, certificates and legacy red
   await page.goto('projects')
   await page.locator('.projectCard button').first().click()
   await expect(page.locator('.projectModalImage')).toHaveAttribute('data-image-state', 'loaded')
+  await expect(page.locator('.projectModalImage')).toHaveAttribute('fetchpriority', 'high')
   await page.goto('credentials')
   await expect(page).toHaveURL(/\/certifications\/$/)
   await page.locator('.certificationBadgeTile').first().click()
@@ -120,4 +121,71 @@ test('mobile/desktop image bounds, themes, projects, certificates and legacy red
   await page.goto('certifications')
   await page.locator('.certificationBadgeTile').filter({ hasText: 'Google AI' }).first().click()
   await expect(page.locator('.certificationPreviewImage')).toHaveAttribute('data-image-state', 'loaded')
+  await expect(page.locator('.certificationPreviewImage')).toHaveAttribute('fetchpriority', 'high')
+})
+
+test('listing images prioritize the first row and preserve lazy homepage sections', async ({ page }) => {
+  for (const width of [390, 587, 601, 768, 892, 901, 1024, 1079, 1196, 1280, 1440]) {
+    await page.setViewportSize({ width, height: 900 })
+    for (const [route, selector] of [
+      ['projects', '.projectCard img'],
+      ['activities', '.activityCardImage'],
+      ['certifications', '.certificationIssuerLogo'],
+    ]) {
+      await page.goto(route)
+      await expect(page.locator(selector).first()).toHaveAttribute('fetchpriority', 'high')
+      await expect.poll(() => page.locator(selector).evaluateAll(images => {
+        const firstTop = images[0].getBoundingClientRect().top
+        return images.every(image => {
+          const img = image as HTMLImageElement
+          const inFirstRow = Math.abs(img.getBoundingClientRect().top - firstTop) < 5
+          return img.loading === (inFirstRow ? 'eager' : 'lazy')
+        })
+      })).toBe(true)
+      expect(await page.locator(`${selector}[fetchpriority="high"]`).count()).toBe(1)
+    }
+  }
+  await page.goto('/')
+  await expect(page.locator('.projectCard img').first()).toHaveAttribute('loading', 'lazy')
+  await expect(page.locator('.projectCard img').first()).toHaveAttribute('fetchpriority', 'auto')
+})
+
+test('small logos and mobile activity photos use fitting responsive variants', async ({ page }, testInfo) => {
+  await page.goto('certifications')
+  const logo = page.locator('.certificationIssuerLogo').first()
+  await expect(logo).toHaveAttribute('data-image-state', 'loaded')
+  expect(await logo.evaluate((img: HTMLImageElement) => img.currentSrc)).toMatch(/-80-[^/]+\.avif$/)
+  await page.goto('activities')
+  const photo = page.locator('.activityCardImage').nth(1)
+  await expect(photo).toHaveAttribute('data-image-state', 'loaded')
+  const expected = testInfo.project.name === 'mobile' ? 768 : 320
+  expect(await photo.evaluate((img: HTMLImageElement) => img.currentSrc)).toMatch(new RegExp(`-${expected}-[^/]+\\.avif$`))
+})
+
+test('full-resolution viewer reports loading and failure without replacing the original', async ({ page }) => {
+  const image = await openGallery(page)
+  let release!: () => void
+  const pending = new Promise<void>(resolve => { release = resolve })
+  await page.route('**/*.jpg', async route => {
+    await pending
+    await route.continue()
+  })
+  await image.click()
+  await expect(page.getByRole('status')).toHaveText('Loading full-resolution photo…')
+  const original = page.locator('.imageLightboxImage')
+  await expect(original).toHaveAttribute('fetchpriority', 'high')
+  expect(await original.getAttribute('src')).toMatch(/\.jpg$/)
+  expect(await original.getAttribute('srcset')).toBeNull()
+  release()
+  await expect(original).toHaveAttribute('data-image-state', 'loaded')
+  await expect(page.getByRole('status')).toHaveCount(0)
+  await page.unroute('**/*.jpg')
+  await page.route('**/*.jpg', route => route.abort('failed'))
+  await page.getByRole('button', { name: 'Show next image', exact: true }).click()
+  await expect(page.getByRole('status')).toHaveText('Loading full-resolution photo…')
+  await expect(page.getByRole('status')).toHaveText('This photo could not load. Please try opening it again.')
+  await expect(original).toBeHidden()
+  await expect(page.locator('.imageLightboxImageWrap')).toHaveAttribute('aria-busy', 'false')
+  await page.getByRole('button', { name: 'Close image preview' }).click()
+  await expect(page.locator('.imageLightboxOverlay')).toHaveCount(0)
 })

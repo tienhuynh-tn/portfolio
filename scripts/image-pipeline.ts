@@ -4,7 +4,7 @@ import path from 'node:path'
 import sharp from 'sharp'
 import type { Plugin, ResolvedConfig } from 'vite'
 
-const WIDTHS = [320, 640, 960, 1440, 1920]
+const WIDTHS = [80, 160, 320, 480, 640, 768, 960, 1440, 1920]
 const SETTINGS = { widths: WIDTHS, avif: 75, webp: 85, version: sharp.versions }
 const RASTER = /\.(jpe?g|png|webp|avif)$/i
 const MODULE_ID = 'virtual:image-manifest'

@@ -150,6 +150,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
                     alt={project.image.alt}
                     className="projectModalImage h-56 sm:h-64 md:h-72 rounded-2xl object-cover"
                     loading="eager"
+                    priority
                     sizes="(min-width: 900px) 850px, 92vw"
                   />
                 ) : (

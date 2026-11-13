@@ -124,7 +124,7 @@ function ProjectsPage() {
               className="reveal"
               style={{ ['--reveal-delay' as string]: `${index * 80}ms` }}
             >
-              <ProjectCard project={project} onSelect={setSelectedProject} />
+              <ProjectCard project={project} onSelect={setSelectedProject} listingIndex={index} />
             </div>
           ))}
         </div>

@@ -8,11 +8,13 @@ import {
 type CertificationBadgeTileProps = {
   certification: CertificationItem
   onSelect: (certification: CertificationItem) => void
+  listingIndex?: number
 }
 
 function CertificationBadgeTile({
   certification,
   onSelect,
+  listingIndex,
 }: CertificationBadgeTileProps) {
   const [failedIssuerLogoIds, setFailedIssuerLogoIds] = useState<string[]>([])
   const issuerLogoOk =
@@ -49,7 +51,9 @@ function CertificationBadgeTile({
                 height={40}
                 className="certificationIssuerLogo"
                 loading="lazy"
-                sizes="40px"
+                priority={listingIndex === 0}
+                eagerWhen={listingIndex === 1 ? '(min-width: 587px)' : listingIndex === 2 ? '(min-width: 892px)' : listingIndex === 3 ? '(min-width: 1196px)' : undefined}
+                sizes="30px"
                 onError={() =>
                   setFailedIssuerLogoIds((current) =>
                     current.includes(certification.id)

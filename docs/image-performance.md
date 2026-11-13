@@ -6,8 +6,8 @@ No external image service, runtime server, or Cloudflare paid feature is require
 
 ## Generation and updates
 
-- Sharp creates AVIF (quality 75) and WebP (quality 85) at widths 320, 640, 960,
-  1440, and 1920, capped at each source's width. These are high-quality display
+- Sharp creates AVIF (quality 75) and WebP (quality 85) at widths 80, 160, 320,
+  480, 640, 768, 960, 1440, and 1920, capped at each source's width. These are high-quality display
   copies, not mathematically lossless reproductions. Full-resolution viewing uses
   the untouched original.
 - SVGs/PDFs remain unchanged. Animated inputs are not flattened. Transparency is
@@ -30,13 +30,19 @@ Use the original import as `src`; the manifest supplies optional variants.
 Provide `sizes` matching the actual layout, descriptive `alt`, and the existing
 CSS class. Existing fixed-height and aspect-ratio classes still own cropping.
 Dimensions come from metadata; unknown sources should supply width/height or an
-existing reserved container. Offscreen images activate within 240px of a visible
-scrollport, then use native lazy loading and async decoding.
+existing reserved container. Offscreen images use native lazy loading and async
+decoding. Lazy card/gallery images use `sizes="auto, ..."` to let supporting browsers
+select a source from the rendered width, with layout-based fallbacks.
 
-`priority` enables eager loading and high fetch priority. `preload` additionally
+The default fetch priority is `auto`. `priority` enables eager loading and high
+fetch priority for the leading listing image and selected previews. `eagerWhen`
+enables eager loading for other first-row images at their layout breakpoint after
+hydration; homepage sections remain lazy. `preload` additionally
 requests a matching responsive preload; use it only with `priority` for a measured
 critical image. No gallery or below-fold image is preloaded. `original` bypasses
 variants and loads eagerly, as used by the lightbox for its single current image.
+The lightbox retains the exact original and shows loading/error feedback; it does
+not download neighboring originals. Large originals remain bandwidth-dependent.
 
 On failure, the initial source gets retries after 500ms and 1500ms. It then falls
 back to WebP and finally the original without another retry cycle. Unknown/original
@@ -104,13 +110,22 @@ set `PLAYWRIGHT_CHROME_PATH` to an existing Chrome executable. Browser tests use
 mobile DPR 2 and desktop DPR 1 against the production preview.
 
 For a repeatable comparison, run the production preview and `npm run measure:images`.
-The measurement script uses fresh browser contexts, disabled cache, 1.6 Mbps
-downloads, 150ms latency, and 4x CPU slowdown. It records ten seconds after each
-view is ready, including partial image transfer bytes, image completion, dimensions,
-LCP, and CLS. It visits the homepage, activities, and the Codex hackathon gallery at
-390px and 1440px. Reports/screenshots go to the OS temporary directory by default;
-set `IMAGE_TEST_REPORT`, `IMAGE_TEST_LABEL`, and `IMAGE_TEST_SCREENSHOTS` to retain
-them elsewhere. `IMAGE_TEST_URL` selects a different preview base URL.
+The measurement script uses 1.6 Mbps downloads, 150ms latency, and 4x CPU slowdown.
+Each of five repetitions starts with a fresh context (cold cache), followed by a
+repeat visit in that context (warm cache). An unfinished original may only be
+partially cached on the repeat visit. It covers all four pages, homepage scrolling,
+the Codex hackathon gallery, project/certificate previews, and the original viewer.
+Widths are 390px at DPR 2 and 1440px at DPR 1. Each view waits up to ten seconds for
+visible images, then samples after 200ms. Reports include completion timestamps,
+partial image bytes received during that navigation, LCP, and CLS. Bytes are not a
+fixed-window or total eventual transfer metric. Desktop homepage views without
+visible images have no image-completion timestamp.
+
+Reports go to the OS temporary directory by default. Use `IMAGE_TEST_REPORT` for
+the output path, `IMAGE_TEST_URL` for the preview URL, `IMAGE_TEST_REPEATS` for the
+run count, and comma-separated `IMAGE_TEST_WIDTHS` / `IMAGE_TEST_SCENARIOS` to narrow
+a diagnostic run. These settings differ from the historical November 3 benchmark;
+compare current before/after runs with each other, not with that older table.
 
 These local checks measure frontend behavior, not Cloudflare edge latency. A live
 deployment needs a separate verification of HTTP status, MIME types, `Age`,
@@ -147,3 +162,39 @@ The first local encode took 8m14s; a cached production build took 23s. There are
 1,376 generated image files totaling approximately 171 MB. The complete build is
 approximately 806 MiB because originals remain available. All 176 pre-existing
 asset files were checked against their Git hashes and remained unchanged.
+
+## Local results, November 13, 2026
+
+Five runs per scenario/device/cache state, using the revised measurement script
+above against production previews. Cold-cache median time from navigation until
+all visible images loaded:
+
+| Device | Page | Before | After |
+| --- | --- | ---: | ---: |
+| Mobile | home | 0.99s | 1.01s |
+| Mobile | projects | 0.76s | 0.77s |
+| Mobile | certifications | 0.77s | 0.75s |
+| Mobile | activities | 3.19s | 2.44s |
+| Desktop | home | 0.88s | 0.90s |
+| Desktop | projects | 0.90s | 0.80s |
+| Desktop | certifications | 0.93s | 0.82s |
+| Desktop | activities | 1.66s | 1.46s |
+
+The mobile gallery median wait after opening/scrolling to the gallery fell from
+6.23s to 4.46s. The desktop gallery median wait fell from 6.64s to 2.30s.
+
+These are local simulated-network results, not live CDN or physical-device
+measurements. Small homepage timing differences are not evidence of a meaningful
+regression. The original photos and AVIF/WebP quality settings are unchanged.
+
+The selected full-resolution original did not finish within the ten-second
+visible-image window on any of the five cold visits at either screen size, before
+or after. Repeat visits completed in all five after-change runs at each size, but
+the preceding interrupted download means those are not guaranteed fully cached
+visits. Keep the loading indicator and do not promise instant original viewing.
+No material visible-image completion regression was observed in the other warm
+or cold scenarios. These results do not establish a general Core Web Vitals gain.
+
+Timing samples preceded the final error-message styling and intermediate-width
+layout corrections. Those corrections preserve image requests at the measured
+390px/1440px widths and were checked separately by the browser regression suite.

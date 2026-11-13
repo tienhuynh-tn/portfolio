@@ -197,6 +197,7 @@ function CertificationModal({
                             alt={`${certification.name} certificate document`}
                             className="certificationPreviewImage"
                             loading="eager"
+                            priority
                             sizes="(min-width: 900px) 850px, 92vw"
                             onError={() =>
                               setFailedCertDetailImageIds((current) =>

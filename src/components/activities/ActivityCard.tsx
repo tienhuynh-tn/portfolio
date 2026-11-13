@@ -15,6 +15,7 @@ import {
 type ActivityCardProps = {
   activity: ActivityItem
   onSelect: (activity: ActivityItem) => void
+  listingIndex?: number
 }
 
 const AUTOPLAY_DELAY_MS = 4200
@@ -86,7 +87,7 @@ function getPreviewTags(tags: ActivityItem['tags']) {
     .slice(0, PREVIEW_TAG_LIMIT)
 }
 
-function ActivityCard({ activity, onSelect }: ActivityCardProps) {
+function ActivityCard({ activity, onSelect, listingIndex }: ActivityCardProps) {
   const cardRef = useRef<HTMLElement | null>(null)
   const [failedImages, setFailedImages] = useState<string[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -190,7 +191,9 @@ function ActivityCard({ activity, onSelect }: ActivityCardProps) {
                   alt={`${activity.title} preview ${index + 1}`}
                   className="activityCardImage"
                   loading="lazy"
-                  sizes="(min-width: 768px) 320px, calc(100vw - 48px)"
+                  priority={listingIndex === 0 && index === effectiveCurrentIndex}
+                  eagerWhen={index !== effectiveCurrentIndex ? undefined : listingIndex === 1 ? '(min-width: 768px)' : listingIndex === 2 ? '(min-width: 1280px)' : undefined}
+                  sizes="auto, (min-width: 768px) 317px, calc(100vw - 2 * clamp(16px, 4vw, 48px) - 3px)"
                   onError={() => handleImageError(image)}
                 />
               </div>
