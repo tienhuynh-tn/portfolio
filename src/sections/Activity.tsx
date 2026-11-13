@@ -37,7 +37,7 @@ function Activity() {
         </ul>
 
         <div className="certificationsCtaRow reveal">
-          <Link to="/activities" className="cardLink" aria-label="View all activities">
+          <Link to="/activities/" className="cardLink" aria-label="View all activities">
             View all activities &#8594;
           </Link>
         </div>

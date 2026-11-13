@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "postbuild": "cp dist/index.html dist/404.html",
+    "postbuild": "node scripts/prerender.mjs",
     "lint": "eslint .",
     "test:images": "playwright test",
     "test:image-assets": "node scripts/check-image-assets.mjs",

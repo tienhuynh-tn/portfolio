@@ -57,7 +57,7 @@ function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const [activeId, setActiveId] = useState<NavItemId>(() =>
-    getRouteActiveId(location.pathname, location.hash),
+    getRouteActiveId(location.pathname, ''),
   )
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isNavbarVisible, setIsNavbarVisible] = useState(true)

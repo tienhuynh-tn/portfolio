@@ -14,6 +14,8 @@ import ActivitiesPage from './ActivitiesPage'
 import CertificationsPage from './CertificationsPage'
 import AppLayout from '../layouts/AppLayout'
 import ProjectsPage from '../pages/ProjectsPage'
+import Seo from '../seo/Seo'
+import NotFoundPage from '../pages/NotFoundPage'
 
 const SECTION_COMPONENTS: Record<NavItemId, ReactElement> = {
   home: <Hero />,
@@ -50,16 +52,19 @@ function App() {
   }, [])
 
   return (
-    <Routes>
-      <Route element={<AppLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/certifications" element={<CertificationsPage />} />
-        <Route path="/credentials" element={<Navigate to="/certifications" replace />} />
-        <Route path="/activities" element={<ActivitiesPage />} />
-      </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <>
+      <Seo />
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/certifications" element={<CertificationsPage />} />
+          <Route path="/credentials" element={<Navigate to="/certifications/" replace />} />
+          <Route path="/activities" element={<ActivitiesPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </>
   )
 }
 

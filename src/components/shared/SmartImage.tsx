@@ -18,7 +18,6 @@ function ImageRequest({
   className = '', onLoad, onError, style, ...props
 }: SmartImageProps) {
   const metadata = imageManifest[src]
-  const [active, setActive] = useState(priority || original || loading === 'eager')
   const [state, setState] = useState<'loading' | 'loaded' | 'error'>('loading')
   const [attempt, setAttempt] = useState(0)
   const [stage, setStage] = useState(0)
@@ -32,23 +31,6 @@ function ImageRequest({
   const srcSet = (items: typeof variants) => items.map((item) => `${item.src} ${item.width}w`).join(', ')
   const fallbackSrc = useVariants && candidates.length ? candidates[0].src : src
   const fallbackSet = useVariants && candidates.length ? srcSet(candidates) : undefined
-
-  useEffect(() => {
-    const image = imageRef.current
-    if (active || !image) return
-    if (priority || original || loading === 'eager' || typeof IntersectionObserver === 'undefined') {
-      const frame = requestAnimationFrame(() => setActive(true))
-      return () => cancelAnimationFrame(frame)
-    }
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setActive(true)
-        observer.disconnect()
-      }
-    }, { rootMargin: '240px' })
-    observer.observe(image)
-    return () => observer.disconnect()
-  }, [active, priority, original, loading])
 
   useEffect(() => () => {
     if (timerRef.current !== null) clearTimeout(timerRef.current)
@@ -75,7 +57,7 @@ function ImageRequest({
   }, [priority, preload, src, sizes])
 
   function handleError(event: SyntheticEvent<HTMLImageElement>) {
-    if (state === 'error' || timerRef.current !== null || !active) return
+    if (state === 'error' || timerRef.current !== null) return
     if (attempt < 2) {
       timerRef.current = setTimeout(() => {
         timerRef.current = null
@@ -95,18 +77,18 @@ function ImageRequest({
 
   return (
     <picture className="smartImage">
-      {active && useVariants && stage === 0 && avif.length > 0 ? (
+      {useVariants && stage === 0 && avif.length > 0 ? (
         <source type="image/avif" srcSet={srcSet(avif)} sizes={sizes} />
       ) : null}
-      {active && useVariants && webp.length > 0 ? (
+      {useVariants && webp.length > 0 ? (
         <source type="image/webp" srcSet={srcSet(webp)} sizes={sizes} />
       ) : null}
       <img
         {...props}
         key={`${stage}-${attempt}`}
         ref={imageRef}
-        src={active ? fallbackSrc : undefined}
-        srcSet={active ? fallbackSet : undefined}
+        src={fallbackSrc}
+        srcSet={fallbackSet}
         sizes={fallbackSet ? sizes : undefined}
         alt={alt}
         width={width ?? metadata?.width}

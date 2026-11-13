@@ -37,7 +37,7 @@ function Projects() {
         </div>
 
         <div className="reveal">
-          <Link to="/projects" className="cardLink" aria-label="View all projects">
+          <Link to="/projects/" className="cardLink" aria-label="View all projects">
             View all projects →
           </Link>
         </div>

@@ -23,12 +23,16 @@ type ThemeToggleProps = {
 }
 
 function ThemeToggle({ compact = false }: ThemeToggleProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => getStoredTheme() ?? getSystemTheme()
-  )
-  const [hasPreference, setHasPreference] = useState(() =>
-    Boolean(getStoredTheme())
-  )
+  const [theme, setTheme] = useState<Theme>('light')
+  const [hasPreference, setHasPreference] = useState(false)
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setTheme(getStoredTheme() ?? getSystemTheme())
+      setHasPreference(Boolean(getStoredTheme()))
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [])
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme

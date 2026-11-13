@@ -138,6 +138,7 @@ export default function imagePipeline(): Plugin {
         }
       }
     },
+    resolveFileUrl({ fileName }) { return JSON.stringify(`${config.base}${fileName}`) },
     resolveId(id) { if (id === MODULE_ID) return `\0${MODULE_ID}` },
     load(id) {
       if (id !== `\0${MODULE_ID}`) return

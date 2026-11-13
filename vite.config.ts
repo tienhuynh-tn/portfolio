@@ -5,4 +5,5 @@ import imagePipeline from './scripts/image-pipeline'
 export default defineConfig({
   plugins: [imagePipeline(), react()],
   base: '/',
+  build: { assetsInlineLimit: 0 },
 })

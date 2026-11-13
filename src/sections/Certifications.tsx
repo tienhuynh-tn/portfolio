@@ -48,7 +48,7 @@ function Certifications() {
 
           <div className="certificationsCtaRow reveal">
             <Link
-              to="/certifications"
+              to="/certifications/"
               className="cardLink"
               aria-label="View all certifications"
             >

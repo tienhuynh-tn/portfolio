@@ -16,8 +16,12 @@ test('responsive images defer offscreen downloads and load only the selected ori
     }
   })
   await page.goto('activities')
-  const pending = page.locator('img.activityCardImage:not([src])')
-  await expect.poll(() => pending.count()).toBeGreaterThan(0)
+  const lazyImages = page.locator('img.activityCardImage[loading="lazy"]')
+  await expect.poll(() => lazyImages.count()).toBeGreaterThan(0)
+  // Native lazy loading keeps URLs crawlable while deferring distant images.
+  await expect.poll(() => lazyImages.evaluateAll((images) =>
+    images.filter((image) => !(image as HTMLImageElement).complete).length
+  )).toBeGreaterThan(0)
   const image = await openGallery(page)
   await expect(image).toHaveAttribute('data-image-state', 'loaded')
   expect(await image.evaluate((img: HTMLImageElement) => img.currentSrc)).toMatch(/\.avif$/)
@@ -110,7 +114,7 @@ test('mobile/desktop image bounds, themes, projects, certificates and legacy red
   await page.locator('.projectCard button').first().click()
   await expect(page.locator('.projectModalImage')).toHaveAttribute('data-image-state', 'loaded')
   await page.goto('credentials')
-  await expect(page).toHaveURL(/\/certifications$/)
+  await expect(page).toHaveURL(/\/certifications\/$/)
   await page.locator('.certificationBadgeTile').first().click()
   await expect(page.locator('.certificationPreviewPdf')).toBeVisible()
   await page.goto('certifications')
